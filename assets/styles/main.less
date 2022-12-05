@@ -1,0 +1,25 @@
+@import "modern-normalize/modern-normalize.css";
+@import "_fonts";
+html {
+  font-size: 16px;
+}
+body {
+  font-family: "DIN Pro", serif;
+  background: #f2f2f2;
+}
+.container {
+  padding: 0 7.813em;
+  width: 100%;
+  @media @xxl {
+    padding: 0 6.25em;
+  }
+  @media @lg {
+    padding: 0 4.375em;
+  }
+  @media @md {
+    padding: 0 1.875em;
+  }
+  @media @xs {
+    padding: 0 1.4em;
+  }
+}
