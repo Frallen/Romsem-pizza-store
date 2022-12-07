@@ -2,7 +2,6 @@
   <div class="menu">
     <div class="menu-heading">
       <div class="menu-heading-title"><Logo></Logo>Romsem</div>
-
       <div class="close" @click="Close"></div>
     </div>
     <div class="menu-wrapper">
@@ -59,7 +58,6 @@ let Close = () => {
   left: 0;
   top: 0;
   height: 100%;
-  width: 40%;
   @media @md {
     padding: 10px 25px;
     width: 100%;
@@ -126,7 +124,8 @@ let Close = () => {
     svg {
       margin-right: 20px;
     }
-
+    display: flex;
+    align-items: center;
     margin-top: 30px;
     text-decoration: none;
     font-weight: 400;

@@ -7,11 +7,13 @@
     <div class="navbar-logo">
       <NuxtLink to="/"><Logo></Logo>Romsem</NuxtLink>
     </div>
-    <div class="navbar-phone">
-      <NuxtLink to="tel:+996 705 188 955">+996 705 188 955 </NuxtLink>
-    </div>
     <div class="navbar-actions">
-      <Search class="navbar-actions-search"></Search>
+      <div class="navbar-phone">
+        <NuxtLink to="tel:+996 705 188 955">+996 705 188 955 </NuxtLink>
+      </div>
+      <div>
+        <Search class="navbar-actions-search"></Search>
+      </div>
     </div>
   </div>
 </template>
