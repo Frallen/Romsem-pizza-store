@@ -1,0 +1,46 @@
+{
+  "kind": "collectionType",
+  "collectionName": "catlog_item_types",
+  "info": {
+    "singularName": "catlog-item-type",
+    "pluralName": "catlog-item-types",
+    "displayName": "CatlogItemType",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "Type": {
+      "type": "enumeration",
+      "enum": [
+        "Пицца",
+        "Сеты",
+        "WOK",
+        "Роллы",
+        "Суши",
+        "Супы",
+        "Салаты",
+        "Напитки",
+        "Комбо",
+        "С угрем",
+        "Корн дог",
+        "Чикен",
+        "Акции"
+      ],
+      "required": true
+    },
+    "Photo": {
+      "type": "media",
+      "multiple": false,
+      "required": true,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    }
+  }
+}
