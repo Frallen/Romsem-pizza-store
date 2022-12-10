@@ -1,6 +1,8 @@
 import qs from "qs";
 export const useIndex = defineStore("index", {
+
   state: () => ({
+    baseURL : useRuntimeConfig().env.STRAPI_URL,
     isLoading: false,
     MainSliderData: [],
   }),
@@ -18,7 +20,7 @@ export const useIndex = defineStore("index", {
         );
         this.isLoading = true;
         let { data } = await useFetch(
-          `http://localhost:1337/api/main-sliders/?${query}`
+          `${this.baseURL}/api/main-sliders/?${query}`
         );
         console.log(data._value.data);
         this.MainSliderData = data._value.data;
