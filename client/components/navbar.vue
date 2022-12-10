@@ -19,9 +19,9 @@
 </template>
 
 <script setup>
-import Menu from "../assets/img/menu.svg";
-import Logo from "../assets/img/logo.svg";
-import Search from "../assets/img/search.svg";
+import Menu from "assets/img/menu.svg";
+import Logo from "assets/img/logo.svg";
+import Search from "assets/img/search.svg";
 let props = defineProps({
   show: { type: Boolean, default: false },
 });
@@ -38,6 +38,9 @@ let showMenu = () => {
   align-items: center;
   background: #fff;
   padding: 10px 1.875em;
+  position: sticky;
+  top: 0;
+  z-index: 3;
   &-hamburger,
   &-logo {
     cursor: pointer;

@@ -27,7 +27,7 @@ export default defineNuxtConfig({
         key: process.env.API_KEY,
       },
       env: {
-        STRAPI_URL: `http://localhost:1337/api`,
+        STRAPI_URL: `http://localhost:1337`,
       },
     },
   },

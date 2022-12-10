@@ -29,17 +29,17 @@
 </template>
 
 <script setup>
-import Logo from "../assets/img/logo.svg";
-import Pizza from "../assets/img/pizza.svg";
-import Wok from "../assets/img/wok.svg";
-import Sets from "../assets/img/sets.svg";
-import Rols from "../assets/img/rols.svg";
-import Sushi from "../assets/img/Sushi.svg";
-import Salats from "../assets/img/salats.svg";
-import Soups from "../assets/img/soups.svg";
-import Corndog from "../assets/img/corndog.svg";
-import Water from "../assets/img/water.svg";
-import Actions from "../assets/img/actions.svg";
+import Logo from "assets/img/logo.svg";
+import Pizza from "assets/img/pizza.svg";
+import Wok from "assets/img/wok.svg";
+import Sets from "assets/img/sets.svg";
+import Rols from "assets/img/rols.svg";
+import Sushi from "assets/img/Sushi.svg";
+import Salats from "assets/img/salats.svg";
+import Soups from "assets/img/soups.svg";
+import Corndog from "assets/img/corndog.svg";
+import Water from "assets/img/water.svg";
+import Actions from "assets/img/actions.svg";
 let emit = defineEmits(["showMenu"]);
 let Close = () => {
   emit("showMenu", false);

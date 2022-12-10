@@ -39,6 +39,27 @@
     "Price": {
       "type": "decimal",
       "required": true
+    },
+    "type": {
+      "type": "enumeration",
+      "enum": [
+        "Пицца",
+        "Сеты",
+        "Wok",
+        "Роллы",
+        "Суши",
+        "Салаты",
+        "Супы",
+        "Корн доги",
+        "Напитки"
+      ],
+      "required": true
+    },
+    "main_slider": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::main-slider.main-slider",
+      "mappedBy": "catalog_item"
     }
   }
 }

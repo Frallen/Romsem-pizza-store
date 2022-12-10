@@ -3,7 +3,7 @@
 </template>
 
 <script setup>
-import Basket from "../assets/img/basket.svg";
+import Basket from "assets/img/basket.svg";
 </script>
 
 <style scoped lang="less">
