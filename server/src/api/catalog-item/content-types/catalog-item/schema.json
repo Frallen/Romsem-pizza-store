@@ -23,9 +23,9 @@
       "type": "string",
       "required": true
     },
-    "Images": {
+    "Image": {
       "type": "media",
-      "multiple": true,
+      "multiple": false,
       "required": true,
       "allowedTypes": [
         "images",
@@ -60,6 +60,24 @@
       "relation": "oneToOne",
       "target": "api::main-slider.main-slider",
       "mappedBy": "catalog_item"
+    },
+    "product_sizes": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::prioduct-size.prioduct-size"
+    },
+    "DetailImage": {
+      "type": "media",
+      "multiple": true,
+      "required": false,
+      "allowedTypes": [
+        "images",
+        "videos"
+      ]
+    },
+    "ingredients": {
+      "type": "string",
+      "required": true
     }
   }
 }

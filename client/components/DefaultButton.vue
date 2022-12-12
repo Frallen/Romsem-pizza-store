@@ -1,6 +1,5 @@
 <template>
   <button class="button"><slot></slot></button>
-  <DefaultInput></DefaultInput>
 </template>
 
 <script>
@@ -15,8 +14,8 @@ export default {
   .br(5px);
   display: block;
   width: 100%;
-  padding: 5px 28px;
-  font-weight: 500;
+  padding: 12px 28px;
+  font-weight: 600;
   font-size: 18px;
   line-height: 22px;
   text-align: center;

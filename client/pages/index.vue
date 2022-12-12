@@ -22,6 +22,18 @@
       <h4>Акции</h4></NuxtLink
     >
   </div>
+
+  <div class="offers">
+    <div class="offers-wrapper">
+      <div
+        class="offers-item"
+        :key="item.id"
+        v-for="item in catalog.sortedCategories('Пицца')"
+      >
+        <CatalogItem :catalogItem="item"></CatalogItem>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script setup>
@@ -29,6 +41,7 @@ import { useCatalog } from "~/store/catalog";
 import { useIndex } from "~/store/index";
 const catalog = useCatalog();
 const indexData = useIndex();
+catalog.getDeals();
 </script>
 
 <style lang="less">
@@ -78,6 +91,37 @@ const indexData = useIndex();
   }
   &-item:nth-child(5) {
     grid-area: e;
+  }
+}
+.offers {
+  margin: 25px 0 35px;
+  @media @md {
+    margin: 15px 0 25px;
+  }
+  &-wrapper {
+    display: flex;
+    justify-content: space-between;
+    margin-top: -10px;
+    margin-left: -10px;
+    flex-wrap: wrap;
+    @media @sm {
+      margin-left: 0;
+    }
+  }
+  &-item {
+    margin-top: 10px;
+    margin-left: 10px;
+    width: calc(100% / 4 - 10px);
+    @media @lg {
+      width: calc(100% / 3 - 10px);
+    }
+    @media @md {
+      width: calc(100% / 2 - 10px);
+    }
+    @media @sm {
+      width: calc(100%);
+      margin-left: 0;
+    }
   }
 }
 </style>

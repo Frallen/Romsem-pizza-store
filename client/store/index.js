@@ -22,7 +22,7 @@ export const useIndex = defineStore("index", {
         let { data } = await useFetch(
           `${this.baseURL}/api/main-sliders/?${query}`
         );
-        console.log(data._value.data);
+        //console.log(data._value.data);
         this.MainSliderData = data._value.data;
       } catch (e) {
         console.error(e);

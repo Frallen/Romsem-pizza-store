@@ -1,0 +1,31 @@
+{
+  "kind": "collectionType",
+  "collectionName": "prioduct_sizes",
+  "info": {
+    "singularName": "prioduct-size",
+    "pluralName": "prioduct-sizes",
+    "displayName": "product-size",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "Size": {
+      "type": "enumeration",
+      "enum": [
+        "Маленькая",
+        "Средняя",
+        "Большая"
+      ],
+      "required": true,
+      "default": "Маленькая"
+    },
+    "DefaultStatus": {
+      "type": "boolean",
+      "default": false,
+      "required": true
+    }
+  }
+}
