@@ -10,26 +10,19 @@
     <div class="container">
       <slot></slot>
     </div>
-    <BasketWidget></BasketWidget>
+    <BasketWidget v-if="route.name!=='basket'"></BasketWidget>
   </div>
 </template>
 
-<script>
-export default {
-  name: "default",
-  data() {
-    return {
-      show: false,
-    };
-  },
-  methods: {
-    showMenu(value) {
-      value ? (this.show = true) : (this.show = false);
-    },
-    HideMenu() {
-      this.show = false;
-    },
-  },
+<script setup>
+
+const route = useRoute()
+let show = useState('show');
+let showMenu = (value) => {
+  value ? (show.value = true) : (show.value = false);
+};
+let HideMenu = () => {
+  show.value= false;
 };
 </script>
 <style lang="less">

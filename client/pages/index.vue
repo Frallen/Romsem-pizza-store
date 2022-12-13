@@ -52,8 +52,22 @@ catalog.getDeals();
     "a a b c"
     "d d e e";
   gap: 30px;
+  @media @xl {
+    grid-template-areas:
+      "a a b b"
+      "c c d d"
+      "e e e e";
+  }
   @media @md {
     margin: 15px 0 25px;
+  }
+  @media @sm{
+    grid-template-areas:
+      "a a a a"
+      "b b b b"
+      "c c c c"
+      "d d d d"
+      "e e e e";
   }
   &-item {
     text-decoration: none;

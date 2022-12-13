@@ -56,6 +56,7 @@ onMounted(() => {});
     a {
       text-decoration: none;
       display: block;
+      height: 100%;
       img {
         width: 100%;
         height: 100%;

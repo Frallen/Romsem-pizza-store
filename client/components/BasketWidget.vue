@@ -11,7 +11,7 @@ import Basket from "assets/img/basket.svg";
   text-decoration: none;
   position: fixed;
   bottom: 5%;
-  right: 5%;
+  right: 3%;
   background: #fff;
   .br(100%);
   .trs();padding: 8px 10px;

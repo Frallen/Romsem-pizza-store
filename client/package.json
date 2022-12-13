@@ -18,6 +18,7 @@
     "less-loader": "^11.1.0",
     "modern-normalize": "^1.1.0",
     "qs": "^6.11.0",
-    "swiper": "^8.4.5"
+    "swiper": "^8.4.5",
+    "vue-imask": "^6.4.3"
   }
 }

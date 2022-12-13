@@ -12,29 +12,38 @@
       <h5 class="catalog-item-title">{{ catalogItem.attributes.Title }}</h5>
       <p>{{ catalogItem.attributes.ingredients }}</p>
       <div class="size" v-if="catalogItem.attributes.product_sizes">
-        <SelectSize :size="catalogItem.attributes.product_sizes" @selectedSize="selectedSize"></SelectSize>
+        <SelectSize
+          :size="catalogItem.attributes.product_sizes"
+          @selectedSize="($event) => (selectedSize = $event)"
+        ></SelectSize>
       </div>
     </div>
-    <DefaultButton @click.prevent="addToBasket(catalogItem.id)">В корзину</DefaultButton>
+    <DefaultButton
+      @click.prevent="addToBasket(catalogItem.id)"
+      class="catalog-item-btn"
+      >В корзину</DefaultButton
+    >
   </NuxtLink>
 </template>
 
 <script setup>
+import {useCatalog} from "~/store/catalog";
+
 const config = useRuntimeConfig();
+const catalog =useCatalog()
 let props = defineProps({
   catalogItem: {
     type: Object,
   },
 });
-let addToBasket=(id)=>{
-  console.log(selectedSize())
-  console.log(id)
+let selectedSize = ref("");
+let addToBasket = (id) => {
+  let data = {
+    id,
+    ...(selectedSize ?? "")
+  };
+  catalog.addToBasket(data)
 }
-let selectedSize=(val)=> {
-
-  return val
-}
-
 console.log(props.catalogItem.attributes.product_sizes);
 </script>
 
@@ -43,7 +52,10 @@ console.log(props.catalogItem.attributes.product_sizes);
   background: #fff;
   overflow: hidden;
   .br(10px);
-  display: block;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  height: 100%;
   &-img {
     width: 100%;
 
@@ -68,8 +80,11 @@ console.log(props.catalogItem.attributes.product_sizes);
     }
   }
   p {
-    margin: 10px; .text-eclipse();
+    margin: 10px;
+    .text-eclipse();
     overflow: hidden;
+  }
+  &-btn {
   }
 }
 .size {

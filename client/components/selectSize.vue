@@ -25,6 +25,9 @@ export default {
       type: Object,
     },
   },
+  mounted() {
+    this.$emit("selectedSize", this.selectedSize);
+  },
   watch: {
     selectedSize() {
 

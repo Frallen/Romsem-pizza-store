@@ -40,6 +40,17 @@ export const useCatalog = defineStore("catalog", {
         this.isLoading = true;
       }
     },
+    addToBasket(data){
+      try {
+        this.isLoading = false;
+        console.log(data)
+      }catch (e){
+        console.error(e)
+      }
+      finally {
+        this.isLoading = true;
+      }
+    }
     /*
     async SizeProduct() {
       try {
