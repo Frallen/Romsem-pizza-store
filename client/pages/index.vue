@@ -23,12 +23,37 @@
     >
   </div>
 
-  <div class="offers">
+  <div class="offers" v-if="catalog.sortedCategories('Пицца').length">
+    <h2>Пицца</h2>
     <div class="offers-wrapper">
       <div
         class="offers-item"
         :key="item.id"
         v-for="item in catalog.sortedCategories('Пицца')"
+      >
+        <CatalogItem :catalogItem="item"></CatalogItem>
+      </div>
+    </div>
+  </div>
+  <div class="offers" v-if="catalog.sortedCategories('Сеты').length">
+    <h2>Сеты</h2>
+    <div class="offers-wrapper">
+      <div
+          class="offers-item"
+          :key="item.id"
+          v-for="item in catalog.sortedCategories('Сеты')"
+      >
+        <CatalogItem :catalogItem="item"></CatalogItem>
+      </div>
+    </div>
+  </div>
+  <div class="offers" v-if="catalog.sortedCategories('Роллы').length">
+    <h2>Роллы</h2>
+    <div class="offers-wrapper">
+      <div
+          class="offers-item"
+          :key="item.id"
+          v-for="item in catalog.sortedCategories('Роллы')"
       >
         <CatalogItem :catalogItem="item"></CatalogItem>
       </div>
@@ -61,7 +86,7 @@ catalog.getDeals();
   @media @md {
     margin: 15px 0 25px;
   }
-  @media @sm{
+  @media @sm {
     grid-template-areas:
       "a a a a"
       "b b b b"
@@ -111,6 +136,12 @@ catalog.getDeals();
   margin: 25px 0 35px;
   @media @md {
     margin: 15px 0 25px;
+  }
+  h2{
+    font-size: 2.8em;
+    margin-bottom: 10px;
+    font-weight: 700;
+    color: #4b4242;
   }
   &-wrapper {
     display: flex;

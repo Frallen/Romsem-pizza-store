@@ -18,19 +18,22 @@
         ></SelectSize>
       </div>
     </div>
-    <DefaultButton
-      @click.prevent="addToBasket(catalogItem.id)"
-      class="catalog-item-btn"
-      >В корзину</DefaultButton
-    >
+    <div class="price-block">
+      <DefaultButton
+        @click.prevent="addToBasket(catalogItem.id)"
+        class="catalog-item-btn"
+        >В корзину</DefaultButton
+      >
+      <div class="price">{{ catalogItem.attributes.Price }} Р</div>
+    </div>
   </NuxtLink>
 </template>
 
 <script setup>
-import {useCatalog} from "~/store/catalog";
+import { useCatalog } from "~/store/catalog";
 
 const config = useRuntimeConfig();
-const catalog =useCatalog()
+const catalog = useCatalog();
 let props = defineProps({
   catalogItem: {
     type: Object,
@@ -40,11 +43,11 @@ let selectedSize = ref("");
 let addToBasket = (id) => {
   let data = {
     id,
-    ...(selectedSize ?? "")
+    ...(selectedSize ?? ""),
   };
-  catalog.addToBasket(data)
-}
-console.log(props.catalogItem.attributes.product_sizes);
+  catalog.addToBasket(data);
+};
+//console.log(props.catalogItem.attributes.product_sizes);
 </script>
 
 <style scoped lang="less">
@@ -71,6 +74,31 @@ console.log(props.catalogItem.attributes.product_sizes);
   &-box {
     display: flex;
     flex-direction: column;
+  }
+  .price-block {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+    .button {
+      width: 68%;
+      padding: 10px 14px;
+      font-size: 20px;
+      @media @xl{
+        font-size: 1em;
+      }
+    }
+  }
+  .price {
+    font-size: 1.3em;
+    font-weight: 700;
+    text-align: center;
+    padding: 5px;
+    width: 28%;
+    white-space: nowrap;
+    @media @xl {
+      font-size: 1.1em;
+    }
   }
   &-title {
     font-size: 1.3em;
