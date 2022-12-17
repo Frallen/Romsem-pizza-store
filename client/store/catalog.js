@@ -1,4 +1,3 @@
-//composition API
 import qs from "qs";
 
 export const useCatalog = defineStore("catalog", {
@@ -40,39 +39,40 @@ export const useCatalog = defineStore("catalog", {
         this.isLoading = true;
       }
     },
-    addToBasket(data){
+    addToBasket(data) {
       try {
         this.isLoading = false;
-        console.log(data)
-      }catch (e){
-        console.error(e)
-      }
-      finally {
-        this.isLoading = true;
-      }
-    }
-    /*
-    async SizeProduct() {
-      try {
-        this.isLoading = true;
-        const query = qs.stringify(
-          {
-            populate: "*",
-          },
-          {
-            encodeValuesOnly: true, // prettify URL
-          }
-        );
 
-        let { data } = await useFetch(
-          `${this.baseURL}/api/product-sizes/?${query}`
-        );
-        this.size = data._value.data;
+        let obj = {
+          id: data.id,
+          value: [data._value],
+        };
+        let cookie = useCookie("order");
+        let order = [...(cookie.value ?? "")];
+
+        if (order.length) {
+          order.map((p) => {
+            if (p.id === data.id) {
+              console.log(p.value.find((z) => z === obj.value[0]));
+              if (!p.value.find((z) => z === obj.value[0])) {
+                p.value = [...p.value, ...obj.value];
+              }
+            }
+          });
+
+          !order.find((p) => p.id === obj.id) && order.push(obj);
+          //  console.log(order);
+
+          cookie.value = JSON.stringify(order);
+        } else {
+          order.push(obj);
+          cookie.value = JSON.stringify(order);
+        }
       } catch (e) {
         console.error(e);
       } finally {
         this.isLoading = true;
       }
-    },*/
+    },
   },
 });
