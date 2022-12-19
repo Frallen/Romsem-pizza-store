@@ -63,10 +63,7 @@
 
 <script setup>
 import { useCatalog } from "~/store/catalog";
-import { useIndex } from "~/store/index";
 const catalog = useCatalog();
-const indexData = useIndex();
-catalog.getDeals();
 </script>
 
 <style lang="less">

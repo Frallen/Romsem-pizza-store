@@ -2,7 +2,7 @@
   <div class="count">
     <div class="count-number">
       <div class="count-number-quality">{{ count }} X</div>
-      <div class="count-number-price">{{ price }}р</div>
+      <div class="count-number-price">{{ Price }}р</div>
     </div>
     <div class="count-manipulate">
       <div class="count-manipulate-item minus" @click.prevent="count--"></div>
@@ -11,24 +11,25 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: "count",
-  data() {
-    return {
-      count: 1,
-      price: 453,
-    };
+<script setup>
+let count = ref("count");
+count.value = 1;
+let props = defineProps({
+  Price: {
+    type: Number,
   },
-  methods: {
-    calc() {
-      if (this.count <= 1) {
-        this.count = 1;
-      }
-      return this.price * this.count;
-    },
-  },
-};
+});
+
+let summary = Number;
+let emit = defineEmits(["summary"]);
+watch(count, (val, preVal) => {
+  if (val <= 1) {
+    count.value = 1;
+  }
+
+  summary = props.Price * count.value;
+  emit("summary", summary);
+});
 </script>
 
 <style scoped lang="less">

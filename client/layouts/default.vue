@@ -10,19 +10,24 @@
     <div class="container">
       <slot></slot>
     </div>
-    <BasketWidget v-if="route.name!=='basket'"></BasketWidget>
+    <BasketWidget v-if="route.name !== 'basket'"></BasketWidget>
   </div>
 </template>
 
 <script setup>
+import { useCatalog } from "~/store/catalog";
+const catalog = useCatalog();
 
-const route = useRoute()
-let show = useState('show');
+await catalog.getDeals();
+
+console.log(catalog.catalogItems);
+const route = useRoute();
+let show = useState("show");
 let showMenu = (value) => {
   value ? (show.value = true) : (show.value = false);
 };
 let HideMenu = () => {
-  show.value= false;
+  show.value = false;
 };
 </script>
 <style lang="less">

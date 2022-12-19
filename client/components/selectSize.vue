@@ -30,7 +30,6 @@ export default {
   },
   watch: {
     selectedSize() {
-
       this.$emit("selectedSize", this.selectedSize);
     },
   },
@@ -49,7 +48,7 @@ export default {
       }
     },
     changeSize(size, id) {
-      this.selectedSize=size
+      this.selectedSize = size;
       this.status = id;
     },
   },

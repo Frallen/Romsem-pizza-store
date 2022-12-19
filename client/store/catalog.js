@@ -2,7 +2,7 @@ import qs from "qs";
 
 export const useCatalog = defineStore("catalog", {
   state: () => ({
-    baseURL: useRuntimeConfig().env.STRAPI_URL,
+    //baseURL: useRuntimeConfig().env.STRAPI_URL,
     catalogItems: [],
     isLoading: false,
     size: [],
@@ -11,6 +11,22 @@ export const useCatalog = defineStore("catalog", {
     sortedCategories: (state) => {
       return (data) =>
         state.catalogItems.filter((p) => p.attributes.type === data);
+    },
+    basketItems: (state) => {
+      let cookie = useCookie("order");
+      let order = [...(cookie.value ?? "")];
+      let arr = state.catalogItems.filter(
+        (p) => order.find((z) => z.id === p.id) && p
+      );
+      order.map((z) =>
+        arr.map((p) => {
+          if (z.id === p.id) {
+            p.value = [...z.value];
+          }
+        })
+      );
+
+      return arr;
     },
   },
   actions: {
@@ -28,7 +44,7 @@ export const useCatalog = defineStore("catalog", {
         );
 
         let { data } = await useFetch(
-          `${this.baseURL}/api/catalog-items/?${query}`
+          `${useRuntimeConfig().env.STRAPI_URL}/api/catalog-items/?${query}`
         );
 
         this.catalogItems = data._value.data;
