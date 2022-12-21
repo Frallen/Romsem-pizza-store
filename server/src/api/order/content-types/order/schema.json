@@ -22,13 +22,14 @@
       "default": "Создан",
       "required": true
     },
-    "OrderID": {
-      "type": "uid",
-      "required": true
-    },
     "OrderItems": {
       "type": "json",
       "required": true
+    },
+    "PhoneNumber": {
+      "type": "string",
+      "required": true,
+      "minLength": 11
     }
   }
 }

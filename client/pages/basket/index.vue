@@ -22,10 +22,31 @@
             </div>
           </div>
           <div class="basket-item-count">
-            <count
-              :Price="item.attributes.Price"
-              @summary="(e) => (calc(e))"
-            ></count>
+            <div class="count">
+              <div class="count-number">
+                <div
+                  class="count-number-quality"
+                  :data-value="1"
+                  :data-sum="item.attributes.Price"
+                  :data-price="item.attributes.Price"
+                >
+                  {{ 1 }} X
+                </div>
+                <div class="count-number-price">
+                  {{ item.attributes.Price }}р
+                </div>
+              </div>
+              <div class="count-manipulate">
+                <div
+                  class="count-manipulate-item minus"
+                  @click.prevent="minus"
+                ></div>
+                <div
+                  class="count-manipulate-item plus"
+                  @click.prevent="plus"
+                ></div>
+              </div>
+            </div>
             <DefaultButton>Удалить</DefaultButton>
           </div>
         </div>
@@ -33,17 +54,16 @@
     </div>
     <div class="basket-total">
       <div class="basket-total-price">
-        <span>Итого</span> <span>{{ sum }} р</span>
+        <span>Итого</span> <span>{{ summary }} р</span>
       </div>
       <div class="basket-total-form">
         <input
-          :value="phone"
           ref="el"
           @accept="onAccept"
           @complete="onComplete"
           class="input"
         />
-        <DefaultButton>Заказать</DefaultButton>
+        <DefaultButton @click.stop="submit">Заказать</DefaultButton>
       </div>
     </div>
   </div>
@@ -56,33 +76,67 @@ const catalog = useCatalog();
 const config = useRuntimeConfig();
 let phone = useState("phone");
 
-let sum=useState("summary");
-let doc;
-let arr=[]
-let calc =  (item) => {
+let summary = ref("");
 
+let minus = (e) => {
+  let quality = e.currentTarget.parentNode.parentNode.parentNode.querySelector(
+    ".count-number-quality"
+  );
 
+  if (quality.dataset.value <= 1) {
+    quality.dataset.value = 1;
+  } else if (parseInt(quality.dataset.value) !== 1) {
+    quality.dataset.value = parseInt(quality.dataset.value) - 1;
+  }
+  if (quality.dataset.sum !== quality.dataset.price) {
+    quality.dataset.sum = parseInt(quality.dataset.sum - quality.dataset.price);
+  }
 
-  arr.push(item._value)
+  quality.textContent = quality.dataset.value + " X";
+  calc(e);
+};
+let plus = (e) => {
+  let quality = e.currentTarget.parentNode.parentNode.parentNode.querySelector(
+    ".count-number-quality"
+  );
 
-
-
+  quality.dataset.value = parseInt(quality.dataset.value) + 1;
+  quality.dataset.sum = parseInt(quality.dataset.value * quality.dataset.price);
+  quality.textContent = quality.dataset.value + " X";
+  calc(e);
 };
 
-let calc2=()=>{
+let calc = (e) => {
+  let arr = [];
+  document.querySelectorAll(".count-number-quality").forEach((p) => {
+    arr.push(parseInt(p.dataset.sum));
+  });
+  summary.value = arr.reduce((acc, number) => acc + number, 0);
+};
+onMounted(() => {
+  calc();
+});
 
-  sum.value=  arr.reduce((acc, number) => acc + number, 0)
-  arr=[]
-}
-calc2()
-onMounted(()=>{
+let submit = () => {
 
+  let arr = [];
+  document.querySelectorAll(".basket-item-type").forEach((p) => {
+    let obj = {
+      Title: p.querySelector(".basket-item-text h5").textContent,
+      Type: p.querySelector(".basket-item-text p").textContent,
+      sum: p.querySelector(".count-number-quality").dataset.sum,
+      count: p.querySelector(".count-number-quality").dataset.value,
+    };
+    arr.push(obj);
+  });
+  let order=[arr,summary.value]
+  if(el.value){
+    console.log( el.value.value);
+  }
+catalog.addOrder(order,el.value.value );
+};
 
-   // document.querySelectorAll('.count').forEach(p=>arr.push(parseInt(p.dataset.sum) ) )
-
-})
-
-
+//let sum = useState("summary");
 
 let onAccept = (e) => {
   const maskRef = e.detail;
@@ -92,9 +146,6 @@ let onAccept = (e) => {
 let onComplete = (e) => {
   const maskRef = e.detail;
   // console.log("complete", maskRef.unmaskedValue);
-};
-let scroll = () => {
-  console.log("gg");
 };
 
 const { el, masked } = useIMask({
@@ -211,6 +262,89 @@ const { el, masked } = useIMask({
         margin-top: 15px;
         width: auto;
       }
+    }
+  }
+}
+.count {
+  display: flex;
+  justify-content: flex-end;
+  flex-direction: column;
+
+  &-manipulate {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    &-item {
+      color: @black;
+      font-size: 1.3em;
+      padding: 5px 10px;
+      background: @orange;
+      cursor: pointer;
+      position: relative;
+      width: 40px;
+      height: 24px;
+    }
+    .minus::before {
+      content: "";
+      display: block;
+      height: 12px;
+      width: 2px;
+      border-radius: 2px;
+      background: #000;
+      position: absolute;
+      top: calc(50% - 6px);
+      left: calc(50% - 1px);
+      transform: rotate(90deg);
+    }
+    .plus::after {
+      content: "";
+      display: block;
+      height: 12px;
+      width: 2px;
+      border-radius: 2px;
+      background: #000;
+      position: absolute;
+      top: calc(50% - 6px);
+      left: calc(50% - 1px);
+      transform: rotate(90deg);
+    }
+    .plus::before {
+      content: "";
+      display: block;
+      height: 12px;
+      width: 2px;
+      border-radius: 2px;
+      background: #000;
+      position: absolute;
+      top: calc(50% - 6px);
+      left: calc(50% - 1px);
+    }
+    &-item:first-child {
+      border-bottom-left-radius: 10px;
+      border-top-left-radius: 10px;
+    }
+    &-item:last-child {
+      border-bottom-right-radius: 10px;
+      border-top-right-radius: 10px;
+    }
+  }
+  &-number {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1em;
+    input {
+      border: none;
+      background: transparent;
+    }
+    &-quality {
+      color: #dadada;
+      font-size: 24px;
+      margin-right: 10px;
+    }
+    &-price {
+      font-weight: 600;
+      font-size: 24px;
     }
   }
 }

@@ -90,5 +90,31 @@ export const useCatalog = defineStore("catalog", {
         this.isLoading = true;
       }
     },
+    async addOrder(data,phone) {
+      try {
+        this.isLoading = true;
+
+        await useFetch(`${useRuntimeConfig().env.STRAPI_URL}/api/orders`, {
+          method: "POST",
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: {
+            "data": {
+
+
+              "OrderItems": JSON.stringify(data),
+              "PhoneNumber": phone
+            },
+
+          }
+
+        });
+      } catch (e) {
+        console.error(e);
+      } finally {
+        this.isLoading = false;
+      }
+    },
   },
 });
