@@ -22,7 +22,10 @@
             </div>
           </div>
           <div class="basket-item-count">
-            <count :Price="item.attributes.Price"></count>
+            <count
+              :Price="item.attributes.Price"
+              @summary="(e) => (calc(e))"
+            ></count>
             <DefaultButton>Удалить</DefaultButton>
           </div>
         </div>
@@ -30,7 +33,7 @@
     </div>
     <div class="basket-total">
       <div class="basket-total-price">
-        <span>Итого</span> <span>1800 р</span>
+        <span>Итого</span> <span>{{ sum }} р</span>
       </div>
       <div class="basket-total-form">
         <input
@@ -52,6 +55,34 @@ import { useCatalog } from "~/store/catalog";
 const catalog = useCatalog();
 const config = useRuntimeConfig();
 let phone = useState("phone");
+
+let sum=useState("summary");
+let doc;
+let arr=[]
+let calc =  (item) => {
+
+
+
+  arr.push(item._value)
+
+
+
+};
+
+let calc2=()=>{
+
+  sum.value=  arr.reduce((acc, number) => acc + number, 0)
+  arr=[]
+}
+calc2()
+onMounted(()=>{
+
+
+   // document.querySelectorAll('.count').forEach(p=>arr.push(parseInt(p.dataset.sum) ) )
+
+})
+
+
 
 let onAccept = (e) => {
   const maskRef = e.detail;
@@ -122,6 +153,13 @@ const { el, masked } = useIMask({
     }
     &-text {
       margin-left: 10px;
+
+      h5 {
+        font-size: 1.4em;
+      }
+      p {
+        font-size: 1.1em;
+      }
     }
     &-count {
       .button {

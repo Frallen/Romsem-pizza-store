@@ -1,5 +1,5 @@
 <template>
-  <div class="count">
+  <div class="count" :data-sum="summary">
     <div class="count-number">
       <div class="count-number-quality">{{ count }} X</div>
       <div class="count-number-price">{{ Price }}р</div>
@@ -20,14 +20,19 @@ let props = defineProps({
   },
 });
 
-let summary = Number;
+let summary = ref("");
 let emit = defineEmits(["summary"]);
 watch(count, (val, preVal) => {
   if (val <= 1) {
     count.value = 1;
   }
 
-  summary = props.Price * count.value;
+  summary.value = props.Price * count.value;
+  emit("summary", summary);
+});
+
+onMounted(() => {
+  summary.value=props.Price * count.value
   emit("summary", summary);
 });
 </script>
