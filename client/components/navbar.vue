@@ -8,9 +8,6 @@
       <NuxtLink to="/"><Logo></Logo>Romsem</NuxtLink>
     </div>
     <div class="navbar-actions">
-      <div class="navbar-phone">
-        <NuxtLink to="tel:+996 705 188 955">+996 705 188 955 </NuxtLink>
-      </div>
       <div>
         <Search class="navbar-actions-search"></Search>
       </div>
@@ -37,7 +34,7 @@ let showMenu = () => {
   justify-content: space-between;
   align-items: center;
   background: #fff;
-  padding: 10px 1.875em;
+  padding: 10px 1em;
   position: sticky;
   top: 0;
   z-index: 3;
@@ -52,10 +49,13 @@ let showMenu = () => {
   &-hamburger {
     display: flex;
     align-items: center;
-    justify-content: center;
     font-size: 1.5em;
+    width: 10%;
     svg {
       margin-right: 10px;
+      @media @md {
+        margin-right: 0;
+      }
     }
     span {
       display: block;
@@ -65,38 +65,28 @@ let showMenu = () => {
     }
   }
   &-logo {
+    width: 80%;
     a {
       text-decoration: none;
       display: flex;
       align-items: center;
-      justify-content: space-between;
+      justify-content: center;
       color: @black;
       font-size: 2em;
       font-weight: 600;
       @media @md {
-        font-size: 1.5em;
+        font-size: 1.2em;
+        flex-direction: column;
       }
       svg {
         margin-right: 10px;
       }
     }
   }
-  &-phone {
-    @media @md {
-      display: none;
-    }
-    a {
-      display: block;
-      text-decoration: none;
-      color: @black;
-      font-size: 1.25em;
-    }
-  }
   &-actions {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-
+    justify-content: flex-end;
+    width: 10%;
     &-search {
       cursor: pointer;
     }

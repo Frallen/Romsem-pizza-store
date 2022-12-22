@@ -1,81 +1,104 @@
 <template>
   <div class="basket">
-    <div class="basket-wrapper">
-      <div
-        class="basket-item"
-        v-for="item in catalog.basketItems"
-        :key="item.id"
-      >
-        <div class="basket-item-type" v-for="(i, index) in item.value" :key="i">
-          <div class="basket-item-info">
-            <div class="basket-item-img">
-              <img
-                :src="
-                  config.public.env.STRAPI_URL +
-                  item.attributes.Image.data.attributes.url
-                "
-              />
-            </div>
-            <div class="basket-item-text">
-              <h5>{{ item.attributes.Title }}</h5>
-              <p>{{ i }}</p>
-            </div>
-          </div>
-          <div class="basket-item-count">
-            <div class="count">
-              <div class="count-number">
-                <div
-                  class="count-number-quality"
-                  :data-value="1"
-                  :data-sum="item.attributes.Price"
-                  :data-price="item.attributes.Price"
-                >
-                  {{ 1 }} X
-                </div>
-                <div class="count-number-price">
-                  {{ item.attributes.Price }}р
-                </div>
+    <template v-if="catalog.basketItems.length">
+      <div class="basket-wrapper">
+        <div
+          class="basket-item"
+          v-for="item in catalog.basketItems"
+          :key="item.id"
+        >
+          <div
+            class="basket-item-type"
+            v-for="(i, index) in item.value"
+            :key="i"
+          >
+            <div class="basket-item-info">
+              <div class="basket-item-img">
+                <img
+                  :src="
+                    config.public.env.STRAPI_URL +
+                    item.attributes.Image.data.attributes.url
+                  "
+                />
               </div>
-              <div class="count-manipulate">
-                <div
-                  class="count-manipulate-item minus"
-                  @click.prevent="minus"
-                ></div>
-                <div
-                  class="count-manipulate-item plus"
-                  @click.prevent="plus"
-                ></div>
+              <div class="basket-item-text">
+                <h5>{{ item.attributes.Title }}</h5>
+                <p>{{ i }}</p>
               </div>
             </div>
-            <DefaultButton>Удалить</DefaultButton>
+            <div class="basket-item-count">
+              <div class="count">
+                <div class="count-number">
+                  <div
+                    class="count-number-quality"
+                    :data-value="1"
+                    :data-sum="item.attributes.Price"
+                    :data-price="item.attributes.Price"
+                  >
+                    {{ 1 }} X
+                  </div>
+                  <div class="count-number-price">
+                    {{ item.attributes.Price }}р
+                  </div>
+                </div>
+                <div class="count-manipulate">
+                  <div
+                    class="count-manipulate-item minus"
+                    @click.prevent="minus"
+                  ></div>
+                  <div
+                    class="count-manipulate-item plus"
+                    @click.prevent="plus"
+                  ></div>
+                </div>
+              </div>
+              <DefaultButton>Удалить</DefaultButton>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-    <div class="basket-total">
-      <div class="basket-total-price">
-        <span>Итого</span> <span>{{ summary }} р</span>
-      </div>
-      <div class="basket-total-form">
-        <input
-          ref="el"
-          @accept="onAccept"
-          @complete="onComplete"
-          class="input"
-        />
-        <DefaultButton @click.stop="submit">Заказать</DefaultButton>
-      </div>
+      <div class="basket-total">
+        <div class="basket-total-price">
+          <span>Итого</span> <span>{{ summary }} р</span>
+        </div>
+        <div class="basket-total-form">
+          <MazPhoneNumberInput
+            v-model="phoneNumber"
+            :error="false"
+            show-code-on-list
+            color="info"
+            :preferred-countries="['RU']"
+            @update="results = $event"
+            :success="results?.isValid"
+            fetch-country
+            :no-search="true"
+            :no-country-selector="true"
+            :translations="{
+              phoneInput: {
+                example: 'Пример:',
+              },
+            }"
+          />
+          <DefaultButton @click.stop="submit">Заказать</DefaultButton>
+        </div>
+      </div></template
+    >
+    <div v-else class="basket-empty">
+      <Trash></Trash>
+      <h3>В корзине пусто</h3>
+      <NuxtLink to="/" class="button">На главную</NuxtLink>
     </div>
   </div>
 </template>
 
 <script setup>
-import { useIMask } from "vue-imask";
+import Trash from "assets/img/Trash.svg";
+import MazPhoneNumberInput from "maz-ui/components/MazPhoneNumberInput";
 import { useCatalog } from "~/store/catalog";
 const catalog = useCatalog();
 const config = useRuntimeConfig();
-let phone = useState("phone");
-
+const phoneNumber = ref("");
+const results = ref();
 let summary = ref("");
 
 let minus = (e) => {
@@ -118,40 +141,29 @@ onMounted(() => {
 });
 
 let submit = () => {
+  if (phoneNumber.value) {
+    let arr = [];
+    document.querySelectorAll(".basket-item-type").forEach((p) => {
+      let obj = {
+        Title: p.querySelector(".basket-item-text h5").textContent,
+        Type: p.querySelector(".basket-item-text p").textContent,
+        sum: p.querySelector(".count-number-quality").dataset.sum,
+        count: p.querySelector(".count-number-quality").dataset.value,
+      };
+      arr.push(obj);
+    });
+    let order = [arr, summary.value];
 
-  let arr = [];
-  document.querySelectorAll(".basket-item-type").forEach((p) => {
-    let obj = {
-      Title: p.querySelector(".basket-item-text h5").textContent,
-      Type: p.querySelector(".basket-item-text p").textContent,
-      sum: p.querySelector(".count-number-quality").dataset.sum,
-      count: p.querySelector(".count-number-quality").dataset.value,
-    };
-    arr.push(obj);
-  });
-  let order=[arr,summary.value]
-  if(el.value){
-    console.log( el.value.value);
+    catalog.addOrder(order, phoneNumber.value);
+  } else {
+    useNuxtApp().$swal.fire({
+      title: "Ошибка",
+      text: "Введите номер телефона",
+      icon: "error",
+      confirmButtonText: "Хорошо",
+    });
   }
-catalog.addOrder(order,el.value.value );
 };
-
-//let sum = useState("summary");
-
-let onAccept = (e) => {
-  const maskRef = e.detail;
-  this.value = maskRef.value;
-  // console.log("accept", maskRef.value);
-};
-let onComplete = (e) => {
-  const maskRef = e.detail;
-  // console.log("complete", maskRef.unmaskedValue);
-};
-
-const { el, masked } = useIMask({
-  mask: "+{7} 000 00 00 000",
-  lazy: false,
-});
 </script>
 
 <style scoped lang="less">
@@ -161,7 +173,7 @@ const { el, masked } = useIMask({
   flex-direction: row;
   justify-content: space-between;
   position: relative;
-  @media @md {
+  @media @lg {
     display: block;
     margin: 1em 0 13em;
   }
@@ -169,7 +181,7 @@ const { el, masked } = useIMask({
     display: flex;
     flex-direction: column;
     width: 65%;
-    @media @md {
+    @media @lg {
       width: 100%;
     }
   }
@@ -184,7 +196,7 @@ const { el, masked } = useIMask({
       display: flex;
       justify-content: space-between;
       .br(10px);
-      @media @md {
+      @media @lg {
         flex-direction: column;
       }
     }
@@ -229,7 +241,7 @@ const { el, masked } = useIMask({
     background: #fff;
     width: 30%;
     padding: 15px;
-    @media @md {
+    @media @lg {
       position: fixed;
       top: inherit;
       bottom: 0;
@@ -245,14 +257,14 @@ const { el, masked } = useIMask({
       display: flex;
       align-items: center;
       justify-content: space-between;
-      @media @md {
+      @media @lg {
         font-size: 2em;
       }
     }
     &-form {
       display: flex;
       flex-direction: column;
-      @media @md {
+      @media @lg {
         justify-content: space-between;
 
         flex-direction: column;
@@ -262,6 +274,25 @@ const { el, masked } = useIMask({
         margin-top: 15px;
         width: auto;
       }
+    }
+  }
+  &-empty {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+    position: fixed;
+    margin-left: auto;
+    margin-right: auto;
+    top: 35%;
+    left: 0;
+    right: 0;
+    h3 {
+      margin: 10px 0 1em;
+      font-size: 2em;
+    }
+    svg {
     }
   }
 }

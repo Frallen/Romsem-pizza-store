@@ -32,7 +32,7 @@ watch(count, (val, preVal) => {
 });
 
 onMounted(() => {
-  summary.value=props.Price * count.value
+  summary.value = props.Price * count.value;
   emit("summary", summary);
 });
 </script>

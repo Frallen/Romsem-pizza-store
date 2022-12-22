@@ -10,16 +10,18 @@
     <div class="container">
       <slot></slot>
     </div>
+    <PhoneWidget :PhoneNumber="index.Phones[0].attributes.MainNumber"></PhoneWidget>
     <BasketWidget v-if="route.name !== 'basket'"></BasketWidget>
   </div>
 </template>
 
 <script setup>
 import { useCatalog } from "~/store/catalog";
+import {useIndex} from "~/store";
 const catalog = useCatalog();
-
+const index=useIndex()
 await catalog.getDeals();
-
+await index.GetPhones()
 console.log(catalog.catalogItems);
 const route = useRoute();
 let show = useState("show");

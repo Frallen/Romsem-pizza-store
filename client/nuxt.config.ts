@@ -1,8 +1,11 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 import svgLoader from "vite-svg-loader";
-
+import VueSweetalert2 from 'vue-sweetalert2';
 export default defineNuxtConfig({
-  css: ["@/assets/styles/main.less"],
+  css: ["maz-ui/css/main.css", "@/assets/styles/main.less","sweetalert2/dist/sweetalert2.min.css"],
+  build: {
+    transpile: ["maz-ui"],
+  },
   imports: {
     dirs: ["store"],
   },
