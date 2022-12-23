@@ -1,5 +1,5 @@
 <template>
-  <NuxtLink class="catalog-item">
+  <div class="catalog-item" @click.stop="go">
     <div class="catalog-item-img">
       <img
         :src="
@@ -20,26 +20,35 @@
     </div>
     <div class="price-block">
       <DefaultButton
-        @click.prevent="addToBasket(catalogItem.id)"
+        @click.stop="addToBasket(catalogItem.id)"
         class="catalog-item-btn"
         >В корзину</DefaultButton
       >
       <div class="price">{{ catalogItem.attributes.Price }} Р</div>
     </div>
-  </NuxtLink>
+  </div>
 </template>
 
 <script setup>
 import { useCatalog } from "~/store/catalog";
-
-const config = useRuntimeConfig();
-const catalog = useCatalog();
 let props = defineProps({
   catalogItem: {
     type: Object,
   },
 });
+
 let selectedSize = ref("");
+const router = useRouter();
+const config = useRuntimeConfig();
+const catalog = useCatalog();
+const slug = useSlug(props.catalogItem.attributes.Title);
+
+let go = () => {
+  router.push(`catalog/${slug}`);
+  //console.log(props.catalogItem.id)
+  catalog.CurrentItem =props.catalogItem.id ;
+};
+
 let addToBasket = (id) => {
   let data = {
     id,
@@ -47,11 +56,11 @@ let addToBasket = (id) => {
   };
   catalog.addToBasket(data);
 };
-//console.log(props.catalogItem.attributes.product_sizes);
 </script>
 
 <style scoped lang="less">
 .catalog-item {
+  cursor: pointer;
   background: #fff;
   overflow: hidden;
   .br(10px);
@@ -59,6 +68,7 @@ let addToBasket = (id) => {
   flex-direction: column;
   justify-content: flex-end;
   height: 100%;
+  text-decoration: none;
   &-img {
     width: 100%;
 
@@ -84,7 +94,7 @@ let addToBasket = (id) => {
       width: 68%;
       padding: 10px 14px;
       font-size: 20px;
-      @media @xl{
+      @media @xl {
         font-size: 1em;
       }
     }

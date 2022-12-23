@@ -21,8 +21,12 @@ export const useCatalog = defineStore("catalog", {
     catalogItems: [],
     isLoading: false,
     size: [],
+    CurrentItem: 1,
   }),
   getters: {
+    filteredItem: (state) => {
+      return state.catalogItems.filter((p) => p.id === state.CurrentItem)[0];
+    },
     sortedCategories: (state) => {
       return (data) =>
         state.catalogItems.filter((p) => p.attributes.type === data);
@@ -100,7 +104,6 @@ export const useCatalog = defineStore("catalog", {
           order.push(obj);
           cookie.value = JSON.stringify(order);
         }
-
       } catch (e) {
         console.error(e);
         error();

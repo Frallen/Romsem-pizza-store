@@ -1,7 +1,7 @@
 <template>
-  <NuxtLink to="/basket" class="basket"
+  <NuxtLink to="/basket" class="widget"
     ><Basket></Basket>
-    <div class="basket-count" v-if="count">{{ count }}</div></NuxtLink
+    <div class="widget-count" v-if="count">{{ count }}</div></NuxtLink
   >
 </template>
 
@@ -28,7 +28,7 @@ let calc = () => {
 </script>
 
 <style scoped lang="less">
-.basket {
+.widget {
   bottom: 5%;
   right: 3%;
 

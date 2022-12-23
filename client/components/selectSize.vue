@@ -4,7 +4,7 @@
       class="size-item"
       :class="{ 'size-item-active': status === item.id }"
       v-for="item in size.data"
-      @click.prevent="changeSize(item.attributes.Size, item.id)"
+      @click.stop="changeSize(item.attributes.Size, item.id)"
       :key="item.id"
       :id="item.id"
     >

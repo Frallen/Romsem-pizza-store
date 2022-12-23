@@ -1,0 +1,32 @@
+{
+  "kind": "collectionType",
+  "collectionName": "ingidient_by_ones",
+  "info": {
+    "singularName": "ingidient-by-one",
+    "pluralName": "ingidient-by-ones",
+    "displayName": "IngidientByOne",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "Ingridient": {
+      "type": "enumeration",
+      "enum": [
+        "Томатный соус",
+        "сыр Моцарелла",
+        "пепперони",
+        "томаты",
+        "чеддер",
+        "сыр с голубой плесенью",
+        "Пармезан",
+        "Чеснок",
+        "Кальмары",
+        "Креветки коктейльные"
+      ],
+      "required": true
+    }
+  }
+}

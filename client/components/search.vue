@@ -1,13 +1,11 @@
 <template>
-
+<div></div>
 </template>
 
-<script>
-export default {
-  name: "search"
-}
+<script setup>
+
 </script>
 
-<style scoped>
+<style scoped lang="less">
 
 </style>
