@@ -4,7 +4,7 @@
   "info": {
     "singularName": "ingidient-by-one",
     "pluralName": "ingidient-by-ones",
-    "displayName": "IngidientByOne",
+    "displayName": "IngridientByOne",
     "description": ""
   },
   "options": {
@@ -27,6 +27,10 @@
         "Креветки коктейльные"
       ],
       "required": true
+    },
+    "Active": {
+      "type": "boolean",
+      "default": true
     }
   }
 }

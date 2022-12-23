@@ -75,11 +75,11 @@
         "videos"
       ]
     },
-    "ingredients": {
+    "Description": {
       "type": "string",
-      "required": true
+      "required": false
     },
-    "ingidient_by_ones": {
+    "ingridients": {
       "type": "relation",
       "relation": "oneToMany",
       "target": "api::ingidient-by-one.ingidient-by-one"

@@ -24,7 +24,9 @@
 import { useCatalog } from "~/store/catalog";
 const catalog = useCatalog();
 const config = useRuntimeConfig();
-let item = useCatalog().filteredItem;
+const route = useRoute()
+
+let item = catalog.filteredItem(route.params.id);
 console.log(item);
 </script>
 
@@ -38,11 +40,11 @@ console.log(item);
   }
   &-img {
     background: #fff;
-    width: 60%; height: 350px;
+    width: 55%;
+    height: 350px;
     .br(10px);
     @media @md {
       width: 100%;
-
     }
     img {
       width: 100%;
@@ -51,7 +53,7 @@ console.log(item);
     }
   }
   &-text {
-    width: 35%;
+    width: 40%;
     padding: 10px;
     background: #fff;
     .br(10px);

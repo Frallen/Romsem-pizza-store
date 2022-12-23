@@ -21,11 +21,11 @@ export const useCatalog = defineStore("catalog", {
     catalogItems: [],
     isLoading: false,
     size: [],
-    CurrentItem: 1,
   }),
   getters: {
     filteredItem: (state) => {
-      return state.catalogItems.filter((p) => p.id === state.CurrentItem)[0];
+      return (id) =>
+          state.catalogItems.filter((p) => p.id === parseInt(id) )[0];
     },
     sortedCategories: (state) => {
       return (data) =>

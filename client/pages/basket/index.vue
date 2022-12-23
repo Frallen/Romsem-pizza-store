@@ -241,6 +241,7 @@ let submit = () => {
     background: #fff;
     width: 30%;
     padding: 15px;
+    .br(10px);
     @media @lg {
       position: fixed;
       top: inherit;
