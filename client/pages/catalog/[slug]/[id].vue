@@ -10,6 +10,14 @@
     </div>
     <div class="catalog-item-text">
       <h2>{{ item.attributes.Title }}</h2>
+      <div class="catalog-item-ingridient">
+        <div
+          class="ingridient"
+          v-for="item in item.attributes.ingridients.data"
+        >
+          {{ item.attributes.Ingridient }}
+        </div>
+      </div>
       <p>{{ item.attributes.ingredients }}</p>
       <SelectSize
         :size="item.attributes.product_sizes"
@@ -24,7 +32,7 @@
 import { useCatalog } from "~/store/catalog";
 const catalog = useCatalog();
 const config = useRuntimeConfig();
-const route = useRoute()
+const route = useRoute();
 
 let item = catalog.filteredItem(route.params.id);
 console.log(item);
@@ -56,15 +64,39 @@ console.log(item);
     width: 40%;
     padding: 10px;
     background: #fff;
+    height: fit-content;
     .br(10px);
     @media @md {
       width: 100%;
       margin-top: 2em;
     }
     h2 {
+      margin-bottom: 10px;
+    }
+    p {
+      margin-top: 1em;
     }
     .button {
       margin-top: 1em;
+    }
+  }
+  &-ingridient {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    margin-top: -5px;
+    margin-left: -5px;
+    .ingridient {
+      margin-top: 5px;
+      margin-left: 5px;
+      padding: 5px 10px;
+      text-transform: capitalize;
+      .br(15px);
+      border: 1px solid;
+      cursor: default;
+      background: @pink;
+      color: #fff;
+      font-weight: 600;
     }
   }
 }

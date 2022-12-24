@@ -10,7 +10,7 @@
     </div>
     <div class="catalog-item-box">
       <h5 class="catalog-item-title">{{ catalogItem.attributes.Title }}</h5>
-      <p>{{ catalogItem.attributes.ingredients }}</p>
+      <p>{{ catalogItem.attributes.Description }}</p>
       <div class="size" v-if="catalogItem.attributes.product_sizes">
         <SelectSize
           :size="catalogItem.attributes.product_sizes"
@@ -44,9 +44,7 @@ const catalog = useCatalog();
 const slug = useSlug(props.catalogItem.attributes.Title);
 
 let go = () => {
-  router.push(`catalog/${slug}`);
-  //console.log(props.catalogItem.id)
-  catalog.CurrentItem =props.catalogItem.id ;
+  router.push(`catalog/${slug}/${props.catalogItem.id}`);
 };
 
 let addToBasket = (id) => {
@@ -74,7 +72,7 @@ let addToBasket = (id) => {
 
     img {
       object-fit: contain;
-      max-height: 300px;
+      height: 250px;
       width: 100%;
       @media @sm {
         max-height: 200px;
@@ -120,6 +118,7 @@ let addToBasket = (id) => {
   p {
     margin: 10px;
     .text-eclipse();
+    -webkit-line-clamp: 1;
     overflow: hidden;
   }
   &-btn {

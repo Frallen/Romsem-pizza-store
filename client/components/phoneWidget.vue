@@ -15,8 +15,9 @@ let props = defineProps({
 
 <style scoped lang="less">
 .widget {
-  bottom: 12%;
+  bottom: 15%;
   right: 3%;
+
   svg {
     width: 30px;
     height: 30px;

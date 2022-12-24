@@ -23,7 +23,12 @@ body {
     padding: 0 1.4em;
   }
 }
-h1,h2,h3,h4,h5,h6{
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   margin: 0;
   padding: 0;
 }
@@ -40,7 +45,7 @@ h4 {
 .widget {
   text-decoration: none;
   position: fixed;
-
+  border: 1px solid @orange;
   background: #fff;
   .br(100%);
   .trs();
@@ -48,7 +53,6 @@ h4 {
   svg {
     .trs();
     filter: invert(63%) sepia(98%) saturate(504%) hue-rotate(325deg)
-    brightness(101%) contrast(108%);
+      brightness(101%) contrast(108%);
   }
-
 }
