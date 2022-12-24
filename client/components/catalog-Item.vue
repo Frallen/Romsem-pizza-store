@@ -10,8 +10,8 @@
     </div>
     <div class="catalog-item-box">
       <h5 class="catalog-item-title">{{ catalogItem.attributes.Title }}</h5>
-      <p>{{ catalogItem.attributes.Description }}</p>
-      <div class="size" v-if="catalogItem.attributes.product_sizes">
+      <p v-if="catalogItem.attributes.Description">{{ catalogItem.attributes.Description }}</p>
+      <div class="size" v-if="catalogItem.attributes.product_sizes.data.length">
         <SelectSize
           :size="catalogItem.attributes.product_sizes"
           @selectedSize="($event) => (selectedSize = $event)"

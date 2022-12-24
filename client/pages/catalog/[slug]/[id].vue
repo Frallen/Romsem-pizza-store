@@ -23,7 +23,7 @@
         :size="item.attributes.product_sizes"
         @selectedSize="($event) => (selectedSize = $event)"
       ></SelectSize>
-      <DefaultButton>В корзину</DefaultButton>
+      <DefaultButton @click.stop="addToBasket(item.id)">В корзину</DefaultButton>
     </div>
   </div>
 </template>
@@ -33,9 +33,16 @@ import { useCatalog } from "~/store/catalog";
 const catalog = useCatalog();
 const config = useRuntimeConfig();
 const route = useRoute();
-
+let selectedSize = ref("");
 let item = catalog.filteredItem(route.params.id);
 console.log(item);
+let addToBasket = (id) => {
+  let data = {
+    id,
+    ...(selectedSize ?? ""),
+  };
+  catalog.addToBasket(data);
+};
 </script>
 
 <style scoped lang="less">

@@ -47,6 +47,18 @@
       </div>
     </div>
   </div>
+  <div class="offers" v-if="catalog.sortedCategories('Wok').length">
+    <h2>Роллы</h2>
+    <div class="offers-wrapper">
+      <div
+          class="offers-item"
+          :key="item.id"
+          v-for="item in catalog.sortedCategories('Wok')"
+      >
+        <CatalogItem :catalogItem="item"></CatalogItem>
+      </div>
+    </div>
+  </div>
   <div class="offers" v-if="catalog.sortedCategories('Роллы').length">
     <h2>Роллы</h2>
     <div class="offers-wrapper">

@@ -24,7 +24,7 @@
 
 <script setup>
 import { Swiper, SwiperSlide } from "swiper/vue";
-import { Navigation } from "swiper";
+import { Navigation,Autoplay } from "swiper";
 import "swiper/css";
 import "swiper/less/navigation";
 import { useIndex } from "~/store/index";
@@ -40,7 +40,7 @@ const onSlideChange = () => {
 };
 IndexReducer.getSlides();
 //console.log(IndexReducer.MainSliderData)
-let modules = [Navigation];
+let modules = [Navigation,Autoplay];
 onMounted(() => {});
 </script>
 
