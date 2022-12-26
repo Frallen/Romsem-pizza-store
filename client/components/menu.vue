@@ -5,30 +5,48 @@
       <div class="close" @click="Close"></div>
     </div>
     <div class="menu-wrapper">
-      <NuxtLink to="/pizza" class="menu-item"><Pizza></Pizza>Пицца</NuxtLink>
-      <NuxtLink to="/Sets" class="menu-item"><Sets></Sets>Сеты</NuxtLink>
-      <NuxtLink to="/Wok" class="menu-item"><Wok></Wok>Wok</NuxtLink>
-      <NuxtLink to="/Rolls" class="menu-item"><Rols></Rols>Роллы</NuxtLink>
-      <NuxtLink to="/Sushi" class="menu-item"><Sushi></Sushi>Суши</NuxtLink>
-      <NuxtLink to="/Salats" class="menu-item"
+      <NuxtLink :to="'/category/пицца'" @click="Close" class="menu-item"
+        ><Pizza></Pizza>Пицца</NuxtLink
+      >
+      <NuxtLink :to="'/category/сеты'" @click="Close" class="menu-item"
+        ><Sets></Sets>Сеты</NuxtLink
+      >
+      <NuxtLink :to="'/category/Wok'" @click="Close" class="menu-item"
+        ><Wok></Wok>Wok</NuxtLink
+      >
+      <NuxtLink :to="'/category/Роллы'" @click="Close" class="menu-item"
+        ><Rols></Rols>Роллы</NuxtLink
+      >
+      <NuxtLink :to="'/category/Суши'" @click="Close" class="menu-item"
+        ><Sushi></Sushi>Суши</NuxtLink
+      >
+      <NuxtLink :to="'/category/Салаты'" @click="Close" class="menu-item"
         ><Salats></Salats>Салаты</NuxtLink
       >
-      <NuxtLink to="/Soups" class="menu-item"><Soups></Soups>Супы</NuxtLink>
-      <NuxtLink to="/Corndog" class="menu-item"
+      <NuxtLink :to="'/category/Cупы'" @click="Close" class="menu-item"
+        ><Soups></Soups>Супы</NuxtLink
+      >
+      <NuxtLink :to="'/category/Корндоги'" @click="Close" class="menu-item"
         ><Corndog></Corndog>Корн доги</NuxtLink
       >
-      <NuxtLink to="/Water" class="menu-item"><Water></Water>Напитки</NuxtLink>
-      <NuxtLink to="/Actions" class="menu-item"
+      <NuxtLink :to="'/category/Вода'" @click="Close" class="menu-item"
+        ><Water></Water>Напитки</NuxtLink
+      >
+      <NuxtLink to="Actions" class="menu-item" @click="Close"
         ><Actions></Actions>Акции</NuxtLink
       >
     </div>
-    <NuxtLink class="menu-phone" to="tel:+996 705 188 955"
-      ><span>Звонок бесплатный</span> +996 705 188 955
+    <NuxtLink
+      class="menu-phone"
+      :to="'tel:' + index.Phones[0].attributes.MainNumber"
+      ><span>Звонок бесплатный</span>
+      {{ index.Phones[0].attributes.MainNumber }}
     </NuxtLink>
   </div>
 </template>
 
 <script setup>
+import { useIndex } from "~/store";
 import Logo from "assets/img/logo.svg";
 import Pizza from "assets/img/pizza.svg";
 import Wok from "assets/img/wok.svg";
@@ -41,6 +59,8 @@ import Corndog from "assets/img/corndog.svg";
 import Water from "assets/img/water.svg";
 import Actions from "assets/img/actions.svg";
 let emit = defineEmits(["showMenu"]);
+const index = useIndex();
+
 let Close = () => {
   emit("showMenu", false);
 };

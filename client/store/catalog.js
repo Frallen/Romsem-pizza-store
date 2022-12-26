@@ -24,12 +24,13 @@ export const useCatalog = defineStore("catalog", {
   }),
   getters: {
     filteredItem: (state) => {
-      return (id) =>
-          state.catalogItems.filter((p) => p.id === parseInt(id) )[0];
+      return (id) => state.catalogItems.filter((p) => p.id === parseInt(id))[0];
     },
     sortedCategories: (state) => {
       return (data) =>
-        state.catalogItems.filter((p) => p.attributes.type === data);
+        state.catalogItems.filter(
+          (p) => p.attributes.type.toLowerCase() === data.toLowerCase()
+        );
     },
     basketItems: (state) => {
       let cookie = useCookie("order");

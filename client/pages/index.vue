@@ -22,55 +22,15 @@
       <h4>Акции</h4></NuxtLink
     >
   </div>
-
-  <div class="offers" v-if="catalog.sortedCategories('Пицца').length">
-    <h2>Пицца</h2>
-    <div class="offers-wrapper">
-      <div
-        class="offers-item"
-        :key="item.id"
-        v-for="item in catalog.sortedCategories('Пицца')"
-      >
-        <CatalogItem :catalogItem="item"></CatalogItem>
-      </div>
-    </div>
-  </div>
-  <div class="offers" v-if="catalog.sortedCategories('Сеты').length">
-    <h2>Сеты</h2>
-    <div class="offers-wrapper">
-      <div
-          class="offers-item"
-          :key="item.id"
-          v-for="item in catalog.sortedCategories('Сеты')"
-      >
-        <CatalogItem :catalogItem="item"></CatalogItem>
-      </div>
-    </div>
-  </div>
-  <div class="offers" v-if="catalog.sortedCategories('Wok').length">
-    <h2>Роллы</h2>
-    <div class="offers-wrapper">
-      <div
-          class="offers-item"
-          :key="item.id"
-          v-for="item in catalog.sortedCategories('Wok')"
-      >
-        <CatalogItem :catalogItem="item"></CatalogItem>
-      </div>
-    </div>
-  </div>
-  <div class="offers" v-if="catalog.sortedCategories('Роллы').length">
-    <h2>Роллы</h2>
-    <div class="offers-wrapper">
-      <div
-          class="offers-item"
-          :key="item.id"
-          v-for="item in catalog.sortedCategories('Роллы')"
-      >
-        <CatalogItem :catalogItem="item"></CatalogItem>
-      </div>
-    </div>
-  </div>
+  <Offers :type="'Пицца'"></Offers>
+  <Offers :type="'Сеты'"></Offers>
+  <Offers :type="'Wok'"></Offers>
+  <Offers :type="'Роллы'"></Offers>
+  <Offers :type="'Суши'"></Offers>
+  <Offers :type="'Салаты'"></Offers>
+  <Offers :type="'Супы'"></Offers>
+  <Offers :type="'Корндоги'"></Offers>
+  <Offers :type="'Напитки'"></Offers>
 </template>
 
 <script setup>
@@ -139,43 +99,6 @@ const catalog = useCatalog();
   }
   &-item:nth-child(5) {
     grid-area: e;
-  }
-}
-.offers {
-  margin: 25px 0 35px;
-  @media @md {
-    margin: 15px 0 25px;
-  }
-  h2{
-    font-size: 2.8em;
-    margin-bottom: 10px;
-    font-weight: 700;
-    color: #4b4242;
-  }
-  &-wrapper {
-    display: flex;
-    justify-content: space-between;
-    margin-top: -10px;
-    margin-left: -10px;
-    flex-wrap: wrap;
-    @media @sm {
-      margin-left: 0;
-    }
-  }
-  &-item {
-    margin-top: 10px;
-    margin-left: 10px;
-    width: calc(100% / 4 - 10px);
-    @media @lg {
-      width: calc(100% / 3 - 10px);
-    }
-    @media @md {
-      width: calc(100% / 2 - 10px);
-    }
-    @media @sm {
-      width: calc(100%);
-      margin-left: 0;
-    }
   }
 }
 </style>
