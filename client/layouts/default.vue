@@ -1,6 +1,10 @@
 <template>
   <div>
-    <Navbar @showMenu="showMenu" :show="show"></Navbar>
+    <Navbar @showMenu="showMenu" :show="show" :searchStatus="search" @searchStatus="searchShow"></Navbar>
+    <transition name="fade"
+    >
+    <Search v-show="search" @searchStatus="searchShow"></Search>
+    </transition>
     <transition name="fade">
       <BackShadow v-show="show" @click="HideMenu"></BackShadow
     ></transition>
@@ -25,6 +29,10 @@ await index.GetPhones()
 console.log(catalog.catalogItems);
 const route = useRoute();
 let show = useState("show");
+let search=useState("searchStatus")
+let searchShow=(value)=>{
+  value ? (search.value = true) : (search.value = false);
+}
 let showMenu = (value) => {
   value ? (show.value = true) : (show.value = false);
 };

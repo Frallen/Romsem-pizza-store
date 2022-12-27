@@ -26,6 +26,16 @@ export const useCatalog = defineStore("catalog", {
     filteredItem: (state) => {
       return (id) => state.catalogItems.filter((p) => p.id === parseInt(id))[0];
     },
+    searchedItems: (state) => {
+      return (data) =>
+
+        data
+          ? state.catalogItems.filter((p) =>
+              p.attributes.Title.toLowerCase().includes(data.toLowerCase())
+            )
+          : state.catalogItems;
+
+    },
     sortedCategories: (state) => {
       return (data) =>
         state.catalogItems.filter(

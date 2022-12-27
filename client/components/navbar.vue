@@ -9,7 +9,7 @@
     </div>
     <div class="navbar-actions">
       <div>
-        <Search class="navbar-actions-search"></Search>
+        <Search class="navbar-actions-search" @click="showSearch"></Search>
       </div>
     </div>
   </div>
@@ -21,10 +21,17 @@ import Logo from "assets/img/logo.svg";
 import Search from "assets/img/search.svg";
 let props = defineProps({
   show: { type: Boolean, default: false },
+  searchStatus: {
+    type: Boolean,
+    default: false,
+  },
 });
-let emit = defineEmits(["showMenu"]);
+let emit = defineEmits(["showMenu","searchStatus"]);
+let showSearch = () => {
+  props.searchStatus? emit("searchStatus", false) : emit("searchStatus", true);
+};
 let showMenu = () => {
-  props.show ? emit("showMenu", true) : emit("showMenu", true);
+  props.show ? emit("showMenu", false) : emit("showMenu", true);
 };
 </script>
 
@@ -52,6 +59,7 @@ let showMenu = () => {
     font-size: 1.5em;
     width: 10%;
     svg {
+      min-width:45px;
       margin-right: 10px;
       @media @md {
         margin-right: 0;

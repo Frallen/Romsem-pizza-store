@@ -1,19 +1,19 @@
 <template>
   <MainSlider></MainSlider>
   <div class="catalog-categories">
-    <NuxtLink class="catalog-categories-item" to="/chicken"
-      ><img src="~/assets/img/chicken.png" alt="" />
-      <h4>Чикен</h4></NuxtLink
+    <NuxtLink class="catalog-categories-item" :to="'/category/Роллы'"
+      ><img src="~/assets/img/rolls.jpg" alt="" />
+      <h4>Роллы</h4></NuxtLink
     >
     <NuxtLink class="catalog-categories-item" to="/Sushi"
-      ><img src="~/assets/img/sushi.png" alt="" />
-      <h4>С угрем</h4></NuxtLink
+      ><img src="~/assets/img/sushi.jpg" alt="" />
+      <h4>Суши</h4></NuxtLink
     >
     <NuxtLink class="catalog-categories-item" to="/Corndog"
       ><img src="~/assets/img/corndog.png" alt="" />
       <h4>Корн дог</h4></NuxtLink
     >
-    <NuxtLink class="catalog-categories-item" to="/pizza"
+    <NuxtLink class="catalog-categories-item" :to="'/category/пицца'"
       ><img src="~/assets/img/pizza.png" alt="" />
       <h4>Пицца</h4></NuxtLink
     >
@@ -42,32 +42,40 @@ const catalog = useCatalog();
 .catalog-categories {
   margin: 25px 0 35px;
   display: grid;
-  grid-template-areas:
-    "a a b c"
-    "d d e e";
+
   gap: 30px;
-  @media @xl {
+  @media @xl-up {
+    grid-template-columns: 1fr 1fr 1fr;
     grid-template-areas:
-      "a a b b"
-      "c c d d"
-      "e e e e";
+      "a b c"
+      "d d e" !important;
   }
+
   @media @md {
     margin: 15px 0 25px;
   }
-  @media @sm {
+  @media @sm-up {
+    grid-template-columns: 1fr 1fr;
     grid-template-areas:
-      "a a a a"
-      "b b b b"
-      "c c c c"
-      "d d d d"
-      "e e e e";
+      "a b"
+      "c d"
+      "e e";
+  }
+  @media @sm {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "a"
+      "b"
+      "c"
+      "d"
+      "e";
   }
   &-item {
-    text-decoration: none;
     position: relative;
     overflow: hidden;
     max-height: 200px;
+    text-decoration: none;
+    border: 1px solid #eee;
     .trs();
     .br(10px);
     img {
