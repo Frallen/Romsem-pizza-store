@@ -1,0 +1,18 @@
+{
+  "kind": "singleType",
+  "collectionName": "delivery_n_pays",
+  "info": {
+    "singularName": "delivery-n-pay",
+    "pluralName": "delivery-n-pays",
+    "displayName": "DeliveryNPay"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "Text": {
+      "type": "string"
+    }
+  }
+}

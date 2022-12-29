@@ -1,9 +1,14 @@
 <template>
   <div>
-    <Navbar @showMenu="showMenu" :show="show" :searchStatus="search" @searchStatus="searchShow"></Navbar>
-    <transition name="fade"
-    >
-    <Search v-show="search" @searchStatus="searchShow"></Search>
+    <Preloader v-show="catalog.isLoading || index.isLoading"></Preloader>
+    <Navbar
+      @showMenu="showMenu"
+      :show="show"
+      :searchStatus="search"
+      @searchStatus="searchShow"
+    ></Navbar>
+    <transition name="fade">
+      <Search v-show="search" @searchStatus="searchShow"></Search>
     </transition>
     <transition name="fade">
       <BackShadow v-show="show" @click="HideMenu"></BackShadow
@@ -12,27 +17,42 @@
       ><Menu v-show="show" @showMenu="showMenu"></Menu
     ></transition>
     <div class="container">
-      <slot></slot>
+      <div class="container-wrapper">
+        <slot></slot>
+      </div>
     </div>
-    <PhoneWidget :PhoneNumber="index.Phones[0].attributes.MainNumber"></PhoneWidget>
+    <Footer></Footer>
+    <PhoneWidget
+      :PhoneNumber="index.Phones[0].attributes.MainNumber"
+    ></PhoneWidget>
     <BasketWidget v-if="route.name !== 'basket'"></BasketWidget>
   </div>
 </template>
 
 <script setup>
 import { useCatalog } from "~/store/catalog";
-import {useIndex} from "~/store";
+import { useIndex } from "~/store";
 const catalog = useCatalog();
-const index=useIndex()
+const index = useIndex();
 await catalog.getDeals();
-await index.GetPhones()
+await index.GetPhones();
 console.log(catalog.catalogItems);
 const route = useRoute();
 let show = useState("show");
-let search=useState("searchStatus")
-let searchShow=(value)=>{
-  value ? (search.value = true) : (search.value = false);
-}
+let search = useState("searchStatus");
+
+let searchShow = (value) => {
+  if (value) {
+    search.value = true;
+    if (window.matchMedia("(max-width: 575.98px)").matches) {
+      document.querySelector("body").style.overflow = "hidden";
+    }
+  } else {
+    search.value = false;
+    document.querySelector("body").style.overflow = "visible";
+  }
+};
+
 let showMenu = (value) => {
   value ? (show.value = true) : (show.value = false);
 };

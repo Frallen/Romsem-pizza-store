@@ -83,6 +83,9 @@
       "type": "relation",
       "relation": "oneToMany",
       "target": "api::ingidient-by-one.ingidient-by-one"
+    },
+    "stock": {
+      "type": "decimal"
     }
   }
 }

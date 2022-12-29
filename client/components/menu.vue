@@ -32,7 +32,7 @@
       <NuxtLink :to="'/category/Вода'" @click="Close" class="menu-item"
         ><Water></Water>Напитки</NuxtLink
       >
-      <NuxtLink to="Actions" class="menu-item" @click="Close"
+      <NuxtLink to="/stock" class="menu-item" @click="Close"
         ><Actions></Actions>Акции</NuxtLink
       >
     </div>

@@ -21,6 +21,14 @@ let props = defineProps({
   }
 })
 let catalog=useCatalog()
+let route=useRoute()
+console.log(route.params)
+computed(()=>{
+  if(route){
+
+  }
+
+})
 </script>
 
 <style scoped lang="less">

@@ -17,7 +17,11 @@
       ><img src="~/assets/img/pizza.png" alt="" />
       <h4>Пицца</h4></NuxtLink
     >
-    <NuxtLink class="catalog-categories-item" to="/Actions"
+    <NuxtLink class="catalog-categories-item" to="/water"
+    ><img src="~/assets/img/water.jpg" alt="" />
+      <h4>Напитки</h4></NuxtLink
+    >
+    <NuxtLink class="catalog-categories-item" to="/stock"
       ><img src="~/assets/img/actions.png" alt="" />
       <h4>Акции</h4></NuxtLink
     >
@@ -48,7 +52,7 @@ const catalog = useCatalog();
     grid-template-columns: 1fr 1fr 1fr;
     grid-template-areas:
       "a b c"
-      "d d e" !important;
+      "d e f" !important;
   }
 
   @media @md {
@@ -59,7 +63,7 @@ const catalog = useCatalog();
     grid-template-areas:
       "a b"
       "c d"
-      "e e";
+      "e f";
   }
   @media @sm {
     grid-template-columns: 1fr;
@@ -68,7 +72,8 @@ const catalog = useCatalog();
       "b"
       "c"
       "d"
-      "e";
+      "e"
+  "f";
   }
   &-item {
     position: relative;
@@ -107,6 +112,9 @@ const catalog = useCatalog();
   }
   &-item:nth-child(5) {
     grid-area: e;
+  }
+  &-item:nth-child(6) {
+    grid-area: f;
   }
 }
 </style>

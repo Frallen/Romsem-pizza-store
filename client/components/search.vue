@@ -1,9 +1,12 @@
 <template>
   <div class="search" :class="{ show: searchStatus }">
     <div class="search-head">
-      <input v-model.trim="search" type="text" class="input" /><Close
-        @click="hide"
-      ></Close>
+      <input
+        v-model.trim="search"
+        type="text"
+        class="input"
+        placeholder="Название блюда"
+      /><Close @click="hide"></Close>
     </div>
     <div class="search-wrapper">
       <NuxtLink
@@ -55,6 +58,13 @@ let hide = () => {
   box-shadow: 0 0 5px 0 #000;
   z-index: 5;
   padding: 10px;
+  @media @sm{
+    .br(0);
+    right: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+  }
   &-head {
     margin-bottom: 1em;
     display: flex;
@@ -72,6 +82,9 @@ let hide = () => {
     overflow: auto;
 
     max-height: 350px;
+    @media @sm{
+      max-height: 450px;
+    }
   }
 
   &-item {

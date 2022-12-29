@@ -28,13 +28,11 @@ export const useCatalog = defineStore("catalog", {
     },
     searchedItems: (state) => {
       return (data) =>
-
         data
           ? state.catalogItems.filter((p) =>
               p.attributes.Title.toLowerCase().includes(data.toLowerCase())
             )
           : state.catalogItems;
-
     },
     sortedCategories: (state) => {
       return (data) =>
@@ -83,7 +81,7 @@ export const useCatalog = defineStore("catalog", {
         console.error(e);
         error();
       } finally {
-        this.isLoading = true;
+        this.isLoading = false;
       }
     },
     addToBasket(data) {
@@ -119,7 +117,7 @@ export const useCatalog = defineStore("catalog", {
         console.error(e);
         error();
       } finally {
-        this.isLoading = true;
+        this.isLoading = false;
       }
     },
     async addOrder(data, phone) {
