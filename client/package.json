@@ -21,7 +21,9 @@
     "modern-normalize": "^1.1.0",
     "qs": "^6.11.0",
     "swiper": "^8.4.5",
-    "vue-sweetalert2": "^5.0.5"
+    "vee-validate": "^4.7.3",
+    "vue-sweetalert2": "^5.0.5",
+    "yup": "^0.32.11"
   },
   "browserslist": "last 5 versions, not dead"
 }
