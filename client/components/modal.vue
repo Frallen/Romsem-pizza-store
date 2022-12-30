@@ -1,9 +1,7 @@
 <template>
   <div class="modal">
-    <div class="modal-wrapper">
       <Close class="modal-close" @click="close()"></Close>
       <slot></slot>
-    </div>
   </div>
 </template>
 
@@ -19,12 +17,11 @@ let close = () => {
 
 <style scoped lang="less">
 .modal {
-  min-height: 480px;
   width: 421px;
   background: #fff;
   border-radius: 10px;
   overflow: hidden;
-  padding: 10px;
+  padding: 1em;
   position: fixed;
   top: 21%;
   margin-left: auto;
@@ -38,8 +35,8 @@ let close = () => {
   }
   &-close {
     position: absolute;
-    right: 0;
-    top: 0;
+    right: 4%;
+    top: 4%;
     cursor: pointer;
   }
 }

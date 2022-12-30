@@ -1,15 +1,25 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 import svgLoader from "vite-svg-loader";
-import VueSweetalert2 from 'vue-sweetalert2';
+import VueSweetalert2 from "vue-sweetalert2";
 export default defineNuxtConfig({
-  css: ["maz-ui/css/main.css", "@/assets/styles/main.less","sweetalert2/dist/sweetalert2.min.css"],
+  css: [
+    "maz-ui/css/main.css",
+    "@/assets/styles/main.less",
+    "sweetalert2/dist/sweetalert2.min.css",
+  ],
   build: {
     transpile: ["maz-ui"],
   },
   imports: {
     dirs: ["store"],
   },
+  image: {
+    strapi: {
+      baseURL: 'http://localhost:1337/uploads/'
+    }
+  },
   modules: [
+    ["@nuxt/image-edge"],
     [
       "@pinia/nuxt",
       {

@@ -8,8 +8,12 @@
       <NuxtLink to="/"><Logo></Logo>Romsem</NuxtLink>
     </div>
     <div class="navbar-actions">
-      <User class="navbar-actions-user" @click="showForm"></User>
-      <Search class="navbar-actions-search" @click="showSearch"></Search>
+      <nuxt-img src="user.png" class="navbar-actions-user" @click="showForm" />
+      <nuxt-img
+        src="search.png"
+        class="navbar-actions-search"
+        @click="showSearch"
+      />
     </div>
   </div>
 </template>
@@ -17,8 +21,6 @@
 <script setup>
 import Menu from "assets/img/menu.svg";
 import Logo from "assets/img/logo.svg";
-import User from "assets/img/user.svg";
-import Search from "assets/img/search.svg";
 let props = defineProps({
   show: { type: Boolean, default: false },
   searchStatus: {
@@ -97,13 +99,21 @@ let showMenu = () => {
   &-actions {
     display: flex;
     justify-content: flex-end;
+    align-items: center;
     width: 10%;
+    &-user,
     &-search {
       cursor: pointer;
+      user-select: none;
     }
-    &-user{
+    &-user {
       height: 40px;
       width: 40px;
+      margin-right: 10px;
+    }
+    &-search {
+      height: 30px;
+      width: 30px;
     }
   }
 }

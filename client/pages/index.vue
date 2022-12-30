@@ -1,28 +1,29 @@
 <template>
   <MainSlider></MainSlider>
   <div class="catalog-categories">
+    <!--Картинки грузятся из директории public из-за расширения-->
     <NuxtLink class="catalog-categories-item" :to="'/category/Роллы'"
-      ><img src="~/assets/img/rolls.jpg" alt="" />
+      ><nuxt-img  src="rolls.jpg" alt="" />
       <h4>Роллы</h4></NuxtLink
     >
     <NuxtLink class="catalog-categories-item" to="/Sushi"
-      ><img src="~/assets/img/sushi.jpg" alt="" />
+      ><nuxt-img  src="sushi.jpg" alt="" />
       <h4>Суши</h4></NuxtLink
     >
     <NuxtLink class="catalog-categories-item" to="/Corndog"
-      ><img src="~/assets/img/corndog.png" alt="" />
+      ><nuxt-img  src="corndog.png" alt="" />
       <h4>Корн дог</h4></NuxtLink
     >
     <NuxtLink class="catalog-categories-item" :to="'/category/пицца'"
-      ><img src="~/assets/img/pizza.png" alt="" />
+      ><nuxt-img  src="pizza.png" alt="" />
       <h4>Пицца</h4></NuxtLink
     >
     <NuxtLink class="catalog-categories-item" to="/water"
-    ><img src="~/assets/img/water.jpg" alt="" />
+    ><nuxt-img  src="water.jpg" alt="" />
       <h4>Напитки</h4></NuxtLink
     >
     <NuxtLink class="catalog-categories-item" to="/stock"
-      ><img src="~/assets/img/actions.png" alt="" />
+      ><nuxt-img  src="actions.png" alt="" />
       <h4>Акции</h4></NuxtLink
     >
   </div>

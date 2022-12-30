@@ -3,6 +3,7 @@
     <Preloader v-show="catalog.isLoading || index.isLoading"></Preloader>
     <Navbar
       @showMenu="showMenu"
+      @showForm="showForm"
       :show="show"
       :searchStatus="search"
       @searchStatus="searchShow"
@@ -14,7 +15,7 @@
       <BackShadow v-show="show" @click="HideMenu"></BackShadow
     ></transition>
     <transition name="leftToRight"
-      ><Menu v-show="show" @showMenu="showMenu"></Menu
+      ><Menu v-show="menu" @showMenu="showMenu"></Menu
     ></transition>
     <div class="container">
       <div class="container-wrapper">
@@ -25,28 +26,13 @@
       :PhoneNumber="index.Phones[0].attributes.MainNumber"
     ></PhoneWidget>
     <BasketWidget v-if="route.name !== 'basket'"></BasketWidget>
-    <Modal @close="closeModal">
-      <Form :validation-schema="schema" class="form">
-        <label for="email" class="form-item">
-          Почта
-          <Field name="email" id="genre" class="input" type="email" />
-          <ErrorMessage name="email" />
-        </label>
-        <label for="password" class="form-item">
-          Пароль
-          <Field name="password" id="password" class="input" type="password" />
-          <ErrorMessage name="password" />
-        </label>
-        <DefaultButton>Зарегистрироваться</DefaultButton></Form
-      >
-    </Modal>
+    <transition name="fade">
+      <userForm @closeModal="HideMenu" v-show="modal"></userForm
+    ></transition>
   </div>
 </template>
 
 <script setup>
-import * as yup from "yup";
-import { Form, Field, ErrorMessage } from "vee-validate";
-
 import { useCatalog } from "~/store/catalog";
 import { useIndex } from "~/store";
 const catalog = useCatalog();
@@ -58,15 +44,8 @@ const route = useRoute();
 let show = useState("show");
 let search = useState("searchStatus");
 let modal = useState("modal");
-let closeModal = () => {
-  modal.value = false;
-};
-let schema = computed(() => {
-  return yup.object({
-    Email: yup.string().email().required(),
-    password: yup.string().required(),
-  });
-});
+let menu = useState("Menu");
+
 let searchShow = (value) => {
   if (value) {
     search.value = true;
@@ -80,10 +59,22 @@ let searchShow = (value) => {
 };
 
 let showMenu = (value) => {
-  value ? (show.value = true) : (show.value = false);
+  if (value) {
+    show.value = true;
+    menu.value = true;
+  } else {
+    show.value = false;
+    menu.value = false;
+  }
+};
+let showForm = () => {
+  modal.value = true;
+  show.value = true;
 };
 let HideMenu = () => {
   show.value = false;
+  modal.value = false;
+  menu.value = false;
 };
 </script>
 <style lang="less">

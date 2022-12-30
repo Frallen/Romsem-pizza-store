@@ -22,7 +22,7 @@ body {
   @media @xs {
     padding: 0 1.4em;
   }
-  &-wrapper{
+  &-wrapper {
     //margin-bottom: 30vh;
   }
 }
@@ -59,12 +59,38 @@ h4 {
       brightness(101%) contrast(108%);
   }
 }
-.form{
+.form {
   display: flex;
   flex-direction: column;
-  &-item{
+  margin: 2em 0;
+  h3{
+    font-size: 2em;
+    color: @black;
+    display: block;
+  }
+  &-item {
     display: flex;
     flex-direction: column;
     text-align: left;
+    margin-top: 10px;
+    span {
+      font-weight: 600;
+      font-size: 1.2em;
+      color: @black;
+      display: block;
+      margin-bottom: 12px;
+    }
+    .error{
+      color: @red;
+    }
+  }
+  button{
+    margin-top: 1em;
+  }
+  &-state{
+    font-weight: 600;
+    color: @orange;
+    margin-top: 10px;
+    cursor: pointer;
   }
 }

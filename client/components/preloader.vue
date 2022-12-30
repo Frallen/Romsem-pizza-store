@@ -1,6 +1,6 @@
 <template>
   <div class="preloader">
-    <img src="~/assets/img/cooking.png" alt="preloader" />
+    <nuxt-img src="cooking.png" alt="preloader" />
   </div>
 </template>
 
