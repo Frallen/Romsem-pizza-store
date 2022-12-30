@@ -40,6 +40,9 @@ export const useCatalog = defineStore("catalog", {
           (p) => p.attributes.type.toLowerCase() === data.toLowerCase()
         );
     },
+    filteredStock:(state)=>{
+      return state.catalogItems.filter(p=>p.attributes.stock)
+    },
     basketItems: (state) => {
       let cookie = useCookie("order");
       let order = [...(cookie.value ?? "")];

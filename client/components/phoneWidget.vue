@@ -17,7 +17,9 @@ let props = defineProps({
 .widget {
   bottom: 15%;
   right: 3%;
-
+  @media @md {
+    bottom: 35%;
+  }
   svg {
     width: 30px;
     height: 30px;

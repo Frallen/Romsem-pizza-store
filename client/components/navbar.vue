@@ -8,9 +8,8 @@
       <NuxtLink to="/"><Logo></Logo>Romsem</NuxtLink>
     </div>
     <div class="navbar-actions">
-      <div>
-        <Search class="navbar-actions-search" @click="showSearch"></Search>
-      </div>
+      <User class="navbar-actions-user" @click="showForm"></User>
+      <Search class="navbar-actions-search" @click="showSearch"></Search>
     </div>
   </div>
 </template>
@@ -18,6 +17,7 @@
 <script setup>
 import Menu from "assets/img/menu.svg";
 import Logo from "assets/img/logo.svg";
+import User from "assets/img/user.svg";
 import Search from "assets/img/search.svg";
 let props = defineProps({
   show: { type: Boolean, default: false },
@@ -26,9 +26,12 @@ let props = defineProps({
     default: false,
   },
 });
-let emit = defineEmits(["showMenu","searchStatus"]);
+let emit = defineEmits(["showMenu", "searchStatus", "showForm"]);
+let showForm = () => {
+  emit("showForm", true);
+};
 let showSearch = () => {
-  props.searchStatus? emit("searchStatus", false) : emit("searchStatus", true);
+  props.searchStatus ? emit("searchStatus", false) : emit("searchStatus", true);
 };
 let showMenu = () => {
   props.show ? emit("showMenu", false) : emit("showMenu", true);
@@ -59,7 +62,7 @@ let showMenu = () => {
     font-size: 1.5em;
     width: 10%;
     svg {
-      min-width:45px;
+      min-width: 45px;
       margin-right: 10px;
       @media @md {
         margin-right: 0;
@@ -97,6 +100,10 @@ let showMenu = () => {
     width: 10%;
     &-search {
       cursor: pointer;
+    }
+    &-user{
+      height: 40px;
+      width: 40px;
     }
   }
 }

@@ -1,5 +1,12 @@
 <template>
   <div class="catalog-item" @click.stop="go">
+    <div
+      class="catalog-item-stock"
+      v-if="catalogItem.attributes.stock"
+      title="Скидка"
+    >
+      %
+    </div>
     <div class="catalog-item-img">
       <img
         :src="
@@ -10,7 +17,9 @@
     </div>
     <div class="catalog-item-box">
       <h5 class="catalog-item-title">{{ catalogItem.attributes.Title }}</h5>
-      <p v-if="catalogItem.attributes.Description">{{ catalogItem.attributes.Description }}</p>
+      <p v-if="catalogItem.attributes.Description">
+        {{ catalogItem.attributes.Description }}
+      </p>
       <div class="size" v-if="catalogItem.attributes.product_sizes.data.length">
         <SelectSize
           :size="catalogItem.attributes.product_sizes"
@@ -24,7 +33,20 @@
         class="catalog-item-btn"
         >В корзину</DefaultButton
       >
-      <div class="price">{{ catalogItem.attributes.Price }} Р</div>
+      <div class="price-block-stock">
+        <template v-if="catalogItem.attributes.stock">
+          <div class="old-price">{{ catalogItem.attributes.Price }} Р</div>
+          <div class="price">
+            {{
+              catalogItem.attributes.Price -
+              catalogItem.attributes.Price *
+                (catalogItem.attributes.stock / 100)
+            }}
+            Р
+          </div></template
+        >
+        <div v-else class="price">{{ catalogItem.attributes.Price }} Р</div>
+      </div>
     </div>
   </div>
 </template>
@@ -67,6 +89,20 @@ let addToBasket = (id) => {
   justify-content: flex-end;
   height: 100%;
   text-decoration: none;
+  position: relative;
+  &-stock {
+    position: absolute;
+    top: -4px;
+    right: -1px;
+    padding: 8px;
+    background: @orange;
+    border-radius: 7px;
+    text-align: right;
+    font-weight: 900;
+    color: #fff;
+    transform: rotate(351deg);
+    font-size: 1.2em;
+  }
   &-img {
     width: 100%;
 
@@ -89,25 +125,37 @@ let addToBasket = (id) => {
     justify-content: space-between;
     padding: 10px;
     .button {
-      width: 68%;
+      width: 65%;
       padding: 10px 14px;
       font-size: 20px;
       @media @xl {
         font-size: 1em;
       }
     }
-  }
-  .price {
-    font-size: 1.3em;
-    font-weight: 700;
-    text-align: center;
-    padding: 5px;
-    width: 28%;
-    white-space: nowrap;
-    @media @xl {
-      font-size: 1.1em;
+    &-stock {
+      width: 31%;
+      padding: 5px;
+      white-space: nowrap;
+      text-align: right;
+      position: relative;
+      .old-price {
+        text-decoration: line-through;
+        color: @gray;
+        top: -13px;
+        right: 0;
+        position: absolute;
+      }
+      .price {
+        font-size: 1.3em;
+        font-weight: 700;
+
+        @media @xl {
+          font-size: 1.1em;
+        }
+      }
     }
   }
+
   &-title {
     font-size: 1.3em;
     padding: 0 10px;

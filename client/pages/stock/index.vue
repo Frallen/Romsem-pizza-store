@@ -1,13 +1,7 @@
 <template>
-
+  <Offers></Offers>
 </template>
 
-<script>
-export default {
-  name: "index"
-}
-</script>
+<script setup></script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

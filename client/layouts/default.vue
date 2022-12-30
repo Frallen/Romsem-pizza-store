@@ -21,15 +21,32 @@
         <slot></slot>
       </div>
     </div>
-    <Footer></Footer>
     <PhoneWidget
       :PhoneNumber="index.Phones[0].attributes.MainNumber"
     ></PhoneWidget>
     <BasketWidget v-if="route.name !== 'basket'"></BasketWidget>
+    <Modal @close="closeModal">
+      <Form :validation-schema="schema" class="form">
+        <label for="email" class="form-item">
+          Почта
+          <Field name="email" id="genre" class="input" type="email" />
+          <ErrorMessage name="email" />
+        </label>
+        <label for="password" class="form-item">
+          Пароль
+          <Field name="password" id="password" class="input" type="password" />
+          <ErrorMessage name="password" />
+        </label>
+        <DefaultButton>Зарегистрироваться</DefaultButton></Form
+      >
+    </Modal>
   </div>
 </template>
 
 <script setup>
+import * as yup from "yup";
+import { Form, Field, ErrorMessage } from "vee-validate";
+
 import { useCatalog } from "~/store/catalog";
 import { useIndex } from "~/store";
 const catalog = useCatalog();
@@ -40,7 +57,16 @@ console.log(catalog.catalogItems);
 const route = useRoute();
 let show = useState("show");
 let search = useState("searchStatus");
-
+let modal = useState("modal");
+let closeModal = () => {
+  modal.value = false;
+};
+let schema = computed(() => {
+  return yup.object({
+    Email: yup.string().email().required(),
+    password: yup.string().required(),
+  });
+});
 let searchShow = (value) => {
   if (value) {
     search.value = true;

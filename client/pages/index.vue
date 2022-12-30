@@ -46,10 +46,9 @@ const catalog = useCatalog();
 .catalog-categories {
   margin: 25px 0 35px;
   display: grid;
-
   gap: 30px;
   @media @xl-up {
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr!important;
     grid-template-areas:
       "a b c"
       "d e f" !important;
