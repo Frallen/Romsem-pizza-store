@@ -1,7 +1,12 @@
 <template>
   <Modal @close="emit('closeModal', false)">
-    <Form :validation-schema="useSchema()" class="form" v-if="typeForm">
+    <Form :validation-schema="useSchemaReg()" class="form" v-if="typeForm"  @submit="onSubmit">
       <h3>Регистрация</h3>
+      <label for="userName" class="form-item">
+        <span>Имя пользователя</span>
+        <Field name="userName" id="userName" class="input" type="text" />
+        <ErrorMessage name="userName" class="error" />
+      </label>
       <label for="email" class="form-item">
         <span>Почта</span>
         <Field name="email" id="genre" class="input" type="email" />
@@ -13,9 +18,11 @@
         <ErrorMessage name="password" class="error" />
       </label>
       <DefaultButton>Зарегистрироваться</DefaultButton>
-      <div class="form-state" @click.stop="typeForm = false">Авторизация</div
-    ></Form>
-    <Form v-else :validation-schema="useSchema()" class="form">
+      <div class="form-state" @click.stop="typeForm = false">
+        Авторизация
+      </div></Form
+    >
+    <Form v-else :validation-schema="useSchemaAuth()" class="form" @submit="onSubmit">
       <h3>Авторизация</h3>
       <label for="email" class="form-item">
         <span>Почта</span>
@@ -35,11 +42,16 @@
 
 <script setup>
 import { Form, Field, ErrorMessage } from "vee-validate";
-import { useSchema } from "~/composables/useSchema";
-
+import { useSchemaReg, useSchemaAuth } from "~/composables/useSchema";
+import { useUser } from "~/store/user";
+const user = useUser();
 let emit = defineEmits(["closeModal"]);
 let typeForm = useState("typeForm");
 typeForm.value = true;
+let onSubmit=(data)=>{
+
+  data.userName?user.createUser(data):user.authUser(data)
+}
 </script>
 
 <style scoped></style>

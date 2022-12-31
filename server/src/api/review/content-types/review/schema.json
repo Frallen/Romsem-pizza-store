@@ -16,9 +16,6 @@
       "type": "string",
       "required": true
     },
-    "ReviewId": {
-      "type": "uid"
-    },
     "ReviewPhoto": {
       "type": "media",
       "multiple": true,
@@ -29,10 +26,6 @@
         "videos",
         "audios"
       ]
-    },
-    "DateReview": {
-      "type": "date",
-      "required": true
     },
     "Text": {
       "type": "text",
