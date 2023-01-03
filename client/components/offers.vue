@@ -51,7 +51,6 @@ return route.path.includes('/stock')
   }
   &-wrapper {
     display: flex;
-    justify-content: space-between;
     margin-top: -10px;
     margin-left: -10px;
     flex-wrap: wrap;

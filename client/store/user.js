@@ -1,16 +1,14 @@
 export const useUser = defineStore("user", {
   state: () => ({
     isLoading: false,
-    isAuth: false,
-    jwt: String,
     user: [],
   }),
   getters: {},
   actions: {
     async createUser(data) {
       try {
-
         this.isLoading = true;
+
         let snap = await useFetch(
           `${useRuntimeConfig().env.STRAPI_URL}/api/auth/local/register`,
           {
@@ -26,9 +24,11 @@ export const useUser = defineStore("user", {
             },
           }
         );
-        this.user=snap.data.value.user
-        this.jwt=snap.data.value.jwt
-
+        localStorage.setItem(
+          "user",
+          JSON.stringify([snap.data.value.user, snap.data.value.jwt])
+        );
+        await this.Status();
       } catch (e) {
         console.error(e);
       } finally {
@@ -38,13 +38,47 @@ export const useUser = defineStore("user", {
     async authUser(data) {
       try {
         this.isLoading = true;
-        let user = await useFetch(
+        let snap = await useFetch(
           `${useRuntimeConfig().env.STRAPI_URL}/api/auth/local`,
           {
-            email: data.email,
-            password: data.password,
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: {
+              identifier: data.email,
+              password: data.password,
+            },
           }
         );
+        localStorage.setItem(
+          "user",
+          JSON.stringify([snap.data.value.user, snap.data.value.jwt])
+        );
+        await this.Status();
+      } catch (e) {
+        console.error(e);
+      } finally {
+        this.isLoading = false;
+      }
+    },
+    async Status() {
+      try {
+        if (process.client) {
+          this.isLoading = true;
+          this.user = JSON.parse(localStorage.getItem("user"));
+        }
+      } catch (e) {
+        console.error(e);
+      } finally {
+        this.isLoading = false;
+      }
+    },
+    async logout() {
+      try {
+        this.isLoading = true;
+        localStorage.setItem("user", JSON.stringify([]));
+        await this.Status();
       } catch (e) {
         console.error(e);
       } finally {

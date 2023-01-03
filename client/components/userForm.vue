@@ -1,6 +1,11 @@
 <template>
   <Modal @close="emit('closeModal', false)">
-    <Form :validation-schema="useSchemaReg()" class="form" v-if="typeForm"  @submit="onSubmit">
+    <Form
+      :validation-schema="useSchemaReg()"
+      class="form"
+      v-if="!typeForm"
+      @submit="onSubmit"
+    >
       <h3>Регистрация</h3>
       <label for="userName" class="form-item">
         <span>Имя пользователя</span>
@@ -18,11 +23,16 @@
         <ErrorMessage name="password" class="error" />
       </label>
       <DefaultButton>Зарегистрироваться</DefaultButton>
-      <div class="form-state" @click.stop="typeForm = false">
-        Авторизация
+      <div class="form-state" @click.stop="typeForm = true">
+        Авторизоваться
       </div></Form
     >
-    <Form v-else :validation-schema="useSchemaAuth()" class="form" @submit="onSubmit">
+    <Form
+      v-else
+      :validation-schema="useSchemaAuth()"
+      class="form"
+      @submit="onSubmit"
+    >
       <h3>Авторизация</h3>
       <label for="email" class="form-item">
         <span>Почта</span>
@@ -34,8 +44,10 @@
         <Field name="password" id="password" class="input" type="password" />
         <ErrorMessage name="password" class="error" />
       </label>
-      <DefaultButton>Авторизоваться</DefaultButton>
-      <div class="form-state" @click.stop="typeForm = true">Регистрация</div>
+      <DefaultButton>Войти</DefaultButton>
+      <div class="form-state" @click.stop="typeForm = false">
+        Зарегистрироваться
+      </div>
     </Form>
   </Modal>
 </template>
@@ -48,10 +60,9 @@ const user = useUser();
 let emit = defineEmits(["closeModal"]);
 let typeForm = useState("typeForm");
 typeForm.value = true;
-let onSubmit=(data)=>{
-
-  data.userName?user.createUser(data):user.authUser(data)
-}
+let onSubmit = (data) => {
+  data.userName ? user.createUser(data) : user.authUser(data);
+};
 </script>
 
 <style scoped></style>

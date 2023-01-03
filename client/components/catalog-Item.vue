@@ -92,16 +92,15 @@ let addToBasket = (id) => {
   position: relative;
   &-stock {
     position: absolute;
-    top: -4px;
-    right: -1px;
-    padding: 8px;
-    background: @orange;
-    border-radius: 7px;
+    top: 8px;
+    left: 8px;
+    padding: 6px 8px;
+    background: #ff9846;
+    .br(100%);
     text-align: right;
     font-weight: 900;
     color: #fff;
-    transform: rotate(351deg);
-    font-size: 1.2em;
+    font-size: 1.1em;
   }
   &-img {
     width: 100%;

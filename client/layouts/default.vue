@@ -1,12 +1,13 @@
 <template>
   <div>
-    <Preloader v-show="catalog.isLoading || index.isLoading"></Preloader>
+    <Preloader v-show="catalog.isLoading || index.isLoading||userState.isLoading"></Preloader>
     <Navbar
       @showMenu="showMenu"
       @showForm="showForm"
       :show="show"
       :searchStatus="search"
       @searchStatus="searchShow"
+      :user="userState.user"
     ></Navbar>
     <transition name="fade">
       <Search v-show="search" @searchStatus="searchShow"></Search>
@@ -35,16 +36,23 @@
 <script setup>
 import { useCatalog } from "~/store/catalog";
 import { useIndex } from "~/store";
+import { useUser } from "~/store/user";
 const catalog = useCatalog();
 const index = useIndex();
 await catalog.getDeals();
 await index.GetPhones();
-console.log(catalog.catalogItems);
+//console.log(catalog.catalogItems);
 const route = useRoute();
 let show = useState("show");
 let search = useState("searchStatus");
 let modal = useState("modal");
 let menu = useState("Menu");
+let userState = useUser();
+
+onMounted(async () => {
+ await userState.Status();
+
+});
 
 let searchShow = (value) => {
   if (value) {
@@ -58,14 +66,9 @@ let searchShow = (value) => {
   }
 };
 
-let showMenu = (value) => {
-  if (value) {
-    show.value = true;
-    menu.value = true;
-  } else {
-    show.value = false;
-    menu.value = false;
-  }
+let showMenu = () => {
+  show.value = true;
+  menu.value = true;
 };
 let showForm = () => {
   modal.value = true;

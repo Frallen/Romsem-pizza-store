@@ -2,23 +2,23 @@
   <MainSlider></MainSlider>
   <div class="catalog-categories">
     <!--Картинки грузятся из директории public из-за расширения-->
-    <NuxtLink class="catalog-categories-item" :to="'/category/Роллы'"
+    <NuxtLink class="catalog-categories-item" to="/category/Роллы"
       ><nuxt-img  src="rolls.jpg" alt="" />
       <h4>Роллы</h4></NuxtLink
     >
-    <NuxtLink class="catalog-categories-item" to="/Sushi"
+    <NuxtLink class="catalog-categories-item" to="/category/Суши"
       ><nuxt-img  src="sushi.jpg" alt="" />
       <h4>Суши</h4></NuxtLink
     >
-    <NuxtLink class="catalog-categories-item" to="/Corndog"
+    <NuxtLink class="catalog-categories-item" to="/category/Корндоги"
       ><nuxt-img  src="corndog.png" alt="" />
       <h4>Корн дог</h4></NuxtLink
     >
-    <NuxtLink class="catalog-categories-item" :to="'/category/пицца'"
+    <NuxtLink class="catalog-categories-item" to="/category/пицца"
       ><nuxt-img  src="pizza.png" alt="" />
       <h4>Пицца</h4></NuxtLink
     >
-    <NuxtLink class="catalog-categories-item" to="/water"
+    <NuxtLink class="catalog-categories-item" to="/category/Вода"
     ><nuxt-img  src="water.jpg" alt="" />
       <h4>Напитки</h4></NuxtLink
     >
