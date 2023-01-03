@@ -41,8 +41,7 @@ let props = defineProps({
     default: false,
   },
   user: {
-    type: Object,
-    required: true,
+    type: Array,
   },
 });
 let emit = defineEmits(["showMenu", "searchStatus", "showForm", "HideMenu"]);

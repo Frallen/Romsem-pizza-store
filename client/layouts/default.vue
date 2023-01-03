@@ -53,7 +53,9 @@ onMounted(async () => {
  await userState.Status();
 
 });
-
+watch(()=>userState.user,()=>{
+  HideMenu()
+})
 let searchShow = (value) => {
   if (value) {
     search.value = true;
