@@ -58,11 +58,11 @@ import Soups from "assets/img/soups.svg";
 import Corndog from "assets/img/corndog.svg";
 import Water from "assets/img/water.svg";
 import Actions from "assets/img/actions.svg";
-let emit = defineEmits(["showMenu"]);
+let emit = defineEmits(["HideMenu"]);
 const index = useIndex();
 
 let Close = () => {
-  emit("showMenu", false);
+  emit("HideMenu", false);
 };
 </script>
 

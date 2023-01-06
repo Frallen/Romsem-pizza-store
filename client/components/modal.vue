@@ -30,6 +30,10 @@ let close = () => {
   right: 0;
   text-align: center;
   z-index: 6;
+  @media @md{
+    width: 320px;
+    top:5%;
+  }
   &-wrapper {
     position: relative;
   }

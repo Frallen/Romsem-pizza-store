@@ -100,7 +100,7 @@ let addToBasket = (id) => {
     text-align: right;
     font-weight: 900;
     color: #fff;
-    font-size: 1.1em;
+    font-size: 1em;
   }
   &-img {
     width: 100%;
@@ -124,7 +124,7 @@ let addToBasket = (id) => {
     justify-content: space-between;
     padding: 10px;
     .button {
-      width: 65%;
+      width: 55%;
       padding: 10px 14px;
       font-size: 20px;
       @media @xl {
@@ -132,7 +132,7 @@ let addToBasket = (id) => {
       }
     }
     &-stock {
-      width: 31%;
+      width: 45%;
       padding: 5px;
       white-space: nowrap;
       text-align: right;

@@ -1,20 +1,6 @@
 import qs from "qs";
-let success = (title, text) => {
-  useNuxtApp().$swal.fire({
-    title: title,
-    text: text,
-    icon: "success",
-    confirmButtonText: "Хорошо",
-  });
-};
-let error = () => {
-  useNuxtApp().$swal.fire({
-    title: "Ошибка",
-    text: "Повторите попытку позже",
-    icon: "error",
-    confirmButtonText: "Хорошо",
-  });
-};
+import { Error, Success } from "~/composables/useAlert";
+
 export const useCatalog = defineStore("catalog", {
   state: () => ({
     //baseURL: useRuntimeConfig().env.STRAPI_URL,
@@ -40,8 +26,8 @@ export const useCatalog = defineStore("catalog", {
           (p) => p.attributes.type.toLowerCase() === data.toLowerCase()
         );
     },
-    filteredStock:(state)=>{
-      return state.catalogItems.filter(p=>p.attributes.stock)
+    filteredStock: (state) => {
+      return state.catalogItems.filter((p) => p.attributes.stock);
     },
     basketItems: (state) => {
       let cookie = useCookie("order");
@@ -63,29 +49,31 @@ export const useCatalog = defineStore("catalog", {
   actions: {
     /// параметры к api https://docs.strapi.io/developer-docs/latest/developer-resources/database-apis-reference/rest/api-parameters.html
     async getDeals() {
-      try {
-        this.isLoading = true;
-        const query = qs.stringify(
-          {
-            populate: "*",
-          },
-          {
-            encodeValuesOnly: true, // prettify URL
-          }
-        );
+      this.isLoading = true;
+      const query = qs.stringify(
+        {
+          populate: "*",
+        },
+        {
+          encodeValuesOnly: true, // prettify URL
+        }
+      );
 
-        let { data } = await useFetch(
-          `${useRuntimeConfig().env.STRAPI_URL}/api/catalog-items/?${query}`
-        );
+      let { data, error } = await useFetch(
+        `${useRuntimeConfig().env.STRAPI_URL}/api/catalog-items/?${query}`
+      );
 
+      //console.log(this.catalogItems);
+
+      if (error.value) {
+        switch (error.value.data.error.message) {
+          default:
+            Error("Повторите попытку позже");
+        }
+      } else {
         this.catalogItems = data._value.data;
-        //console.log(this.catalogItems);
-      } catch (e) {
-        console.error(e);
-        error();
-      } finally {
-        this.isLoading = false;
       }
+      this.isLoading = false;
     },
     addToBasket(data) {
       try {
@@ -117,17 +105,17 @@ export const useCatalog = defineStore("catalog", {
           cookie.value = JSON.stringify(order);
         }
       } catch (e) {
-        console.error(e);
-        error();
+        Error("Повторите попытку позже");
       } finally {
         this.isLoading = false;
       }
     },
     async addOrder(data, phone) {
-      try {
-        this.isLoading = true;
-        let cookie = useCookie("order");
-        await useFetch(`${useRuntimeConfig().env.STRAPI_URL}/api/orders`, {
+      this.isLoading = true;
+      let cookie = useCookie("order");
+      let { error } = await useFetch(
+        `${useRuntimeConfig().env.STRAPI_URL}/api/orders`,
+        {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -138,18 +126,22 @@ export const useCatalog = defineStore("catalog", {
               PhoneNumber: phone,
             },
           },
-        });
+        }
+      );
+      if (error.value) {
+        switch (error.value.data.error.message) {
+          default:
+            Error("Повторите попытку позже");
+        }
+      } else {
         cookie.value = JSON.stringify([]);
-        success(
+        Success(
           "Заказ успешно создан!",
           "Ожидайте звонка нашего специалиста или позованите по номеру"
         );
-      } catch (e) {
-        console.error(e);
-        error();
-      } finally {
-        this.isLoading = false;
       }
+
+      this.isLoading = false;
     },
   },
 });

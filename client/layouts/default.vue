@@ -16,7 +16,7 @@
       <BackShadow v-show="show" @click="HideMenu"></BackShadow
     ></transition>
     <transition name="leftToRight"
-      ><Menu v-show="menu" @showMenu="showMenu"></Menu
+      ><Menu v-show="menu" @HideMenu="HideMenu"></Menu
     ></transition>
     <div class="container">
       <div class="container-wrapper">
