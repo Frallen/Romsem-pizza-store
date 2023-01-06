@@ -7,6 +7,11 @@
     >
       %
     </div>
+    <Favorite
+      class="favorite"
+      @favoriteAction="favoriteAction"
+      :isFavorite="Status"
+    ></Favorite>
     <div class="catalog-item-img">
       <img
         :src="
@@ -53,22 +58,42 @@
 
 <script setup>
 import { useCatalog } from "~/store/catalog";
+import { useUser } from "~/store/user";
 let props = defineProps({
   catalogItem: {
     type: Object,
   },
 });
-
+const userState = useUser();
 let selectedSize = ref("");
 const router = useRouter();
 const config = useRuntimeConfig();
 const catalog = useCatalog();
 const slug = useSlug(props.catalogItem.attributes.Title);
+const Status = useState(props.catalogItem.id.toString());
 
 let go = () => {
   router.push(`catalog/${slug}/${props.catalogItem.id}`);
 };
+let favoriteStatus = computed(async () => {
+  if (await userState.user.Favorites) {
+    // return
+  }
+});
 
+watch(
+  () => userState.user,
+  () => {
+    Status.value = userState.user.Favorites.find(
+      (p) => p.id === props.catalogItem.id
+    );
+  }
+);
+let favoriteAction = (data) => {
+  data
+    ? userState.updateFavorites(props.catalogItem.id, true)
+    : userState.updateFavorites(props.catalogItem.id, false);
+};
 let addToBasket = (id) => {
   let data = {
     id,
@@ -90,6 +115,9 @@ let addToBasket = (id) => {
   height: 100%;
   text-decoration: none;
   position: relative;
+  .favorite {
+    z-index: 2;
+  }
   &-stock {
     position: absolute;
     top: 8px;

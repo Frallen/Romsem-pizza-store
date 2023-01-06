@@ -1,6 +1,8 @@
 <template>
   <div>
-    <Preloader v-show="catalog.isLoading || index.isLoading||userState.isLoading"></Preloader>
+    <Preloader
+      v-show="catalog.isLoading || index.isLoading || userState.isLoading"
+    ></Preloader>
     <Navbar
       @showMenu="showMenu"
       @showForm="showForm"
@@ -50,12 +52,17 @@ let menu = useState("Menu");
 let userState = useUser();
 
 onMounted(async () => {
- await userState.Status();
-
+  await userState.Status();
+  if (userState.jwt) {
+    await userState.Profile();
+  }
 });
-watch(()=>userState.user,()=>{
-  HideMenu()
-})
+watch(
+  () => userState.user,
+  () => {
+    HideMenu();
+  }
+);
 let searchShow = (value) => {
   if (value) {
     search.value = true;

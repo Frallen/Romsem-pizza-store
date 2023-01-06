@@ -1,9 +1,11 @@
 import { Error } from "~/composables/useAlert";
+import qs from "qs";
 
 export const useUser = defineStore("user", {
   state: () => ({
     isLoading: false,
-    user: [],
+    user: {},
+    jwt: String,
   }),
   getters: {},
   actions: {
@@ -26,21 +28,19 @@ export const useUser = defineStore("user", {
         }
       );
       if (error.value) {
-        console.log(error.value.data.error.message);
+        // console.log(error.value.data.error.message);
         switch (error.value.data.error.message) {
           case "Email or Username are already taken": {
-             Error("Данный адрес почты уже существует");
-             break;
+            Error("Данный адрес почты уже существует");
+            break;
           }
           default:
             Error("Повторите попытку позже");
         }
       } else {
-        localStorage.setItem(
-          "user",
-          JSON.stringify([data.value.user, data.value.jwt])
-        );
+        localStorage.setItem("user", JSON.stringify(data.value.jwt));
         await this.Status();
+        await this.Profile();
       }
       this.isLoading = false;
     },
@@ -60,22 +60,19 @@ export const useUser = defineStore("user", {
         }
       );
       if (error.value) {
-        console.log(error.value.data.error.message);
+        // console.log(error.value.data.error.message);
         switch (error.value.data.error.message) {
           case "Invalid identifier or password": {
-             Error("Неправльная почта или пароль");
-             break;
+            Error("Неправльная почта или пароль");
+            break;
           }
           default:
             Error("Повторите попытку позже");
         }
       } else {
-
-        localStorage.setItem(
-          "user",
-          JSON.stringify([data.value.user, data.value.jwt])
-        );
+        localStorage.setItem("user", JSON.stringify(data.value.jwt));
         await this.Status();
+        await this.Profile();
       }
 
       this.isLoading = false;
@@ -83,16 +80,76 @@ export const useUser = defineStore("user", {
     async Status() {
       this.isLoading = true;
       if (process.client) {
-        this.user = JSON.parse(localStorage.getItem("user"));
+        this.jwt = JSON.parse(localStorage.getItem("user"))
+          ? JSON.parse(localStorage.getItem("user"))
+          : "";
       }
 
+      this.isLoading = false;
+    },
+    async updateFavorites(id, status){
+      this.isLoading = true;
+      let { data, error } = await useFetch(
+          `${useRuntimeConfig().env.STRAPI_URL}/api/users/${this.user.id}`,
+          {
+            method: "PUT",
+            headers: {
+              Authorization: `Bearer ${this.jwt}`,
+              "Content-Type": "application/json",
+            },
+            body:{
+
+            }
+          }
+      );
+      if (error.value) {
+        // console.log(error.value.data.error.message);
+        switch (error.value.data.error.message) {
+          default:
+            Error("Повторите попытку позже");
+        }
+      } else {
+        this.user = { ...data.value };
+      }
+      this.isLoading = false;
+    },
+    async Profile() {
+      this.isLoading = true;
+      const query = qs.stringify(
+        {
+          populate: "*",
+        },
+        {
+          encodeValuesOnly: true, // prettify URL
+        }
+      );
+      let { data, error } = await useFetch(
+        `${useRuntimeConfig().env.STRAPI_URL}/api/users/me/?${query}`,
+        {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${this.jwt}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      if (error.value) {
+        // console.log(error.value.data.error.message);
+        switch (error.value.data.error.message) {
+          default:
+            Error("Повторите попытку позже");
+        }
+      } else {
+        this.user = { ...data.value };
+      }
       this.isLoading = false;
     },
     async logout() {
       try {
         this.isLoading = true;
-        localStorage.setItem("user", JSON.stringify([]));
-        await this.Status();
+        localStorage.setItem("user", JSON.stringify(""));
+        this.user = {};
+        this.jwt = "";
       } catch (e) {
         console.error(e);
       } finally {

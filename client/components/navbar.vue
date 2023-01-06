@@ -17,7 +17,7 @@
         src="log-out.png"
         class="navbar-actions-item navbar-actions-logout"
         @click="logOut"
-        v-if="user.length"
+        v-if="Object.keys(user).length"
       />
       <nuxt-img
         src="user.png"
@@ -41,7 +41,7 @@ let props = defineProps({
     default: false,
   },
   user: {
-    type: Array,
+    type: Object,
   },
 });
 let emit = defineEmits(["showMenu", "searchStatus", "showForm", "HideMenu"]);

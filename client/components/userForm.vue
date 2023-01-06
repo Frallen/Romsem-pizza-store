@@ -60,8 +60,8 @@ const user = useUser();
 let emit = defineEmits(["closeModal"]);
 let typeForm = useState("typeForm");
 typeForm.value = true;
-let onSubmit = (data) => {
-  data.userName ? user.createUser(data) : user.authUser(data);
+let onSubmit =async (data,{ resetForm }) => {
+  data.userName ?  await user.createUser(data) : await user.authUser(data).then(()=>resetForm());
 };
 </script>
 
