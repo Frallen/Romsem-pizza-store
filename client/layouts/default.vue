@@ -51,12 +51,10 @@ let modal = useState("modal");
 let menu = useState("Menu");
 let userState = useUser();
 
-onMounted(async () => {
-  await userState.Status();
-  if (userState.jwt) {
-    await userState.Profile();
-  }
-});
+
+  await userState.Profile();
+
+
 watch(
   () => userState.user,
   () => {

@@ -5,13 +5,23 @@ export const useUser = defineStore("user", {
   state: () => ({
     isLoading: false,
     user: {},
-    jwt: String,
   }),
-  getters: {},
+  getters: {
+    favorites: (state) => {
+      return (id) =>
+        state.user.Favorites.find((p) => p.id === parseInt(id))
+          ? state.user.Favorites.find((p) => p.id === parseInt(id))
+          : false;
+    },
+  },
   actions: {
     async createUser(obj) {
       this.isLoading = true;
-
+      let cookie = useCookie("user", {
+        HttpOnly: true,
+        //Secure:true,
+        sameSite: "strict",
+      });
       let { data, error } = await useFetch(
         `${useRuntimeConfig().env.STRAPI_URL}/api/auth/local/register`,
         {
@@ -38,14 +48,18 @@ export const useUser = defineStore("user", {
             Error("Повторите попытку позже");
         }
       } else {
-        localStorage.setItem("user", JSON.stringify(data.value.jwt));
-        await this.Status();
+        cookie.value = data.value.jwt;
         await this.Profile();
       }
       this.isLoading = false;
     },
     async authUser(obj) {
       this.isLoading = true;
+      let cookie = useCookie("user", {
+        HttpOnly: true,
+        //Secure:true,
+        sameSite: "strict",
+      });
       let { data, error } = await useFetch(
         `${useRuntimeConfig().env.STRAPI_URL}/api/auth/local`,
         {
@@ -70,86 +84,121 @@ export const useUser = defineStore("user", {
             Error("Повторите попытку позже");
         }
       } else {
-        localStorage.setItem("user", JSON.stringify(data.value.jwt));
-        await this.Status();
+        cookie.value = data.value.jwt;
         await this.Profile();
       }
 
       this.isLoading = false;
     },
-    async Status() {
-      this.isLoading = true;
-      if (process.client) {
-        this.jwt = JSON.parse(localStorage.getItem("user"))
-          ? JSON.parse(localStorage.getItem("user"))
-          : "";
-      }
 
-      this.isLoading = false;
-    },
-    async updateFavorites(id, status){
+    async updateFavorites(id, status) {
       this.isLoading = true;
-      let { data, error } = await useFetch(
+      let cookie = useCookie("user", {
+        httpOnly: true,
+        //secure:true,
+        sameSite: "strict",
+      });
+      console.log(id, status);
+      if (status) {
+        let { data, error } = await useFetch(
           `${useRuntimeConfig().env.STRAPI_URL}/api/users/${this.user.id}`,
           {
             method: "PUT",
             headers: {
-              Authorization: `Bearer ${this.jwt}`,
+              Authorization: `Bearer ${cookie.value}`,
               "Content-Type": "application/json",
             },
-            body:{
-
-            }
+            body: {
+              Favorites: id,
+            },
           }
-      );
-      if (error.value) {
-        // console.log(error.value.data.error.message);
-        switch (error.value.data.error.message) {
-          default:
-            Error("Повторите попытку позже");
+        );
+        if (error.value) {
+          // console.log(error.value.data.error.message);
+          switch (error.value.data.error.message) {
+            default:
+              Error("Повторите попытку позже");
+          }
+        } else {
+          this.user = { ...data.value };
         }
       } else {
-        this.user = { ...data.value };
+        let { data, error } = await useFetch(
+          `${useRuntimeConfig().env.STRAPI_URL}/api/users/${this.user.id}`,
+          {
+            method: "PUT",
+            headers: {
+              Authorization: `Bearer ${cookie.value}`,
+              "Content-Type": "application/json",
+            },
+            body: {
+              Favorites: this.user.Favorites.filter((p) => p.id !== id),
+            },
+          }
+        );
+        if (error.value) {
+          // console.log(error.value.data.error.message);
+          switch (error.value.data.error.message) {
+            default:
+              Error("Повторите попытку позже");
+          }
+        } else {
+          this.user = { ...data.value };
+        }
       }
+
+      await this.Profile();
       this.isLoading = false;
     },
     async Profile() {
       this.isLoading = true;
-      const query = qs.stringify(
-        {
-          populate: "*",
-        },
-        {
-          encodeValuesOnly: true, // prettify URL
-        }
-      );
-      let { data, error } = await useFetch(
-        `${useRuntimeConfig().env.STRAPI_URL}/api/users/me/?${query}`,
-        {
-          method: "GET",
-          headers: {
-            Authorization: `Bearer ${this.jwt}`,
-            "Content-Type": "application/json",
+      let cookie = useCookie("user", {
+        httpOnly: true,
+        //secure:true,
+        sameSite: "strict",
+      });
+      console.log(cookie.value);
+      if (cookie.value) {
+        const query = qs.stringify(
+          {
+            populate: "*",
           },
+          {
+            encodeValuesOnly: true, // prettify URL
+          }
+        );
+        let { data, error } = await useFetch(
+          `${useRuntimeConfig().env.STRAPI_URL}/api/users/me/?${query}`,
+          {
+            method: "GET",
+            headers: {
+              Authorization: `Bearer ${cookie.value}`,
+              "Content-Type": "application/json",
+            },
+          }
+        );
+        if (error.value) {
+          // console.log(error.value.data.error.message);
+          switch (error.value.data.error.message) {
+            default:
+              Error("Повторите попытку позже");
+          }
+        } else {
+          this.user = { ...data.value };
         }
-      );
-      if (error.value) {
-        // console.log(error.value.data.error.message);
-        switch (error.value.data.error.message) {
-          default:
-            Error("Повторите попытку позже");
-        }
-      } else {
-        this.user = { ...data.value };
       }
       this.isLoading = false;
     },
     async logout() {
       try {
         this.isLoading = true;
-        localStorage.setItem("user", JSON.stringify(""));
+        let cookie = useCookie("user", {
+          HttpOnly: true,
+          //Secure:true,
+          sameSite: "strict",
+        });
+        cookie.value = null;
         this.user = {};
-        this.jwt = "";
       } catch (e) {
         console.error(e);
       } finally {

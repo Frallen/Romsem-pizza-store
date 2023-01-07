@@ -10,7 +10,8 @@
     <Favorite
       class="favorite"
       @favoriteAction="favoriteAction"
-      :isFavorite="Status"
+      :isFavorite="userState.favorites(catalogItem.id)"
+      v-if="Object.entries(userState.user).length"
     ></Favorite>
     <div class="catalog-item-img">
       <img
@@ -80,15 +81,15 @@ let favoriteStatus = computed(async () => {
     // return
   }
 });
-
+/**
 watch(
-  () => userState.user,
+ async () => userState.user,
   () => {
     Status.value = userState.user.Favorites.find(
       (p) => p.id === props.catalogItem.id
     );
   }
-);
+);*/
 let favoriteAction = (data) => {
   data
     ? userState.updateFavorites(props.catalogItem.id, true)

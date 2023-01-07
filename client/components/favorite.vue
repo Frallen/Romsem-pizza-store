@@ -19,10 +19,10 @@ let props = defineProps({
     default: false,
   },
 });
-console.log(typeof props.isFavorite)
+
 let emit = defineEmits(["favoriteAction"]);
 let favoriteAction = (data) => {
-  data ? emit("favoriteAction", false) : emit("favoriteAction", true);
+  data ? emit("favoriteAction", true) : emit("favoriteAction", false);
 };
 </script>
 
