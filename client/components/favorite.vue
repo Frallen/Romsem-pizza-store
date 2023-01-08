@@ -5,15 +5,16 @@
       v-if="isFavorite"
       @click.stop="favoriteAction(false)"
     >
-      <nuxt-img src="Checked.png" class="star-img" />
+      <HeartFilled class="check" />
     </div>
     <div class="star-item" v-else @click.stop="favoriteAction(true)">
-      <nuxt-img src="unChecked.png" class="star-img" />
+      <HeartOutlined class="uncheck" />
     </div>
   </div>
 </template>
 
 <script setup>
+import { HeartFilled, HeartOutlined } from "@ant-design/icons-vue";
 let props = defineProps({
   isFavorite: {
     default: false,
@@ -32,12 +33,13 @@ let favoriteAction = (data) => {
   right: 5%;
   top: 2%;
   &-item {
-    height: 30px;
-    width: 30px;
-  }
-  &-img {
-    width: 100%;
-    height: 100%;
+    .check {
+      color: @red;
+    }
+    .check,
+    .uncheck {
+      font-size: 1.3em;
+    }
   }
 }
 </style>

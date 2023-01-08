@@ -76,20 +76,7 @@ const Status = useState(props.catalogItem.id.toString());
 let go = () => {
   router.push(`catalog/${slug}/${props.catalogItem.id}`);
 };
-let favoriteStatus = computed(async () => {
-  if (await userState.user.Favorites) {
-    // return
-  }
-});
-/**
-watch(
- async () => userState.user,
-  () => {
-    Status.value = userState.user.Favorites.find(
-      (p) => p.id === props.catalogItem.id
-    );
-  }
-);*/
+
 let favoriteAction = (data) => {
   data
     ? userState.updateFavorites(props.catalogItem.id, true)

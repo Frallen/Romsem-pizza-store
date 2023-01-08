@@ -8,10 +8,7 @@ export const useUser = defineStore("user", {
   }),
   getters: {
     favorites: (state) => {
-      return (id) =>
-        state.user.Favorites.find((p) => p.id === parseInt(id))
-          ? state.user.Favorites.find((p) => p.id === parseInt(id))
-          : false;
+      return (id) => state.user.Favorites.some((p) => p.id === parseInt(id));
     },
   },
   actions: {
@@ -85,7 +82,7 @@ export const useUser = defineStore("user", {
         }
       } else {
         cookie.value = data.value.jwt;
-        await this.Profile();
+        await this.Profile(data.value.jwt);
       }
 
       this.isLoading = false;
@@ -98,8 +95,8 @@ export const useUser = defineStore("user", {
         //secure:true,
         sameSite: "strict",
       });
-      console.log(id, status);
       if (status) {
+        this.user.Favorites.push(id);
         let { data, error } = await useFetch(
           `${useRuntimeConfig().env.STRAPI_URL}/api/users/${this.user.id}`,
           {
@@ -109,7 +106,7 @@ export const useUser = defineStore("user", {
               "Content-Type": "application/json",
             },
             body: {
-              Favorites: id,
+              Favorites: this.user.Favorites,
             },
           }
         );
@@ -119,8 +116,6 @@ export const useUser = defineStore("user", {
             default:
               Error("Повторите попытку позже");
           }
-        } else {
-          this.user = { ...data.value };
         }
       } else {
         let { data, error } = await useFetch(
@@ -142,23 +137,20 @@ export const useUser = defineStore("user", {
             default:
               Error("Повторите попытку позже");
           }
-        } else {
-          this.user = { ...data.value };
         }
       }
 
-      await this.Profile();
+      await this.Profile(cookie.value);
       this.isLoading = false;
     },
-    async Profile() {
+    async Profile(jwt) {
       this.isLoading = true;
       let cookie = useCookie("user", {
         httpOnly: true,
         //secure:true,
         sameSite: "strict",
       });
-      console.log(cookie.value);
-      if (cookie.value) {
+      if (cookie.value || jwt) {
         const query = qs.stringify(
           {
             populate: "*",
@@ -172,7 +164,7 @@ export const useUser = defineStore("user", {
           {
             method: "GET",
             headers: {
-              Authorization: `Bearer ${cookie.value}`,
+              Authorization: `Bearer ${cookie.value || jwt}`,
               "Content-Type": "application/json",
             },
           }

@@ -1,8 +1,6 @@
 <template>
   <div>
-    <Preloader
-      v-show="catalog.isLoading || index.isLoading || userState.isLoading"
-    ></Preloader>
+    <Preloader v-show="preloader"></Preloader>
     <Navbar
       @showMenu="showMenu"
       @showForm="showForm"
@@ -50,11 +48,10 @@ let search = useState("searchStatus");
 let modal = useState("modal");
 let menu = useState("Menu");
 let userState = useUser();
-
-
-  await userState.Profile();
-
-
+await userState.Profile();
+let preloader = computed(() => {
+  return catalog.isLoading || index.isLoading || userState.isLoading;
+});
 watch(
   () => userState.user,
   () => {

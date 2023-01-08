@@ -1,6 +1,5 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 import svgLoader from "vite-svg-loader";
-import VueSweetalert2 from "vue-sweetalert2";
 export default defineNuxtConfig({
   css: [
     "maz-ui/css/main.css",
