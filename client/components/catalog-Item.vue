@@ -10,7 +10,7 @@
     <Favorite
       class="favorite"
       @favoriteAction="favoriteAction"
-      :isFavorite="userState.favorites(catalogItem.id)"
+      :isFavorite="userState.favorited(catalogItem.id)"
       v-if="Object.entries(userState.user).length"
     ></Favorite>
     <div class="catalog-item-img">

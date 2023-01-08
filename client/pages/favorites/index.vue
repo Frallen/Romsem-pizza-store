@@ -1,8 +1,8 @@
 <template>
   <Offers
-    :type="'Пицца'"
-    :data="catalog.filteredStock"
-    v-if="catalog.filteredStock.length"
+    :type="'Избранное'"
+    :data="catalog.favoriteItems"
+    v-if="catalog.favoriteItems.length"
   ></Offers>
 </template>
 
@@ -11,4 +11,4 @@ import { useCatalog } from "~/store/catalog";
 let catalog = useCatalog();
 </script>
 
-<style scoped></style>
+<style scoped lang="less"></style>

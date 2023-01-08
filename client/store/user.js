@@ -7,7 +7,7 @@ export const useUser = defineStore("user", {
     user: {},
   }),
   getters: {
-    favorites: (state) => {
+    favorited: (state) => {
       return (id) => state.user.Favorites.some((p) => p.id === parseInt(id));
     },
   },

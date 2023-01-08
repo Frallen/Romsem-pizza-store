@@ -8,19 +8,18 @@
       <NuxtLink to="/"><Logo></Logo>Romsem</NuxtLink>
     </div>
     <div class="navbar-actions">
-      <nuxt-img
-        src="search.png"
+      <SearchOutlined
         class="navbar-actions-item navbar-actions-search"
         @click="showSearch"
       />
-      <nuxt-img
+      <NuxtLink  class="navbar-actions-item " to="/favorites"><HeartFilled /></NuxtLink>
+      <LogoutOutlined
         src="log-out.png"
         class="navbar-actions-item navbar-actions-logout"
         @click="logOut"
         v-if="Object.keys(user).length"
       />
-      <nuxt-img
-        src="user.png"
+      <LockOutlined
         class="navbar-actions-item navbar-actions-user"
         @click="showForm"
         v-else
@@ -33,7 +32,12 @@
 import Menu from "assets/img/menu.svg";
 import Logo from "assets/img/logo.svg";
 import { useUser } from "~/store/user";
-
+import {
+  HeartFilled,
+  LockOutlined,
+  SearchOutlined,
+  LogoutOutlined,
+} from "@ant-design/icons-vue";
 let props = defineProps({
   show: { type: Boolean, default: false },
   searchStatus: {
@@ -83,7 +87,6 @@ let showMenu = () => {
     align-items: center;
     font-size: 1.5em;
     svg {
-      min-width: 45px;
       margin-right: 10px;
       @media @md {
         margin-right: 0;
@@ -121,27 +124,15 @@ let showMenu = () => {
     align-items: center;
     width: 10%;
     &-item {
-      margin-right: 1em;
+      margin-right: 13px;
       cursor: pointer;
+      user-select: none;
+      font-size: 1.6em;
+      text-decoration: none;
+      color: @black;
     }
     &-item:last-child {
       margin-right: 0;
-    }
-    &-user,
-    &-search {
-      user-select: none;
-    }
-    &-user {
-      height: 40px;
-      width: 40px;
-    }
-    &-search {
-      height: 30px;
-      width: 30px;
-    }
-    &-logout {
-      height: 30px;
-      width: 30px;
     }
   }
 }

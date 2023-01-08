@@ -3,39 +3,75 @@
   <div class="catalog-categories">
     <!--Картинки грузятся из директории public из-за расширения-->
     <NuxtLink class="catalog-categories-item" to="/category/Роллы"
-      ><nuxt-img  src="rolls.jpg" alt="" />
+      ><nuxt-img src="rolls.jpg" alt="" />
       <h4>Роллы</h4></NuxtLink
     >
     <NuxtLink class="catalog-categories-item" to="/category/Суши"
-      ><nuxt-img  src="sushi.jpg" alt="" />
+      ><nuxt-img src="sushi.jpg" alt="" />
       <h4>Суши</h4></NuxtLink
     >
     <NuxtLink class="catalog-categories-item" to="/category/Корндоги"
-      ><nuxt-img  src="corndog.png" alt="" />
+      ><nuxt-img src="corndog.png" alt="" />
       <h4>Корн дог</h4></NuxtLink
     >
     <NuxtLink class="catalog-categories-item" to="/category/пицца"
-      ><nuxt-img  src="pizza.png" alt="" />
+      ><nuxt-img src="pizza.png" alt="" />
       <h4>Пицца</h4></NuxtLink
     >
     <NuxtLink class="catalog-categories-item" to="/category/Вода"
-    ><nuxt-img  src="water.jpg" alt="" />
+      ><nuxt-img src="water.jpg" alt="" />
       <h4>Напитки</h4></NuxtLink
     >
     <NuxtLink class="catalog-categories-item" to="/stock"
-      ><nuxt-img  src="actions.png" alt="" />
+      ><nuxt-img src="actions.png" alt="" />
       <h4>Акции</h4></NuxtLink
     >
   </div>
-  <Offers :type="'Пицца'"></Offers>
-  <Offers :type="'Сеты'"></Offers>
-  <Offers :type="'Wok'"></Offers>
-  <Offers :type="'Роллы'"></Offers>
-  <Offers :type="'Суши'"></Offers>
-  <Offers :type="'Салаты'"></Offers>
-  <Offers :type="'Супы'"></Offers>
-  <Offers :type="'Корндоги'"></Offers>
-  <Offers :type="'Напитки'"></Offers>
+  <Offers
+    :type="'Пицца'"
+    :data="catalog.sortedCategories('Пицца')"
+    v-if="catalog.sortedCategories('Пицца').length"
+  ></Offers>
+  <Offers
+    :type="'Сеты'"
+    :data="catalog.sortedCategories('Сеты')"
+    v-if="catalog.sortedCategories('Сеты').length"
+  ></Offers>
+  <Offers
+    :type="'Wok'"
+    :data="catalog.sortedCategories('Wok')"
+    v-if="catalog.sortedCategories('Wok').length"
+  ></Offers>
+  <Offers
+    :type="'Роллы'"
+    :data="catalog.sortedCategories('Роллы')"
+    v-if="catalog.sortedCategories('Роллы').length"
+  ></Offers>
+  <Offers
+    :type="'Суши'"
+    :data="catalog.sortedCategories('Суши')"
+    v-if="catalog.sortedCategories('Суши').length"
+  ></Offers>
+  <Offers
+    :type="'Салаты'"
+    :data="catalog.sortedCategories('Салаты')"
+    v-if="catalog.sortedCategories('Салаты').length"
+  ></Offers>
+  <Offers
+    :type="'Супы'"
+    :data="catalog.sortedCategories('Супы')"
+    v-if="catalog.sortedCategories('Супы').length"
+  ></Offers>
+  <Offers
+    :type="'Корндоги'"
+    :data="catalog.sortedCategories('Корндоги')"
+    v-if="catalog.sortedCategories('Корндоги').length"
+  ></Offers>
+  <Offers
+    :type="'Напитки'"
+    :data="catalog.sortedCategories('Напитки')"
+    v-if="catalog.sortedCategories('Напитки').length"
+  ></Offers>
 </template>
 
 <script setup>
@@ -49,7 +85,7 @@ const catalog = useCatalog();
   display: grid;
   gap: 30px;
   @media @xl-up {
-    grid-template-columns: 1fr 1fr 1fr!important;
+    grid-template-columns: 1fr 1fr 1fr !important;
     grid-template-areas:
       "a b c"
       "d e f" !important;
@@ -73,7 +109,7 @@ const catalog = useCatalog();
       "c"
       "d"
       "e"
-  "f";
+      "f";
   }
   &-item {
     position: relative;

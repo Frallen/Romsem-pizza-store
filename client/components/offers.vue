@@ -1,21 +1,8 @@
 <template>
-  <div
-    class="offers"
-    v-if="
-      filtered
-        ? catalog.filteredStock.length
-        : catalog.sortedCategories(type).length
-    "
-  >
+  <div class="offers">
     <h2>{{ type }}</h2>
     <div class="offers-wrapper">
-      <div
-        class="offers-item"
-        :key="item.id"
-        v-for="item in filtered
-          ? catalog.filteredStock
-          : catalog.sortedCategories(type)"
-      >
+      <div class="offers-item" :key="item.id" v-for="item in data">
         <CatalogItem :catalogItem="item"></CatalogItem>
       </div>
     </div>
@@ -23,16 +10,13 @@
 </template>
 
 <script setup>
-import { useCatalog } from "~/store/catalog";
 let props = defineProps({
   type: {
     type: String,
   },
-});
-let catalog = useCatalog();
-let route = useRoute();
-let filtered = computed(() => {
-return route.path.includes('/stock')
+  data: {
+    type: Array,
+  },
 });
 </script>
 

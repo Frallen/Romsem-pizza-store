@@ -1,6 +1,6 @@
 import qs from "qs";
 import { Error, Success } from "~/composables/useAlert";
-
+import { useUser } from "~/store/user";
 export const useCatalog = defineStore("catalog", {
   state: () => ({
     //baseURL: useRuntimeConfig().env.STRAPI_URL,
@@ -25,6 +25,11 @@ export const useCatalog = defineStore("catalog", {
         state.catalogItems.filter(
           (p) => p.attributes.type.toLowerCase() === data.toLowerCase()
         );
+    },
+    favoriteItems: (state) => {
+      return state.catalogItems.filter((p) =>
+        useUser().user.Favorites.some((z) => z.id === p.id)&&p
+      );
     },
     filteredStock: (state) => {
       return state.catalogItems.filter((p) => p.attributes.stock);
