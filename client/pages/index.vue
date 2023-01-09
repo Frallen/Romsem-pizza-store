@@ -10,9 +10,9 @@
       ><nuxt-img src="sushi.jpg" alt="" />
       <h4>Суши</h4></NuxtLink
     >
-    <NuxtLink class="catalog-categories-item" to="/category/Корндоги"
-      ><nuxt-img src="corndog.png" alt="" />
-      <h4>Корн дог</h4></NuxtLink
+    <NuxtLink class="catalog-categories-item" to="/category/Wok"
+      ><nuxt-img src="wok.jpg" alt="" />
+      <h4>Wok</h4></NuxtLink
     >
     <NuxtLink class="catalog-categories-item" to="/category/пицца"
       ><nuxt-img src="pizza.png" alt="" />

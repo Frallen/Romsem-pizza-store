@@ -1,6 +1,6 @@
 <template>
   <Offers
-    :type="'Пицца'"
+    :type="'Акции'"
     :data="catalog.filteredStock"
     v-if="catalog.filteredStock.length"
   ></Offers>

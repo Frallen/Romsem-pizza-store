@@ -27,8 +27,8 @@ export const useCatalog = defineStore("catalog", {
         );
     },
     favoriteItems: (state) => {
-      return state.catalogItems.filter((p) =>
-        useUser().user.Favorites.some((z) => z.id === p.id)&&p
+      return state.catalogItems.filter(
+        (p) => useUser().user.Favorites.some((z) => z.id === p.id) && p
       );
     },
     filteredStock: (state) => {
@@ -128,6 +128,7 @@ export const useCatalog = defineStore("catalog", {
           body: {
             data: {
               OrderItems: JSON.stringify(data),
+              Summ: data[1].toFixed(2),
               PhoneNumber: phone,
             },
           },
@@ -142,7 +143,7 @@ export const useCatalog = defineStore("catalog", {
         cookie.value = JSON.stringify([]);
         Success(
           "Заказ успешно создан!",
-          "Ожидайте звонка нашего специалиста или позованите по номеру"
+          "Ожидайте звонка нашего специалиста или позвоните по номеру"
         );
       }
 

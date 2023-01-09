@@ -8,6 +8,9 @@
 
 <script setup>
 import { useCatalog } from "~/store/catalog";
+definePageMeta({
+  middleware: "auth",
+});
 let catalog = useCatalog();
 </script>
 

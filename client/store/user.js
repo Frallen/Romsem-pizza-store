@@ -74,7 +74,7 @@ export const useUser = defineStore("user", {
         // console.log(error.value.data.error.message);
         switch (error.value.data.error.message) {
           case "Invalid identifier or password": {
-            Error("Неправльная почта или пароль");
+            Error("Не верная пароль или такой почты не существует ");
             break;
           }
           default:

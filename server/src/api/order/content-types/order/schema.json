@@ -30,6 +30,10 @@
       "type": "string",
       "required": true,
       "minLength": 11
+    },
+    "Summ": {
+      "type": "decimal",
+      "required": true
     }
   }
 }

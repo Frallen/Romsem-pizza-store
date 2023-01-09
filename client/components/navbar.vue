@@ -12,12 +12,12 @@
         class="navbar-actions-item navbar-actions-search"
         @click="showSearch"
       />
-      <NuxtLink  class="navbar-actions-item " to="/favorites"><HeartFilled /></NuxtLink>
+      <NuxtLink  class="navbar-actions-item " to="/favorites" v-if="isAuth"><HeartFilled /></NuxtLink>
       <LogoutOutlined
         src="log-out.png"
         class="navbar-actions-item navbar-actions-logout"
         @click="logOut"
-        v-if="Object.keys(user).length"
+        v-if="isAuth"
       />
       <LockOutlined
         class="navbar-actions-item navbar-actions-user"
@@ -38,6 +38,9 @@ import {
   SearchOutlined,
   LogoutOutlined,
 } from "@ant-design/icons-vue";
+let isAuth=computed(()=>{
+  return Object.keys(props.user).length>0
+})
 let props = defineProps({
   show: { type: Boolean, default: false },
   searchStatus: {
@@ -100,7 +103,6 @@ let showMenu = () => {
     }
   }
   &-logo {
-    width: 80%;
     a {
       text-decoration: none;
       display: flex;
@@ -122,7 +124,6 @@ let showMenu = () => {
     display: flex;
     justify-content: flex-end;
     align-items: center;
-    width: 10%;
     &-item {
       margin-right: 13px;
       cursor: pointer;
