@@ -74,7 +74,7 @@ const slug = useSlug(props.catalogItem.attributes.Title);
 const Status = useState(props.catalogItem.id.toString());
 
 let go = () => {
-  router.push(`catalog/${slug}/${props.catalogItem.id}`);
+  router.push(`/catalog/${slug}/${props.catalogItem.id}`);
 };
 
 let favoriteAction = (data) => {
