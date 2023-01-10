@@ -24,10 +24,7 @@ let close = () => {
   padding: 1em;
   position: fixed;
   top: 21%;
-  margin-left: auto;
-  margin-right: auto;
-  left: 0;
-  right: 0;
+  .postAbsolute();
   text-align: center;
   z-index: 6;
   @media @md{

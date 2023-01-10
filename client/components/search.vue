@@ -58,7 +58,7 @@ let hide = () => {
   box-shadow: 0 0 5px 0 #000;
   z-index: 5;
   padding: 10px;
-  @media @sm{
+  @media @sm {
     .br(0);
     right: 0;
     top: 0;
@@ -82,8 +82,8 @@ let hide = () => {
     overflow: auto;
 
     max-height: 350px;
-    @media @sm{
-      max-height: 450px;
+    @media @sm {
+      max-height: 500px;
     }
   }
 

@@ -111,7 +111,7 @@ let addToBasket = (id) => {
     top: 8px;
     left: 8px;
     padding: 6px 8px;
-    background: #ff9846;
+    background: @orange;
     .br(100%);
     text-align: right;
     font-weight: 900;
@@ -155,7 +155,7 @@ let addToBasket = (id) => {
       position: relative;
       .old-price {
         text-decoration: line-through;
-        color: @gray;
+        color: @gray-price;
         top: -13px;
         right: 0;
         position: absolute;

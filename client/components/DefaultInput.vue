@@ -16,7 +16,7 @@ export default {
   font-weight: 400;
   font-size: 18px;
   line-height: 22px;
-  color: @gray;
+  color: @black;
   overflow: hidden;
   background: #fff;
   border:none;

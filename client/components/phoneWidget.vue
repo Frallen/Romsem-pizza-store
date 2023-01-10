@@ -17,6 +17,8 @@ let props = defineProps({
 .widget {
   bottom: 15%;
   right: 3%;
+  background: #fff;
+  z-index: 2;
   @media @md {
     bottom: 35%;
   }

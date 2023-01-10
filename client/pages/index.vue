@@ -3,15 +3,15 @@
   <div class="catalog-categories">
     <!--Картинки грузятся из директории public из-за расширения-->
     <NuxtLink class="catalog-categories-item" to="/category/Роллы"
-      ><nuxt-img src="rolls.jpg" alt="" />
+      ><nuxt-img src="rolls.png" alt="" />
       <h4>Роллы</h4></NuxtLink
     >
     <NuxtLink class="catalog-categories-item" to="/category/Суши"
-      ><nuxt-img src="sushi.jpg" alt="" />
+      ><nuxt-img src="sushi.png" alt="" />
       <h4>Суши</h4></NuxtLink
     >
     <NuxtLink class="catalog-categories-item" to="/category/Wok"
-      ><nuxt-img src="wok.jpg" alt="" />
+      ><nuxt-img src="wok.png" alt="" />
       <h4>Wok</h4></NuxtLink
     >
     <NuxtLink class="catalog-categories-item" to="/category/пицца"
@@ -19,7 +19,7 @@
       <h4>Пицца</h4></NuxtLink
     >
     <NuxtLink class="catalog-categories-item" to="/category/Вода"
-      ><nuxt-img src="water.jpg" alt="" />
+      ><nuxt-img src="water.png" alt="" />
       <h4>Напитки</h4></NuxtLink
     >
     <NuxtLink class="catalog-categories-item" to="/stock"
@@ -83,74 +83,55 @@ const catalog = useCatalog();
 .catalog-categories {
   margin: 25px 0 35px;
   display: grid;
-  gap: 30px;
-  @media @xl-up {
-    grid-template-columns: 1fr 1fr 1fr !important;
-    grid-template-areas:
-      "a b c"
-      "d e f" !important;
-  }
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
 
   @media @md {
     margin: 15px 0 25px;
+    grid-template-columns: repeat(3, 1fr);
   }
-  @media @sm-up {
-    grid-template-columns: 1fr 1fr;
-    grid-template-areas:
-      "a b"
-      "c d"
-      "e f";
+  @media @xs {
+    margin: 15px 0 25px;
+    grid-template-columns: repeat(2, 1fr);
   }
-  @media @sm {
-    grid-template-columns: 1fr;
-    grid-template-areas:
-      "a"
-      "b"
-      "c"
-      "d"
-      "e"
-      "f";
-  }
+
   &-item {
+    background: #f9fafb;
     position: relative;
     overflow: hidden;
-    max-height: 200px;
+
     text-decoration: none;
-    border: 1px solid #eee;
     .trs();
     .br(10px);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    @media (min-width: 320px) {
+      height: 130px;
+    }
+    @media @md-up {
+      height: 190px;
+    }
     img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
+      @media (min-width: 320px) {
+        width: 76px;
+        height: 60px;
+      }
+      @media @md-up {
+        width: 136px;
+        height: 106px;
+      }
     }
     h4 {
       position: absolute;
       bottom: 5%;
       left: 4%;
+      color: @black;
     }
   }
   &-item:hover {
-    box-shadow: 0 4px 8px 2px #0000003b;
     .trs();
-  }
-  &-item:nth-child(1) {
-    grid-area: a;
-  }
-  &-item:nth-child(2) {
-    grid-area: b;
-  }
-  &-item:nth-child(3) {
-    grid-area: c;
-  }
-  &-item:nth-child(4) {
-    grid-area: d;
-  }
-  &-item:nth-child(5) {
-    grid-area: e;
-  }
-  &-item:nth-child(6) {
-    grid-area: f;
+    background: #eee;
   }
 }
 </style>

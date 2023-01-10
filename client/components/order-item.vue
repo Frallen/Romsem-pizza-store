@@ -44,8 +44,9 @@ show.value = false;
 <style scoped lang="less">
 .orders-item {
   background: #fff;
+  filter:drop-shadow(0 6px 30px rgba(50, 52, 72, 0.1));
   margin-top: 1em;
-  padding: 10px;
+  padding:15px;
   .br(10px);
   user-select: none;
   overflow: hidden;

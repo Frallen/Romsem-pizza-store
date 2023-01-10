@@ -58,7 +58,7 @@ const config = useRuntimeConfig();
 const route = useRoute();
 let selectedSize = ref("");
 let item = catalog.filteredItem(route.params.id);
-console.log(item);
+//console.log(item);
 let addToBasket = (id) => {
   let data = {
     id,
@@ -116,7 +116,7 @@ let addToBasket = (id) => {
     }
     .old-price {
       text-decoration: line-through;
-      color: @gray;
+      color: @gray-price;
       font-size: 1.2em;
     }
     .price {
@@ -161,13 +161,12 @@ let addToBasket = (id) => {
     .ingridient {
       margin-top: 5px;
       margin-left: 5px;
-      padding: 5px 10px;
+      padding: 10px 15px;
       text-transform: capitalize;
       .br(15px);
-      border: 1px solid;
       cursor: default;
-      background: @pink;
-      color: #fff;
+      background: @gray;
+      color: @black;
       font-weight: 600;
     }
   }

@@ -1,19 +1,22 @@
 <template>
   <div class="navbar">
-    <div class="navbar-hamburger" @click="showMenu">
-      <Menu></Menu>
-      <span>Меню</span>
-    </div>
-    <div class="navbar-logo">
-      <NuxtLink to="/"><Logo></Logo>Romsem</NuxtLink>
+    <div class="navbar-box">
+      <div class="navbar-hamburger" @click="showMenu">
+        <Menu></Menu>
+      </div>
+      <div class="navbar-logo">
+        <NuxtLink to="/"><Logo></Logo>Romsem</NuxtLink>
+      </div>
     </div>
     <div class="navbar-actions">
       <SearchOutlined
         class="navbar-actions-item navbar-actions-search"
         @click="showSearch"
       />
-      <NuxtLink  class="navbar-actions-item " to="/favorites" v-if="isAuth"><HeartFilled /></NuxtLink>
-      <LogoutOutlined
+      <NuxtLink class="navbar-actions-item" to="/favorites" v-if="isAuth"
+        ><HeartFilled
+      /></NuxtLink>
+      <ExportOutlined
         src="log-out.png"
         class="navbar-actions-item navbar-actions-logout"
         @click="logOut"
@@ -36,11 +39,11 @@ import {
   HeartFilled,
   LockOutlined,
   SearchOutlined,
-  LogoutOutlined,
+  ExportOutlined,
 } from "@ant-design/icons-vue";
-let isAuth=computed(()=>{
-  return Object.keys(props.user).length>0
-})
+let isAuth = computed(() => {
+  return Object.keys(props.user).length > 0;
+});
 let props = defineProps({
   show: { type: Boolean, default: false },
   searchStatus: {
@@ -69,6 +72,7 @@ let showMenu = () => {
 
 <style scoped lang="less">
 .navbar {
+  filter: drop-shadow(0 6px 30px rgba(50, 52, 72, 0.1));
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -77,6 +81,11 @@ let showMenu = () => {
   position: sticky;
   top: 0;
   z-index: 3;
+  &-box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
   &-hamburger,
   &-logo {
     cursor: pointer;
@@ -90,10 +99,7 @@ let showMenu = () => {
     align-items: center;
     font-size: 1.5em;
     svg {
-      margin-right: 10px;
-      @media @md {
-        margin-right: 0;
-      }
+      margin-right: 1em;
     }
     span {
       display: block;
@@ -131,6 +137,14 @@ let showMenu = () => {
       font-size: 1.6em;
       text-decoration: none;
       color: @black;
+      padding: 10px;
+      .br(15px);
+      background: @gray;
+      .trs();
+    }
+    &-item:hover {
+      opacity: 0.8;
+      .trs();
     }
     &-item:last-child {
       margin-right: 0;

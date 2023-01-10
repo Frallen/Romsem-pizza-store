@@ -28,9 +28,12 @@ export const useCatalog = defineStore("catalog", {
         );
     },
     favoriteItems: (state) => {
-      return state.catalogItems.filter(
-        (p) => useUser().user.Favorites.some((z) => z.id === p.id) && p
-      );
+      if (Object.entries(useUser().user).length===0) {
+        return false;
+      } else
+        return state.catalogItems.filter(
+          (p) => useUser().user.Favorites.some((z) => z.id === p.id) && p
+        );
     },
     filteredStock: (state) => {
       return state.catalogItems.filter((p) => p.attributes.stock);
@@ -116,7 +119,7 @@ export const useCatalog = defineStore("catalog", {
         this.isLoading = false;
       }
     },
-    async addOrder(data,sum, phone) {
+    async addOrder(data, sum, phone) {
       this.isLoading = true;
       let cookie = useCookie("order");
       let { error } = await useFetch(
@@ -131,7 +134,7 @@ export const useCatalog = defineStore("catalog", {
               OrderItems: JSON.stringify(data),
               Sum: sum.toFixed(2),
               PhoneNumber: phone,
-              Owner:useUser().user?useUser().user.email:phone
+              Owner: useUser().user ? useUser().user.email : phone,
             },
           },
         }
@@ -184,7 +187,6 @@ export const useCatalog = defineStore("catalog", {
         }
       );
       if (error.value) {
-
         switch (error.value.data.error.message) {
           default:
             Error("Повторите попытку позже");

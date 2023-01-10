@@ -31,9 +31,11 @@ let calc = () => {
 .widget {
   bottom: 5%;
   right: 3%;
-@media @md{
-  bottom: 25%;
-}
+  background: #fff;
+  z-index: 2;
+  @media @md {
+    bottom: 25%;
+  }
   &-count {
     background: @orange;
     color: #fff;
