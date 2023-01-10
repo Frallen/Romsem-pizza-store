@@ -21,6 +21,7 @@
     "libphonenumber-js": "^1.10.15",
     "maz-ui": "^3.6.5",
     "modern-normalize": "^1.1.0",
+    "moment": "^2.29.4",
     "qs": "^6.11.0",
     "swiper": "^8.4.5",
     "vee-validate": "^4.7.3",

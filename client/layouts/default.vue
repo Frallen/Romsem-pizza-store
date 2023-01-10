@@ -37,18 +37,20 @@
 import { useCatalog } from "~/store/catalog";
 import { useIndex } from "~/store";
 import { useUser } from "~/store/user";
-const catalog = useCatalog();
-const index = useIndex();
-await catalog.getDeals();
-await index.GetPhones();
-//console.log(catalog.catalogItems);
 const route = useRoute();
 let show = useState("show");
 let search = useState("searchStatus");
 let modal = useState("modal");
 let menu = useState("Menu");
+
 let userState = useUser();
+const catalog = useCatalog();
+const index = useIndex();
+await catalog.getDeals();
+await index.GetPhones();
 await userState.Profile();
+//console.log(catalog.catalogItems);
+
 let preloader = computed(() => {
   return catalog.isLoading || index.isLoading || userState.isLoading;
 });

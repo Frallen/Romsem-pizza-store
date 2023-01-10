@@ -31,8 +31,12 @@
       "required": true,
       "minLength": 11
     },
-    "Summ": {
+    "Sum": {
       "type": "decimal",
+      "required": true
+    },
+    "Owner": {
+      "type": "string",
       "required": true
     }
   }

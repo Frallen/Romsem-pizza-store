@@ -152,9 +152,8 @@ let submit = () => {
       };
       arr.push(obj);
     });
-    let order = [arr, summary.value];
 
-    catalog.addOrder(order, phoneNumber.value);
+    catalog.addOrder(arr, summary.value, phoneNumber.value);
   } else {
     useNuxtApp().$swal.fire({
       title: "Ошибка",

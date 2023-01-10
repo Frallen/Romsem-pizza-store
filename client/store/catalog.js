@@ -7,6 +7,7 @@ export const useCatalog = defineStore("catalog", {
     catalogItems: [],
     isLoading: false,
     size: [],
+    orders: [],
   }),
   getters: {
     filteredItem: (state) => {
@@ -94,7 +95,7 @@ export const useCatalog = defineStore("catalog", {
         if (order.length) {
           order.map((p) => {
             if (p.id === data.id) {
-              console.log(p.value.find((z) => z === obj.value[0]));
+              //console.log(p.value.find((z) => z === obj.value[0]));
               if (!p.value.find((z) => z === obj.value[0])) {
                 p.value = [...p.value, ...obj.value];
               }
@@ -115,7 +116,7 @@ export const useCatalog = defineStore("catalog", {
         this.isLoading = false;
       }
     },
-    async addOrder(data, phone) {
+    async addOrder(data,sum, phone) {
       this.isLoading = true;
       let cookie = useCookie("order");
       let { error } = await useFetch(
@@ -128,8 +129,9 @@ export const useCatalog = defineStore("catalog", {
           body: {
             data: {
               OrderItems: JSON.stringify(data),
-              Summ: data[1].toFixed(2),
+              Sum: sum.toFixed(2),
               PhoneNumber: phone,
+              Owner:useUser().user?useUser().user.email:phone
             },
           },
         }
@@ -147,6 +149,49 @@ export const useCatalog = defineStore("catalog", {
         );
       }
 
+      this.isLoading = false;
+    },
+    async userOrders() {
+      this.isLoading = true;
+      let cookie = useCookie("user", {
+        httpOnly: true,
+        //secure:true,
+        sameSite: "strict",
+      });
+      const query = qs.stringify(
+        {
+          populate: "*",
+
+          filters: {
+            Owner: {
+              $eq: useUser().user.email,
+            },
+          },
+        },
+        {
+          encodeValuesOnly: true, // prettify URL
+        }
+      );
+
+      let { data, error } = await useFetch(
+        `${useRuntimeConfig().env.STRAPI_URL}/api/orders/?${query}`,
+        {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${cookie.value}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      if (error.value) {
+
+        switch (error.value.data.error.message) {
+          default:
+            Error("Повторите попытку позже");
+        }
+      } else {
+        this.orders = data._value.data;
+      }
       this.isLoading = false;
     },
   },
