@@ -3,48 +3,48 @@
     <div class="catalog-item-img">
       <img
         :src="
-          config.public.env.STRAPI_URL +
-          item.attributes.Image.data.attributes.url
+          config.public.strapi.url +
+          exist().attributes.Image.data.attributes.url
         "
       />
       <div
         class="catalog-item-stock"
-        v-if="item.attributes.stock"
+        v-if="exist().attributes.stock"
         title="Скидка"
       >
         %
       </div>
     </div>
     <div class="catalog-item-text">
-      <h2>{{ item.attributes.Title }}</h2>
+      <h2>{{ exist().attributes.Title }}</h2>
       <div class="catalog-item-ingridient">
         <div
           class="ingridient"
-          v-for="item in item.attributes.ingridients.data"
+          v-for="item in exist().attributes.ingridients.data"
         >
           {{ item.attributes.Ingridient }}
         </div>
       </div>
-      <p>{{ item.attributes.ingredients }}</p>
+      <p>{{ exist().attributes.ingredients }}</p>
       <SelectSize
-        :size="item.attributes.product_sizes"
+        :size="exist().attributes.product_sizes"
         @selectedSize="($event) => (selectedSize = $event)"
       ></SelectSize>
       <div class="catalog-item-box">
         <h3>Цена:</h3>
-        <div v-if="item.attributes.stock" class="catalog-item-price">
-          <div class="old-price">{{ item.attributes.Price }} Р</div>
+        <div v-if="exist().attributes.stock" class="catalog-item-price">
+          <div class="old-price">{{ exist().attributes.Price }} Р</div>
           <div class="price">
             {{
-              item.attributes.Price -
-              item.attributes.Price * (item.attributes.stock / 100)
+              exist().attributes.Price -
+              exist().attributes.Price * (exist().attributes.stock / 100)
             }}
             Р
           </div>
         </div>
-        <div v-else class="price">{{ item.attributes.Price }} Р</div>
+        <div v-else class="price">{{ exist().attributes.Price }} Р</div>
       </div>
-      <DefaultButton @click.stop="addToBasket(item.id)"
+      <DefaultButton @click.stop="addToBasket(exist().id)"
         >В корзину</DefaultButton
       >
     </div>
@@ -58,6 +58,14 @@ const config = useRuntimeConfig();
 const route = useRoute();
 let selectedSize = ref("");
 let item = catalog.filteredItem(route.params.id);
+console.log(catalog.filteredItem(route.params.id));
+let exist = () => {
+  if (catalog.filteredItem(route.params.id))
+    return catalog.filteredItem(route.params.id);
+  else
+    throw createError({ statusCode: 404, statusMessage: "Product not found" });
+};
+
 //console.log(item);
 let addToBasket = (id) => {
   let data = {
@@ -109,6 +117,7 @@ let addToBasket = (id) => {
   &-box {
     display: flex;
     justify-content: space-between;
+    align-items: center;
     margin: 1em 0;
     h3 {
       margin-bottom: 0;

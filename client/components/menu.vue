@@ -8,6 +8,9 @@
       <NuxtLink class="menu-nav-item" to="/favorites/"
         ><HeartFilled class="icon" /><span>Избранное</span>
       </NuxtLink>
+      <NuxtLink class="menu-nav-item" to="/orders/"
+        ><ProfileOutlined class="icon" /><span>Заказы</span>
+      </NuxtLink>
       <NuxtLink class="menu-nav-item" to="/settings/"
         ><SettingOutlined class="icon" /><span>Настройки</span>
       </NuxtLink>
@@ -55,7 +58,11 @@
 </template>
 
 <script setup>
-import { SettingOutlined, HeartFilled } from "@ant-design/icons-vue";
+import {
+  SettingOutlined,
+  HeartFilled,
+  ProfileOutlined,
+} from "@ant-design/icons-vue";
 import { useIndex } from "~/store";
 import Logo from "assets/img/logo.svg";
 import Pizza from "assets/img/pizza.svg";
@@ -104,7 +111,7 @@ let Close = () => {
       background: @gray;
       .br(10px);
       padding: 10px;
-      width: fit-content;
+      width: 140px;
       margin-top: 1em;
       .icon {
         margin-left: 0;

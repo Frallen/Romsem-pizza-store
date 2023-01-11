@@ -34,12 +34,9 @@ export default defineNuxtConfig({
   runtimeConfig: {
     public: {
       strapi: {
-        url: process.env.STRAPI_URL || "http://localhost:1337/api",
+        url: process.env.STRAPI_URL || "http://localhost:1337",
         entities: ["catalog-items", "about", "Review"],
         key: process.env.API_KEY,
-      },
-      env: {
-        STRAPI_URL: `http://localhost:1337`,
       },
     },
   },

@@ -23,7 +23,7 @@ export const useUser = defineStore("user", {
         sameSite: "strict",
       });
       let { data, error } = await useFetch(
-        `${useRuntimeConfig().env.STRAPI_URL}/api/auth/local/register`,
+        `${useRuntimeConfig().public.strapi.url}/api/auth/local/register`,
         {
           method: "POST",
           headers: {
@@ -61,7 +61,7 @@ export const useUser = defineStore("user", {
         sameSite: "strict",
       });
       let { data, error } = await useFetch(
-        `${useRuntimeConfig().env.STRAPI_URL}/api/auth/local`,
+        `${useRuntimeConfig().public.strapi.url}/api/auth/local`,
         {
           method: "POST",
           headers: {
@@ -101,7 +101,7 @@ export const useUser = defineStore("user", {
       if (status) {
         this.user.Favorites.push(id);
         let { data, error } = await useFetch(
-          `${useRuntimeConfig().env.STRAPI_URL}/api/users/${this.user.id}`,
+          `${useRuntimeConfig().public.strapi.url}/api/users/${this.user.id}`,
           {
             method: "PUT",
             headers: {
@@ -122,7 +122,7 @@ export const useUser = defineStore("user", {
         }
       } else {
         let { data, error } = await useFetch(
-          `${useRuntimeConfig().env.STRAPI_URL}/api/users/${this.user.id}`,
+          `${useRuntimeConfig().public.strapi.url}/api/users/${this.user.id}`,
           {
             method: "PUT",
             headers: {
@@ -163,7 +163,7 @@ export const useUser = defineStore("user", {
           }
         );
         let { data, error } = await useFetch(
-          `${useRuntimeConfig().env.STRAPI_URL}/api/users/me/?${query}`,
+          `${useRuntimeConfig().public.strapi.url}/api/users/me/?${query}`,
           {
             method: "GET",
             headers: {

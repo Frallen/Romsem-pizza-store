@@ -18,7 +18,7 @@
         <div class="search-item-img">
           <img
             :src="
-              config.public.env.STRAPI_URL +
+              config.public.strapi.url +
               item.attributes.Image.data.attributes.url
             "
           />

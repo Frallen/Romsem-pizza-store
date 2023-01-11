@@ -11,7 +11,7 @@ export const useCatalog = defineStore("catalog", {
   }),
   getters: {
     filteredItem: (state) => {
-      return (id) => state.catalogItems.filter((p) => p.id === parseInt(id))[0];
+      return (id) => state.catalogItems.find((p) => p.id === parseInt(id));
     },
     searchedItems: (state) => {
       return (data) =>
@@ -68,7 +68,7 @@ export const useCatalog = defineStore("catalog", {
       );
 
       let { data, error } = await useFetch(
-        `${useRuntimeConfig().env.STRAPI_URL}/api/catalog-items/?${query}`
+        `${useRuntimeConfig().public.strapi.url}/api/catalog-items/?${query}`
       );
 
       //console.log(this.catalogItems);
@@ -122,7 +122,7 @@ export const useCatalog = defineStore("catalog", {
       this.isLoading = true;
       let cookie = useCookie("order");
       let { error } = await useFetch(
-        `${useRuntimeConfig().env.STRAPI_URL}/api/orders`,
+        `${useRuntimeConfig().public.strapi.url}/api/orders`,
         {
           method: "POST",
           headers: {
@@ -176,7 +176,7 @@ export const useCatalog = defineStore("catalog", {
       );
 
       let { data, error } = await useFetch(
-        `${useRuntimeConfig().env.STRAPI_URL}/api/orders/?${query}`,
+        `${useRuntimeConfig().public.strapi.url}/api/orders/?${query}`,
         {
           method: "GET",
           headers: {

@@ -16,7 +16,7 @@
               <div class="basket-item-img">
                 <img
                   :src="
-                    config.public.env.STRAPI_URL +
+                    config.public.strapi.url +
                     item.attributes.Image.data.attributes.url
                   "
                 />
@@ -184,7 +184,10 @@ let submit = () => {
       width: 100%;
     }
   }
-
+  &-wrapper,
+  &-total {
+    filter: drop-shadow(0 6px 30px rgba(50, 52, 72, 0.1));
+  }
   &-item {
     margin-top: 1em;
     &-type {

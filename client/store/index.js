@@ -2,7 +2,7 @@ import qs from "qs";
 export const useIndex = defineStore("index", {
 
   state: () => ({
-    baseURL : useRuntimeConfig().env.STRAPI_URL,
+    baseURL : useRuntimeConfig().public.strapi.url,
     isLoading: false,
     Phones:[],
     MainSliderData: [],
