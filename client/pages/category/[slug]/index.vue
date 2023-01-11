@@ -1,4 +1,7 @@
 <template>
+  <Head
+    ><Title>{{ id.toString().toLocaleUpperCase() }}</Title></Head
+  >
   <Offers
     :type="id.toString()"
     :data="catalog.sortedCategories(id.toString())"

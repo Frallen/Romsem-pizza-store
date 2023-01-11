@@ -1,4 +1,8 @@
 <template>
+  <Head>
+    <Title>Заказы</Title>
+    <Meta name="description" :content="'Список ваших заказов'" />
+  </Head>
   <div class="orders">
     <OrderItem
       v-for="item in catalog.orders"

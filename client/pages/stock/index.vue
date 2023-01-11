@@ -1,4 +1,8 @@
 <template>
+  <Head>
+    <Title>Акции</Title>
+    <Meta name="description" :content="'Список проводимых акции. Скидкки,акции'" />
+  </Head>
   <Offers
     :type="'Акции'"
     :data="catalog.filteredStock"

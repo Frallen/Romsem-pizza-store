@@ -1,13 +1,18 @@
 <template>
   <div class="slider">
-    <swiper
+    <Swiper
+      :modules="[SwiperAutoplay]"
       :slides-per-view="1"
+      :loop="true"
+      :autoplay="{
+        delay: 3000,
+      }"
       :space-between="50"
       @swiper="onSwiper"
       @slideChange="onSlideChange"
       class="slider-wrapper"
     >
-      <swiper-slide
+      <SwiperSlide
         class="slider-item"
         v-for="item in IndexReducer.MainSliderData"
         :key="item.id"
@@ -17,16 +22,12 @@
               config.public.strapi.url +
               item.attributes.Image.data.attributes.url
             " /></NuxtLink
-      ></swiper-slide>
-    </swiper>
+      ></SwiperSlide>
+    </Swiper>
   </div>
 </template>
 
 <script setup>
-import { Swiper, SwiperSlide } from "swiper/vue";
-import { Navigation,Autoplay } from "swiper";
-import "swiper/css";
-import "swiper/less/navigation";
 import { useIndex } from "~/store/index";
 const config = useRuntimeConfig();
 let IndexReducer = useIndex();
@@ -40,8 +41,6 @@ const onSlideChange = () => {
 };
 IndexReducer.getSlides();
 //console.log(IndexReducer.MainSliderData)
-let modules = [Navigation,Autoplay];
-onMounted(() => {});
 </script>
 
 <style scoped lang="less">

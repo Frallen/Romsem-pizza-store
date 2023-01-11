@@ -1,5 +1,8 @@
 <template>
   <div class="catalog-item">
+    <Head
+      ><Title>{{ exist().attributes.Title }}</Title></Head
+    >
     <div class="catalog-item-img">
       <img
         :src="

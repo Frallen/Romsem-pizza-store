@@ -1,6 +1,14 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 import svgLoader from "vite-svg-loader";
 export default defineNuxtConfig({
+  app: {
+    head: {
+      title: "Romsem сеть пиццерий",
+      meta: [
+        { name: "description", content: "Пицца,роллы,суши,wok,салаты,супы." },
+      ],
+    },
+  },
   css: [
     "maz-ui/css/main.css",
     "@/assets/styles/main.less",
@@ -14,10 +22,22 @@ export default defineNuxtConfig({
   },
   image: {
     strapi: {
-      baseURL: 'http://localhost:1337/uploads/'
-    }
+      baseURL: "http://localhost:1337/uploads/",
+    },
   },
   modules: [
+    ["@nuxtjs/robots"],
+    [
+      "@nuxtjs/web-vitals",
+      {
+        webVitals: {
+          // provider: '', // auto detectd
+          debug: false,
+          disabled: false,
+        },
+      },
+    ],
+    ["nuxt-swiper"],
     ["@nuxt/image-edge"],
     [
       "@pinia/nuxt",

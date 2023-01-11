@@ -1,9 +1,14 @@
 <template>
+  <Head>
+    <Title>Избарнное</Title>
+    <Meta name="description" :content="'Список ваших любимых блюд'" />
+  </Head>
   <Offers
     :type="'Избранное'"
     :data="catalog.favoriteItems"
     v-if="catalog.favoriteItems.length"
   ></Offers>
+
   <div class="favorite-empty" v-else>
     <HeartOutlined class="heart" />
     <h3>Пока что в избранном пусто</h3>
