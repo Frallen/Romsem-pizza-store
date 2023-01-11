@@ -1,26 +1,21 @@
 <template>
   <div class="navbar">
-    <div class="navbar-box">
-      <div class="navbar-hamburger" @click="showMenu">
-        <Menu></Menu>
-      </div>
-      <div class="navbar-logo">
-        <NuxtLink to="/"><Logo></Logo>Romsem</NuxtLink>
-      </div>
+    <div class="navbar-hamburger" @click="showMenu">
+      <Menu></Menu>
+    </div>
+    <div class="navbar-logo">
+      <NuxtLink to="/"><Logo></Logo>Romsem</NuxtLink>
     </div>
     <div class="navbar-actions">
       <SearchOutlined
         class="navbar-actions-item navbar-actions-search"
         @click="showSearch"
       />
-      <NuxtLink class="navbar-actions-item" to="/favorites" v-if="isAuth"
-        ><HeartFilled
-      /></NuxtLink>
       <ExportOutlined
         src="log-out.png"
         class="navbar-actions-item navbar-actions-logout"
         @click="logOut"
-        v-if="isAuth"
+        v-if="userState.isAuth"
       />
       <LockOutlined
         class="navbar-actions-item navbar-actions-user"
@@ -41,9 +36,7 @@ import {
   SearchOutlined,
   ExportOutlined,
 } from "@ant-design/icons-vue";
-let isAuth = computed(() => {
-  return Object.keys(props.user).length > 0;
-});
+let userState = useUser();
 let props = defineProps({
   show: { type: Boolean, default: false },
   searchStatus: {
@@ -81,11 +74,6 @@ let showMenu = () => {
   position: sticky;
   top: 0;
   z-index: 3;
-  &-box {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
   &-hamburger,
   &-logo {
     cursor: pointer;
@@ -141,6 +129,9 @@ let showMenu = () => {
       .br(15px);
       background: @gray;
       .trs();
+      @media @md {
+        font-size: 1.2em;
+      }
     }
     &-item:hover {
       opacity: 0.8;

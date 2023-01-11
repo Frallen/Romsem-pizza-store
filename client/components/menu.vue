@@ -4,7 +4,16 @@
       <div class="menu-heading-title"><Logo></Logo>Romsem</div>
       <div class="close" @click="Close"></div>
     </div>
+    <div class="menu-nav" v-if="userState.isAuth">
+      <NuxtLink class="menu-nav-item" to="/favorites/"
+        ><HeartFilled class="icon" /><span>Избранное</span>
+      </NuxtLink>
+      <NuxtLink class="menu-nav-item" to="/settings/"
+        ><SettingOutlined class="icon" /><span>Настройки</span>
+      </NuxtLink>
+    </div>
     <div class="menu-wrapper">
+      <h4>Меню</h4>
       <NuxtLink :to="'/category/пицца'" @click="Close" class="menu-item"
         ><Pizza></Pizza>Пицца</NuxtLink
       >
@@ -46,6 +55,7 @@
 </template>
 
 <script setup>
+import { SettingOutlined, HeartFilled } from "@ant-design/icons-vue";
 import { useIndex } from "~/store";
 import Logo from "assets/img/logo.svg";
 import Pizza from "assets/img/pizza.svg";
@@ -60,6 +70,7 @@ import Water from "assets/img/water.svg";
 import Actions from "assets/img/actions.svg";
 let emit = defineEmits(["HideMenu"]);
 const index = useIndex();
+let userState = useUser();
 
 let Close = () => {
   emit("HideMenu", false);
@@ -81,6 +92,29 @@ let Close = () => {
   @media @md {
     padding: 10px 25px;
     width: 100%;
+  }
+  &-nav {
+    display: flex;
+    flex-direction: column;
+    &-item {
+      display: flex;
+      align-items: center;
+      text-decoration: none;
+      color: @black;
+      background: @gray;
+      .br(10px);
+      padding: 10px;
+      width: fit-content;
+      margin-top: 1em;
+      .icon {
+        margin-left: 0;
+        font-size: 1.3em;
+      }
+      span {
+        margin-left: 10px;
+        font-size: 1em;
+      }
+    }
   }
   &-phone {
     font-weight: 500;
@@ -139,6 +173,10 @@ let Close = () => {
   &-wrapper {
     display: flex;
     flex-direction: column;
+    h4 {
+      color: @black;
+      margin-top: 10px;
+    }
   }
   &-item {
     svg {
@@ -146,7 +184,7 @@ let Close = () => {
     }
     display: flex;
     align-items: center;
-    margin-top: 30px;
+    margin-top: 18px;
     text-decoration: none;
     font-weight: 400;
     font-size: 24px;

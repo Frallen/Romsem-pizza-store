@@ -10,6 +10,9 @@ export const useUser = defineStore("user", {
     favorited: (state) => {
       return (id) => state.user.Favorites.some((p) => p.id === parseInt(id));
     },
+    isAuth: (state) => {
+      return Object.keys(state.user).length > 0;
+    },
   },
   actions: {
     async createUser(obj) {

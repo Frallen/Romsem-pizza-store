@@ -28,12 +28,11 @@ export const useCatalog = defineStore("catalog", {
         );
     },
     favoriteItems: (state) => {
-      if (Object.entries(useUser().user).length===0) {
-        return false;
-      } else
+      if (useUser().isAuth) {
         return state.catalogItems.filter(
           (p) => useUser().user.Favorites.some((z) => z.id === p.id) && p
         );
+      } else return false;
     },
     filteredStock: (state) => {
       return state.catalogItems.filter((p) => p.attributes.stock);

@@ -11,7 +11,7 @@
       class="favorite"
       @favoriteAction="favoriteAction"
       :isFavorite="userState.favorited(catalogItem.id)"
-      v-if="Object.entries(userState.user).length"
+      v-if="userState.isAuth"
     ></Favorite>
     <div class="catalog-item-img">
       <img
