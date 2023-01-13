@@ -2,17 +2,25 @@
   <div class="menu">
     <div class="menu-heading">
       <div class="menu-heading-title"><Logo></Logo>Romsem</div>
-      <div class="close" @click="Close"></div>
+      <Icon class="close" name="gg:close" @click="Close" :size="'2.5em'" />
     </div>
     <div class="menu-nav" v-if="userState.isAuth">
-      <NuxtLink class="menu-nav-item" to="/favorites/"
-        ><HeartFilled class="icon" /><span>Избранное</span>
+      <NuxtLink class="menu-nav-item" to="/favorites/" @click="Close">
+        <Icon name="clarity:heart-solid" :size="'1.4em'" class="icon" /><span
+          >Избранное</span
+        >
       </NuxtLink>
-      <NuxtLink class="menu-nav-item" to="/orders/"
-        ><ProfileOutlined class="icon" /><span>Заказы</span>
+      <NuxtLink class="menu-nav-item" to="/orders/" @click="Close"
+        ><Icon name="iconoir:shopping-bag" :size="'1.4em'" class="icon" /><span
+          >Заказы</span
+        >
       </NuxtLink>
-      <NuxtLink class="menu-nav-item" to="/settings/"
-        ><SettingOutlined class="icon" /><span>Настройки</span>
+      <NuxtLink class="menu-nav-item" to="/settings/" @click="Close"
+        ><Icon
+          name="clarity:settings-solid"
+          :size="'1.4em'"
+          class="icon"
+        /><span>Настройки</span>
       </NuxtLink>
     </div>
     <div class="menu-wrapper">
@@ -58,11 +66,6 @@
 </template>
 
 <script setup>
-import {
-  SettingOutlined,
-  HeartFilled,
-  ProfileOutlined,
-} from "@ant-design/icons-vue";
 import { useIndex } from "~/store";
 import Logo from "assets/img/logo.svg";
 import Pizza from "assets/img/pizza.svg";
@@ -155,25 +158,7 @@ let Close = () => {
     }
     .close {
       position: relative;
-      height: 40px;
-      width: 40px;
       cursor: pointer;
-    }
-    .close::before {
-      transform: rotate(-45deg);
-    }
-    .close::after {
-      transform: rotate(45deg);
-    }
-    .close::before,
-    .close::after {
-      position: absolute;
-      background: @black;
-      height: 40px;
-      width: 2px;
-      right: 17px;
-      content: "";
-      display: block;
     }
   }
 

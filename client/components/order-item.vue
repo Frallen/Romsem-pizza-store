@@ -9,7 +9,7 @@
         Заказ от
         {{ moment(item.attributes.createdAt).format("DD.MM.YYYY hh:mm") }}
       </h5>
-      <div class="arrow"><DownOutlined /></div>
+      <div class="arrow"><Icon name="gg:arrow-down" :size="'1.8em'" /></div>
     </div>
     <div class="orders-item-body">
       <div class="order">
@@ -29,7 +29,6 @@
 </template>
 
 <script setup>
-import { DownOutlined } from "@ant-design/icons-vue";
 import moment from "moment";
 let props = defineProps({
   item: {
@@ -44,9 +43,9 @@ show.value = false;
 <style scoped lang="less">
 .orders-item {
   background: #fff;
-  filter:drop-shadow(0 6px 30px rgba(50, 52, 72, 0.1));
+  .shadow();
   margin-top: 1em;
-  padding:15px;
+  padding: 15px;
   .br(10px);
   user-select: none;
   overflow: hidden;

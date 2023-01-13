@@ -5,7 +5,7 @@ html {
 }
 body {
   font-family: "DIN Pro", serif;
- // background: #f2f2f2;
+  // background: #f2f2f2;
 }
 .container {
   padding: 10px 7.813em;
@@ -48,16 +48,12 @@ h4 {
 .widget {
   text-decoration: none;
   position: fixed;
-  border: 1px solid @orange;
-  background: #fff;
+  background: @gray;
+  box-shadow: 0 0 9px 0px @black;
   .br(100%);
   .trs();
   padding: 8px 10px;
-  svg {
-    .trs();
-    filter: invert(63%) sepia(98%) saturate(504%) hue-rotate(325deg)
-      brightness(101%) contrast(108%);
-  }
+  color: @black;
 }
 .form {
   display: flex;

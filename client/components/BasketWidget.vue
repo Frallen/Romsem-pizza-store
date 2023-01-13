@@ -1,12 +1,11 @@
 <template>
   <NuxtLink to="/basket" class="widget"
-    ><Basket></Basket>
+    ><Icon name="gg:shopping-bag" :size="'1.6em'"/>
     <div class="widget-count" v-if="count">{{ count }}</div></NuxtLink
   >
 </template>
 
 <script setup>
-import Basket from "assets/img/basket.svg";
 import { useCatalog } from "~/store/catalog";
 const catalog = useCatalog();
 let cookie = useCookie("order");
@@ -31,7 +30,6 @@ let calc = () => {
 .widget {
   bottom: 5%;
   right: 3%;
-  background: #fff;
   z-index: 2;
   @media @md {
     bottom: 25%;

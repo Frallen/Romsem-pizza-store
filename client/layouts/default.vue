@@ -1,6 +1,8 @@
 <template>
   <div>
-    <Preloader v-show="preloader"></Preloader>
+    <transition name="fade">
+      <Preloader v-show="preloader"></Preloader
+    ></transition>
     <Navbar
       @showMenu="showMenu"
       @showForm="showForm"

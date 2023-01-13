@@ -1,11 +1,10 @@
 <template>
   <NuxtLink :to="`tel:${PhoneNumber}`" class="widget">
-    <Phone></Phone>
+    <Icon name="gg:smartphone" :size="'1.6em'"/>
   </NuxtLink>
 </template>
 
 <script setup>
-import Phone from "assets/img/phone.svg";
 let props = defineProps({
   PhoneNumber: {
     type: String,
@@ -17,14 +16,10 @@ let props = defineProps({
 .widget {
   bottom: 15%;
   right: 3%;
-  background: #fff;
   z-index: 2;
   @media @md {
     bottom: 35%;
   }
-  svg {
-    width: 30px;
-    height: 30px;
-  }
+
 }
 </style>

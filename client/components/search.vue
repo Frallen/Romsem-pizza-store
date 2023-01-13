@@ -6,7 +6,8 @@
         type="text"
         class="input"
         placeholder="Название блюда"
-      /><Close @click="hide"></Close>
+      />
+      <Icon class="close" @click="hide" name="gg:close"  :size="'1.8em'" />
     </div>
     <div class="search-wrapper">
       <NuxtLink

@@ -2,12 +2,27 @@
   <div class="slider">
     <Swiper
       :modules="[SwiperAutoplay]"
-      :slides-per-view="1"
+      :slides-per-view="3"
+      :space-between="10"
       :loop="true"
+      :breakpoints="{
+        998: {
+          slidesPerView: 3,
+          spaceBetween: 10,
+        },
+        480: {
+          slidesPerView: 2,
+          spaceBetween: 30,
+        },
+
+        320: {
+          slidesPerView: 1,
+          spaceBetween: 20,
+        },
+      }"
       :autoplay="{
         delay: 3000,
       }"
-      :space-between="50"
       @swiper="onSwiper"
       @slideChange="onSlideChange"
       class="slider-wrapper"
@@ -31,8 +46,6 @@
 import { useIndex } from "~/store/index";
 const config = useRuntimeConfig();
 let IndexReducer = useIndex();
-let props = defineProps({});
-let emit = defineEmits([]);
 const onSwiper = (swiper) => {
   //console.log(swiper);
 };
@@ -51,15 +64,17 @@ IndexReducer.getSlides();
   }
   &-item {
     overflow: hidden;
-    .br(10px);
+    .br(15px);
     a {
       text-decoration: none;
       display: block;
+      overflow: hidden;
       height: 100%;
+      .br(15px);
       img {
+        display: block;
         width: 100%;
         height: 100%;
-        object-fit: cover;
       }
     }
   }

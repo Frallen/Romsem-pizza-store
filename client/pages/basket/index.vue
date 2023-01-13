@@ -186,7 +186,7 @@ let submit = () => {
   }
   &-wrapper,
   &-total {
-    filter: drop-shadow(0 6px 30px rgba(50, 52, 72, 0.1));
+    .shadow();
   }
   &-item {
     margin-top: 1em;

@@ -1,41 +1,41 @@
 <template>
   <div class="navbar">
     <div class="navbar-hamburger" @click="showMenu">
-      <Menu></Menu>
+      <Icon
+          name="gg:menu"
+      />
     </div>
     <div class="navbar-logo">
       <NuxtLink to="/"><Logo></Logo>Romsem</NuxtLink>
     </div>
     <div class="navbar-actions">
-      <SearchOutlined
+      <Icon
+        name="gg:search"
+        :size="'1.8em'"
         class="navbar-actions-item navbar-actions-search"
         @click="showSearch"
       />
-      <ExportOutlined
-        src="log-out.png"
-        class="navbar-actions-item navbar-actions-logout"
-        @click="logOut"
-        v-if="userState.isAuth"
+      <Icon
+          name="gg:log-off"
+          :size="'1.8em'"
+          class="navbar-actions-item navbar-actions-logout"
+          @click="logOut"
+          v-if="userState.isAuth"
       />
-      <LockOutlined
-        class="navbar-actions-item navbar-actions-user"
-        @click="showForm"
-        v-else
+      <Icon
+          name="gg:lock"
+          :size="'1.8em'"
+          class="navbar-actions-item navbar-actions-user"
+          @click="showForm"
+          v-else
       />
     </div>
   </div>
 </template>
 
 <script setup>
-import Menu from "assets/img/menu.svg";
 import Logo from "assets/img/logo.svg";
 import { useUser } from "~/store/user";
-import {
-  HeartFilled,
-  LockOutlined,
-  SearchOutlined,
-  ExportOutlined,
-} from "@ant-design/icons-vue";
 let userState = useUser();
 let props = defineProps({
   show: { type: Boolean, default: false },
@@ -65,7 +65,7 @@ let showMenu = () => {
 
 <style scoped lang="less">
 .navbar {
-  filter: drop-shadow(0 6px 30px rgba(50, 52, 72, 0.1));
+  .shadow();
   display: flex;
   justify-content: space-between;
   align-items: center;

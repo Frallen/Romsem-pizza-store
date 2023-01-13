@@ -10,13 +10,12 @@
   ></Offers>
 
   <div class="favorite-empty" v-else>
-    <HeartOutlined class="heart" />
+    <Icon name="gg:heart" :size="'15em'" />
     <h3>Пока что в избранном пусто</h3>
   </div>
 </template>
 
 <script setup>
-import { HeartOutlined } from "@ant-design/icons-vue";
 import { useCatalog } from "~/store/catalog";
 definePageMeta({
   middleware: "auth",

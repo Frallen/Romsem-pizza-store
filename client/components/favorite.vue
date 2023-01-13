@@ -5,16 +5,15 @@
       v-if="isFavorite"
       @click.stop="favoriteAction(false)"
     >
-      <HeartFilled class="check" />
+      <Icon name="clarity:heart-solid" :size="'1.6em'" class="check" />
     </div>
     <div class="star-item" v-else @click.stop="favoriteAction(true)">
-      <HeartOutlined class="uncheck" />
+      <Icon name="clarity:heart-line" :size="'1.6em'" class="uncheck" />
     </div>
   </div>
 </template>
 
 <script setup>
-import { HeartFilled, HeartOutlined } from "@ant-design/icons-vue";
 let props = defineProps({
   isFavorite: {
     default: false,
