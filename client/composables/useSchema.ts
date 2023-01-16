@@ -13,14 +13,18 @@ export const useSchemaReg = () => {
   });
 };
 
-export const useSchemaUpdate = () => {
+export const useInfo = () => {
   return yup.object({
     userName: yup.string(),
     email: yup.string().email(() => email()),
-    password: yup.string().min(8, () => min8()),
   });
 };
-
+export const usePassword = () => {
+  return yup.object({
+    CurrentPassword: yup.string().min(8, () => min8()).required(() => required()),
+    NewPassword: yup.string().min(8, () => min8()).required(() => required()),
+  });
+};
 export const useSchemaAuth = () => {
   return yup.object({
     email: yup

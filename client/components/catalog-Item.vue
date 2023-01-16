@@ -5,7 +5,7 @@
       v-if="catalogItem.attributes.stock"
       title="Скидка"
     >
-      %
+      <Icon name="mingcute:sale-line" :size="'2em'" />
     </div>
     <Favorite
       class="favorite"
@@ -110,13 +110,10 @@ let addToBasket = (id) => {
     position: absolute;
     top: 8px;
     left: 8px;
-    padding: 6px 8px;
-    background: @orange;
     .br(100%);
     text-align: right;
     font-weight: 900;
-    color: #fff;
-    font-size: 1em;
+    color: @orange;
   }
   &-img {
     width: 100%;

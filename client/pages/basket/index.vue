@@ -52,7 +52,9 @@
                   ></div>
                 </div>
               </div>
-              <DefaultButton>Удалить</DefaultButton>
+              <DefaultButton @click.stop="Remove(item.id,i)"
+                >Удалить</DefaultButton
+              >
             </div>
           </div>
         </div>
@@ -140,6 +142,9 @@ onMounted(() => {
   calc();
 });
 
+let Remove = (id,type) => {
+   catalog.removeItem(id,type)
+};
 let submit = () => {
   if (phoneNumber.value) {
     let arr = [];

@@ -1,6 +1,6 @@
 <template>
   <NuxtLink to="/basket" class="widget"
-    ><Icon name="gg:shopping-bag" :size="'1.6em'"/>
+    ><Icon name="iconoir:shopping-bag" :size="'1.6em'" />
     <div class="widget-count" v-if="count">{{ count }}</div></NuxtLink
   >
 </template>
@@ -13,9 +13,9 @@ let order = [...(cookie.value ?? "")];
 
 let count = useState("count");
 
-onMounted(() => {
+setInterval(() => {
   calc();
-});
+}, 1000);
 let calc = () => {
   let arr = [];
   order.map((p) => {
@@ -24,6 +24,7 @@ let calc = () => {
 
   count.value = arr.reduce((acc, number) => acc + number, 0);
 };
+calc();
 </script>
 
 <style scoped lang="less">

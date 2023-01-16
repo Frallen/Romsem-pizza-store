@@ -30,7 +30,7 @@
     ></PhoneWidget>
     <BasketWidget v-if="route.name !== 'basket'"></BasketWidget>
     <transition name="fade">
-      <userForm @closeModal="HideMenu" v-show="modal"></userForm
+      <Auth @closeModal="HideMenu" v-show="modal" v-if="userState.user"></Auth
     ></transition>
   </div>
 </template>

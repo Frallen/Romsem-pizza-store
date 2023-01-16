@@ -1,6 +1,6 @@
 <template>
   <NuxtLink :to="`tel:${PhoneNumber}`" class="widget">
-    <Icon name="gg:smartphone" :size="'1.6em'"/>
+    <Icon name="lucide:smartphone" :size="'1.6em'"/>
   </NuxtLink>
 </template>
 

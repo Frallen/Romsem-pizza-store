@@ -146,6 +146,107 @@ export const useUser = defineStore("user", {
       await this.Profile(cookie.value);
       this.isLoading = false;
     },
+    async updateProfile(info) {
+      this.isLoading = true;
+      let cookie = useCookie("user", {
+        httpOnly: true,
+        //secure:true,
+        sameSite: "strict",
+      });
+
+      switch (true) {
+        case info.hasOwnProperty("email") && info.email: {
+          let { data, error } = await useFetch(
+            `${useRuntimeConfig().public.strapi.url}/api/auth/change-password`,
+            {
+              method: "PUT",
+              headers: {
+                Authorization: `Bearer ${cookie.value}`,
+                "Content-Type": "application/json",
+              },
+              body: {
+                Favorites: this.user.Favorites,
+              },
+            }
+          );
+          if (error.value) {
+            // console.log(error.value.data.error.message);
+            switch (error.value.data.error.message) {
+              default:
+                Error("Повторите попытку позже");
+            }
+          } else {
+            await this.logout();
+          }
+
+          break;
+        }
+        case info.hasOwnProperty("userName"): {
+          let { data, error } = await useFetch(
+            `${useRuntimeConfig().public.strapi.url}/api/users/${this.user.id}`,
+            {
+              method: "PUT",
+              headers: {
+                Authorization: `Bearer ${cookie.value}`,
+                "Content-Type": "application/json",
+              },
+              body: {
+                FI: info.userName,
+              },
+            }
+          );
+          if (error.value) {
+            // console.log(error.value.data.error.message);
+            switch (error.value.data.error.message) {
+              default:
+                Error("Повторите попытку позже");
+            }
+          } else {
+            Success(
+              "Пароль усешно изменен",
+              "Можете входить в учетную запись с новыми данными"
+            );
+            await this.Profile();
+          }
+
+          break;
+        }
+        case info.hasOwnProperty("NewPassword"): {
+          let { data, error } = await useFetch(
+            `${useRuntimeConfig().public.strapi.url}/api/auth/change-password`,
+            {
+              method: "POST",
+              headers: {
+                Authorization: `Bearer ${cookie.value}`,
+                "Content-Type": "application/json",
+              },
+              body: {
+                currentPassword: info.CurrentPassword,
+                password: info.NewPassword,
+                passwordConfirmation: info.NewPassword,
+              },
+            }
+          );
+          if (error.value) {
+            // console.log(error.value);
+            switch (error.value.data.error.message) {
+              default:
+                Error("Не верный пароль или повторите попытку позже");
+            }
+          } else {
+            Success(
+              "Пароль усешно изменен",
+              "Можете входить в учетную запись с новыми данными"
+            );
+            await this.logout();
+          }
+
+          break;
+        }
+      }
+
+      this.isLoading = false;
+    },
     async Profile(jwt) {
       this.isLoading = true;
       let cookie = useCookie("user", {
@@ -194,6 +295,7 @@ export const useUser = defineStore("user", {
         });
         cookie.value = null;
         this.user = {};
+        useRouter().push("/");
       } catch (e) {
         console.error(e);
       } finally {

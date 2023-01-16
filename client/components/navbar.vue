@@ -10,7 +10,7 @@
     </div>
     <div class="navbar-actions">
       <Icon
-        name="gg:search"
+        name="clarity:search-line"
         :size="'1.8em'"
         class="navbar-actions-item navbar-actions-search"
         @click="showSearch"

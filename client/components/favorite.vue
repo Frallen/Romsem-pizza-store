@@ -5,10 +5,10 @@
       v-if="isFavorite"
       @click.stop="favoriteAction(false)"
     >
-      <Icon name="clarity:heart-solid" :size="'1.6em'" class="check" />
+      <Icon name="clarity:heart-solid" :size="'1.4em'" class="check" />
     </div>
     <div class="star-item" v-else @click.stop="favoriteAction(true)">
-      <Icon name="clarity:heart-line" :size="'1.6em'" class="uncheck" />
+      <Icon name="clarity:heart-line" :size="'1.4em'" class="uncheck" />
     </div>
   </div>
 </template>

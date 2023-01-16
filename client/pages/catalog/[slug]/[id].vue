@@ -15,7 +15,7 @@
         v-if="exist().attributes.stock"
         title="Скидка"
       >
-        %
+        <Icon name="mingcute:sale-line" :size="'1.8em'" />
       </div>
     </div>
     <div class="catalog-item-text">
@@ -94,6 +94,7 @@ let addToBasket = (id) => {
     height: 350px;
     overflow: hidden;
     position: relative;
+    .shadow();
     .br(10px);
     @media @md {
       width: 100%;
