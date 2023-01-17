@@ -37,22 +37,6 @@ export const useCatalog = defineStore("catalog", {
     filteredStock: (state) => {
       return state.catalogItems.filter((p) => p.attributes.stock);
     },
-    basketItems: (state) => {
-      let cookie = useCookie("order");
-      let order = [...(cookie.value ?? "")];
-      let arr = state.catalogItems.filter(
-        (p) => order.find((z) => z.id === p.id) && p
-      );
-      order.map((z) =>
-        arr.map((p) => {
-          if (z.id === p.id) {
-            p.value = [...z.value];
-          }
-        })
-      );
-
-      return arr;
-    },
   },
   actions: {
     /// параметры к api https://docs.strapi.io/developer-docs/latest/developer-resources/database-apis-reference/rest/api-parameters.html

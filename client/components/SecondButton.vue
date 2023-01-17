@@ -6,11 +6,9 @@
 
 <style scoped lang="less">
 .button {
-  background: @orange;
-  color: #fff;
-  box-shadow: 0 4px 20px rgb(255 80 0 / 16%);
+  color: @black;
+  background: #f1f4f9;
 }
 .button:hover {
-  box-shadow: 0 2px 10px rgb(215 68 0 / 40%);
 }
 </style>

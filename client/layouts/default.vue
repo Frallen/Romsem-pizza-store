@@ -89,14 +89,6 @@ let HideMenu = () => {
 };
 </script>
 <style lang="less">
-.fade-enter-active,
-.fade-leave-active {
-  transition: opacity 0.2s ease;
-}
-.fade-enter-from,
-.fade-leave-to {
-  opacity: 0;
-}
 .leftToRight-enter-active,
 .leftToRight-leave-active {
   .trs();

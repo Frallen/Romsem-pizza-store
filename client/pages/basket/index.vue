@@ -1,62 +1,61 @@
 <template>
   <div class="basket">
-    <template v-if="catalog.basketItems.length">
+    <template v-if="basketItems().length">
       <div class="basket-wrapper">
-        <div
-          class="basket-item"
-          v-for="item in catalog.basketItems"
-          :key="item.id"
-        >
-          <div
-            class="basket-item-type"
-            v-for="(i, index) in item.value"
-            :key="i"
-          >
-            <div class="basket-item-info">
-              <div class="basket-item-img">
-                <img
-                  :src="
-                    config.public.strapi.url +
-                    item.attributes.Image.data.attributes.url
-                  "
+        <div class="basket-item" v-for="item in basketItems()" :key="item.id">
+          <transition-group name="fade">
+            <div
+              class="basket-item-type"
+              v-for="(i, index) in item.value"
+              :key="i"
+            >
+              <div class="basket-item-info">
+                <div class="basket-item-img">
+                  <img
+                    :src="
+                      config.public.strapi.url +
+                      item.attributes.Image.data.attributes.url
+                    "
+                  />
+                </div>
+                <div class="basket-item-text">
+                  <h5>{{ item.attributes.Title }}</h5>
+                  <p>{{ i }}</p>
+                </div>
+              </div>
+              <div class="basket-item-count">
+                <div class="count">
+                  <div class="count-number">
+                    <div
+                      class="count-number-quality"
+                      :data-value="1"
+                      :data-sum="item.attributes.Price"
+                      :data-price="item.attributes.Price"
+                    >
+                      {{ 1 }} X
+                    </div>
+                    <div class="count-number-price">
+                      {{ item.attributes.Price }}р
+                    </div>
+                  </div>
+                  <div class="count-manipulate">
+                    <div
+                      class="count-manipulate-item minus"
+                      @click.prevent="minus"
+                    ></div>
+                    <div
+                      class="count-manipulate-item plus"
+                      @click.prevent="plus"
+                    ></div>
+                  </div>
+                </div>
+                <Icon
+                  @click.stop="Remove(item.id, i)"
+                  name="ph:trash-simple"
+                  :size="'2em'"
                 />
-              </div>
-              <div class="basket-item-text">
-                <h5>{{ item.attributes.Title }}</h5>
-                <p>{{ i }}</p>
-              </div>
-            </div>
-            <div class="basket-item-count">
-              <div class="count">
-                <div class="count-number">
-                  <div
-                    class="count-number-quality"
-                    :data-value="1"
-                    :data-sum="item.attributes.Price"
-                    :data-price="item.attributes.Price"
-                  >
-                    {{ 1 }} X
-                  </div>
-                  <div class="count-number-price">
-                    {{ item.attributes.Price }}р
-                  </div>
-                </div>
-                <div class="count-manipulate">
-                  <div
-                    class="count-manipulate-item minus"
-                    @click.prevent="minus"
-                  ></div>
-                  <div
-                    class="count-manipulate-item plus"
-                    @click.prevent="plus"
-                  ></div>
-                </div>
-              </div>
-              <DefaultButton @click.stop="Remove(item.id,i)"
-                >Удалить</DefaultButton
-              >
-            </div>
-          </div>
+              </div></div
+          ></transition-group>
         </div>
       </div>
       <div class="basket-total">
@@ -83,10 +82,11 @@
           />
           <DefaultButton @click.stop="submit">Заказать</DefaultButton>
         </div>
-      </div></template
-    >
+        <SecondButton class="basket-total-clear">Очистить корзину</SecondButton>
+      </div>
+    </template>
     <div v-else class="basket-empty">
-      <Trash></Trash>
+      <Icon name="quill:folder-trash" :size="'10em'" />
       <h3>В корзине пусто</h3>
       <NuxtLink to="/" class="button">На главную</NuxtLink>
     </div>
@@ -94,14 +94,14 @@
 </template>
 
 <script setup>
-import Trash from "assets/img/Trash.svg";
 import MazPhoneNumberInput from "maz-ui/components/MazPhoneNumberInput";
 import { useCatalog } from "~/store/catalog";
+import SecondButton from "~/components/SecondButton.vue";
 const catalog = useCatalog();
 const config = useRuntimeConfig();
-const phoneNumber = ref("");
+const phoneNumber = useState("phoneNumber");
 const results = ref();
-let summary = ref("");
+let summary = useState("summary");
 
 let minus = (e) => {
   let quality = e.currentTarget.parentNode.parentNode.parentNode.querySelector(
@@ -142,8 +142,8 @@ onMounted(() => {
   calc();
 });
 
-let Remove = (id,type) => {
-   catalog.removeItem(id,type)
+let Remove = async (id, type) => {
+  await catalog.removeItem(id, type).then(() => basketItems());
 };
 let submit = () => {
   if (phoneNumber.value) {
@@ -167,6 +167,22 @@ let submit = () => {
       confirmButtonText: "Хорошо",
     });
   }
+};
+let basketItems = () => {
+  let cookie = useCookie("order");
+  let order = [...(cookie.value ?? "")];
+  let arr = catalog.catalogItems.filter(
+    (p) => order.find((z) => z.id === p.id) && p
+  );
+  order.map((z) =>
+    arr.map((p) => {
+      if (z.id === p.id) {
+        p.value = [...z.value];
+      }
+    })
+  );
+
+  return arr;
 };
 </script>
 
@@ -220,6 +236,7 @@ let submit = () => {
     }
     &-info {
       display: flex;
+      align-items: center;
     }
     &-text {
       margin-left: 10px;
@@ -232,9 +249,16 @@ let submit = () => {
       }
     }
     &-count {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
       .button {
         padding: 2px 5px;
         margin-top: 10px;
+      }
+      .icon {
+        margin-top: 1em;
+        cursor: pointer;
       }
     }
   }
@@ -283,6 +307,10 @@ let submit = () => {
         width: auto;
       }
     }
+    &-clear {
+      margin-top: 1.2em;
+      background: #f1f4f9;
+    }
   }
   &-empty {
     display: flex;
@@ -302,26 +330,32 @@ let submit = () => {
     }
     svg {
     }
+    .button {
+      background: #f1f4f9;
+      color: @black;
+      width: fit-content;
+    }
   }
 }
 .count {
   display: flex;
   justify-content: flex-end;
   flex-direction: column;
-
   &-manipulate {
     display: flex;
     align-items: center;
+    justify-content: space-between;
     gap: 5px;
+    background: #f1f4f9;
+    padding: 10px;
+    .br(40px);
     &-item {
       color: @black;
       font-size: 1.3em;
-      padding: 5px 10px;
-      background: @orange;
       cursor: pointer;
       position: relative;
-      width: 40px;
-      height: 24px;
+      width: 30px;
+      height: 15px;
     }
     .minus::before {
       content: "";
@@ -386,5 +420,13 @@ let submit = () => {
       font-size: 24px;
     }
   }
+}
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.2s ease;
+}
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
 }
 </style>

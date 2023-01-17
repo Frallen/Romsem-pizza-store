@@ -8,8 +8,6 @@
 <script setup>
 import { useCatalog } from "~/store/catalog";
 const catalog = useCatalog();
-let cookie = useCookie("order");
-let order = [...(cookie.value ?? "")];
 
 let count = useState("count");
 
@@ -17,6 +15,8 @@ setInterval(() => {
   calc();
 }, 1000);
 let calc = () => {
+  let cookie = useCookie("order");
+  let order = [...(cookie.value ?? "")];
   let arr = [];
   order.map((p) => {
     arr.push(p.value.length);
