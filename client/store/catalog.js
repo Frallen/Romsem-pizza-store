@@ -153,6 +153,27 @@ export const useCatalog = defineStore("catalog", {
 
       this.isLoading = false;
     },
+    async removeItem(id, type) {
+      this.isLoading = true;
+      let cookie = useCookie("order");
+      console.log(cookie.value);
+      // console.log(cookie.value.filter(p=>p.id!==id&&p.value.filter(z=>z!==type)) )
+      if (type) {
+        cookie.value = cookie.value.map((z) => {
+          if (z.id === id) {
+
+            z.value = [...z.value.filter((p) => p !== type)];
+
+          }
+          return z
+        });
+
+      } else {
+        cookie.value = JSON.stringify(cookie.value.filter((p) => p.id !== id));
+      }
+
+      this.isLoading = false;
+    },
     async userOrders() {
       this.isLoading = true;
       let cookie = useCookie("user", {
