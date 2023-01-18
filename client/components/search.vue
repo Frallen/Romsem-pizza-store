@@ -32,7 +32,6 @@
 
 <script setup>
 import { useCatalog } from "~/store/catalog";
-import Close from "assets/img/close.svg";
 const config = useRuntimeConfig();
 const catalog = useCatalog();
 let emit = defineEmits(["searchStatus"]);

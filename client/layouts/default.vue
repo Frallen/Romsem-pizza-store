@@ -1,7 +1,7 @@
 <template>
   <div>
     <transition name="fade">
-      <Preloader v-show="preloader"></Preloader
+      <Preloader v-show="preloaderState||preloader"></Preloader
     ></transition>
     <Navbar
       @showMenu="showMenu"
@@ -52,6 +52,11 @@ await catalog.getDeals();
 await index.GetPhones();
 await userState.Profile();
 //console.log(catalog.catalogItems);
+let preloaderState=useState("preloader")
+preloaderState.value=true
+setTimeout(()=>{
+  preloaderState.value=false
+},2000)
 
 let preloader = computed(() => {
   return catalog.isLoading || index.isLoading || userState.isLoading;
@@ -73,7 +78,9 @@ let searchShow = (value) => {
     document.querySelector("body").style.overflow = "visible";
   }
 };
-
+onMounted(()=>{
+  document.querySelector("body").style.overflow = "visible";
+})
 let showMenu = () => {
   show.value = true;
   menu.value = true;

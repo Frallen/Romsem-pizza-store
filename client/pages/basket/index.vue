@@ -1,8 +1,8 @@
 <template>
   <div class="basket">
-    <template v-if="basketItems().length">
+    <template v-if="basketItems.length">
       <div class="basket-wrapper">
-        <div class="basket-item" v-for="item in basketItems()" :key="item.id">
+        <div class="basket-item" v-for="item in basketItems" :key="item.id">
           <transition-group name="fade">
             <div
               class="basket-item-type"
@@ -82,7 +82,9 @@
           />
           <DefaultButton @click.stop="submit">Заказать</DefaultButton>
         </div>
-        <SecondButton class="basket-total-clear">Очистить корзину</SecondButton>
+        <SecondButton class="basket-total-clear" @click.stop="clearBasket()"
+          >Очистить корзину</SecondButton
+        >
       </div>
     </template>
     <div v-else class="basket-empty">
@@ -143,7 +145,9 @@ onMounted(() => {
 });
 
 let Remove = async (id, type) => {
-  await catalog.removeItem(id, type).then(() => basketItems());
+  await catalog.removeItem(id, type).then(async ()=> {
+    basketItems.value = await fillteredItems()
+  });
 };
 let submit = () => {
   if (phoneNumber.value) {
@@ -168,22 +172,36 @@ let submit = () => {
     });
   }
 };
-let basketItems = () => {
+let basketItems = ref("items");
+let clearBasket = async () => {
+  let cookie = useCookie("order");
+  cookie.value = [];
+  basketItems.value =await fillteredItems();
+};
+
+
+let fillteredItems = () => {
   let cookie = useCookie("order");
   let order = [...(cookie.value ?? "")];
-  let arr = catalog.catalogItems.filter(
-    (p) => order.find((z) => z.id === p.id) && p
-  );
-  order.map((z) =>
-    arr.map((p) => {
-      if (z.id === p.id) {
-        p.value = [...z.value];
-      }
-    })
-  );
+  if (order) {
+    let arr = catalog.catalogItems.filter(
+      (p) => order.find((z) => z.id === p.id) && p
+    );
+    order.map((z) =>
+      arr.map((p) => {
+        if (z.id === p.id && z.value) {
+          p.value = [...z.value];
+        }
+      })
+    );
 
-  return arr;
+    return arr;
+  } else {
+    return [];
+  }
 };
+
+basketItems.value = fillteredItems();
 </script>
 
 <style scoped lang="less">
@@ -420,13 +438,5 @@ let basketItems = () => {
       font-size: 24px;
     }
   }
-}
-.fade-enter-active,
-.fade-leave-active {
-  transition: opacity 0.2s ease;
-}
-.fade-enter-from,
-.fade-leave-to {
-  opacity: 0;
 }
 </style>

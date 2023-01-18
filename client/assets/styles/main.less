@@ -6,6 +6,7 @@ html {
 body {
   font-family: "DIN Pro", serif;
   // background: #f2f2f2;
+  overflow: hidden;
 }
 .container {
   padding: 10px 7.813em;
@@ -105,4 +106,12 @@ h4 {
 .button:hover {
   background: #c3c3c3;
   .trs();
+}
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.2s ease;
+}
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
 }

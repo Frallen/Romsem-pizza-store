@@ -1,13 +1,16 @@
 <template>
   <div class="modal">
-      <Close class="modal-close" @click="close()"></Close>
-      <slot></slot>
+    <Icon
+      name="gg:close"
+      :size="'2.5em'"
+      class="modal-close"
+      @click="close()"
+    />
+    <slot></slot>
   </div>
 </template>
 
 <script setup>
-import Close from "~/assets/img/close.svg";
-
 let props = defineProps({});
 let emit = defineEmits(["close"]);
 let close = () => {
@@ -27,9 +30,9 @@ let close = () => {
   .postAbsolute();
   text-align: center;
   z-index: 6;
-  @media @md{
+  @media @md {
     width: 320px;
-    top:5%;
+    top: 5%;
   }
   &-wrapper {
     position: relative;

@@ -10,18 +10,17 @@ import { useCatalog } from "~/store/catalog";
 const catalog = useCatalog();
 
 let count = useState("count");
-
+let cookie = useCookie("order");
 setInterval(() => {
   calc();
 }, 1000);
 let calc = () => {
-  let cookie = useCookie("order");
+
   let order = [...(cookie.value ?? "")];
   let arr = [];
   order.map((p) => {
     arr.push(p.value.length);
   });
-
   count.value = arr.reduce((acc, number) => acc + number, 0);
 };
 calc();

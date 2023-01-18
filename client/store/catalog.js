@@ -74,6 +74,7 @@ export const useCatalog = defineStore("catalog", {
         let obj = {
           id: data.id,
           value: [data._value],
+          //...(data._value && {value: [data._value]})}
         };
         let cookie = useCookie("order");
         let order = [...(cookie.value ?? "")];
@@ -83,13 +84,12 @@ export const useCatalog = defineStore("catalog", {
             if (p.id === data.id) {
               //console.log(p.value.find((z) => z === obj.value[0]));
               if (!p.value.find((z) => z === obj.value[0])) {
-                p.value = [...p.value, ...obj.value];
+                return (p.value = [...p.value, ...obj.value]);
               }
             }
           });
 
-          !order.find((p) => p.id === obj.id) && order.push(obj);
-          //  console.log(order);
+          !order.some((p) => p.id === obj.id) && order.push(obj);
 
           cookie.value = JSON.stringify(order);
         } else {
@@ -140,18 +140,30 @@ export const useCatalog = defineStore("catalog", {
     async removeItem(id, type) {
       this.isLoading = true;
       let cookie = useCookie("order");
-      console.log(cookie.value);
-      // console.log(cookie.value.filter(p=>p.id!==id&&p.value.filter(z=>z!==type)) )
       if (type) {
-        cookie.value = cookie.value.map((z) => {
-          if (z.id === id) {
-
-            z.value = [...z.value.filter((p) => p !== type)];
-
+        console.log(  cookie.value.some((p) => {
+          if (p.id === id) {
+            return  Object.entries(p.value).length < 2;
           }
-          return z
-        });
-
+        }));
+        if (
+          cookie.value.some((p) => {
+            if (p.id === id) {
+             return  Object.entries(p.value).length < 2;
+            }
+          })
+        ) {
+          cookie.value = JSON.stringify(
+            cookie.value.filter((p) => p.id !== id)
+          );
+        } else {
+          cookie.value = cookie.value.map((z) => {
+            if (z.id === id) {
+              z.value = [...z.value.filter((p) => p !== type)];
+            }
+            return z;
+          });
+        }
       } else {
         cookie.value = JSON.stringify(cookie.value.filter((p) => p.id !== id));
       }

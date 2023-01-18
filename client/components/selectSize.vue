@@ -12,46 +12,44 @@
     </div>
   </div>
 </template>
+<script setup>
+let emit = defineEmits(["selectedSize"]);
+let props = defineProps({
+  size: {
+    type: Object,
+  },
+});
+let status = ref("");
+status.value=1
+let selectedSize = useState("Маленькая");
+selectedSize.value = "Маленькая";
 
-<script>
-export default {
-  name: "selectSize",
-  emits: ["selectedSize"],
-  data() {
-    return { status: 1, selectedSize: "Маленькая" };
-  },
-  props: {
-    size: {
-      type: Object,
-    },
-  },
-  mounted() {
-    this.$emit("selectedSize", this.selectedSize);
-  },
-  watch: {
-    selectedSize() {
-      this.$emit("selectedSize", this.selectedSize);
-    },
-  },
-  methods: {
-    modifiedSize(val) {
-      switch (val) {
-        case "Маленькая": {
-          return "26 СМ";
-        }
-        case "Средняя": {
-          return "30 СМ";
-        }
-        case "Большая": {
-          return "40 СМ";
-        }
-      }
-    },
-    changeSize(size, id) {
-      this.selectedSize = size;
-      this.status = id;
-    },
-  },
+watch(
+  () => selectedSize.value,
+  () => {
+    emit("selectedSize", selectedSize.value);
+  }
+);
+onMounted(() => {
+  emit("selectedSize", selectedSize.value);
+});
+
+let modifiedSize = (val) => {
+  switch (val) {
+    case "Маленькая": {
+      return "26 СМ";
+    }
+    case "Средняя": {
+      return "30 СМ";
+    }
+    case "Большая": {
+      return "40 СМ";
+    }
+  }
+};
+let changeSize = (size, id) => {
+  selectedSize.value = size;
+  status.value = id;
 };
 </script>
 
