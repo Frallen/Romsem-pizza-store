@@ -10,7 +10,6 @@ export default defineNuxtConfig({
     },
   },
   css: [
-    "maz-ui/css/main.css",
     "@/assets/styles/main.less",
     "sweetalert2/dist/sweetalert2.min.css",
   ],
