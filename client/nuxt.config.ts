@@ -15,7 +15,6 @@ export default defineNuxtConfig({
     "sweetalert2/dist/sweetalert2.min.css",
   ],
   build: {
-    transpile: ["maz-ui"],
   },
   imports: {
     dirs: ["store"],
