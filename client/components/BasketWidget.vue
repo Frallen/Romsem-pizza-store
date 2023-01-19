@@ -1,7 +1,7 @@
 <template>
   <NuxtLink to="/basket" class="widget"
     ><Icon name="iconoir:shopping-bag" :size="'1.6em'" />
-    <div class="widget-count" v-if="count">{{ count }}</div></NuxtLink
+    <div class="widget-count" v-show="count">+</div></NuxtLink
   >
 </template>
 
@@ -10,18 +10,15 @@ import { useCatalog } from "~/store/catalog";
 const catalog = useCatalog();
 
 let count = useState("count");
-let cookie = useCookie("order");
+
 setInterval(() => {
   calc();
-}, 1000);
+}, 2000);
 let calc = () => {
-
+  let cookie = useCookie("order");
   let order = [...(cookie.value ?? "")];
-  let arr = [];
-  order.map((p) => {
-    arr.push(p.value.length);
-  });
-  count.value = arr.reduce((acc, number) => acc + number, 0);
+
+  count.value = order.length > 0;
 };
 calc();
 </script>
@@ -40,12 +37,13 @@ calc();
     font-size: 1em;
     .br(100%);
     position: absolute;
-    right: 0;
+    right: -3px;
     top: -17%;
-    padding: 4px 0.3em;
-    height: auto;
-    width: auto;
-    line-height: 12px;
+    padding: 5px 0.2em;
+    height: 20px;
+    width: 20px;
+    line-height: 9px;
+    text-align: center;
   }
 }
 </style>

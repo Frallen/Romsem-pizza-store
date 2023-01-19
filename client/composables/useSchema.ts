@@ -12,7 +12,17 @@ export const useSchemaReg = () => {
       .required(),
   });
 };
-
+export const usePhone = () => {
+  return yup.object({
+    phone: yup
+      .string()
+      .matches(
+        /^(^8|7|\+7)((\d{10})|(\s\(\d{3}\)\s\d{3}\s\d{2}\s\d{2}))$/,
+        "Не верный номер телефона"
+      )
+      .required(() => required()),
+  });
+};
 export const useInfo = () => {
   return yup.object({
     userName: yup.string(),
@@ -21,8 +31,14 @@ export const useInfo = () => {
 };
 export const usePassword = () => {
   return yup.object({
-    CurrentPassword: yup.string().min(8, () => min8()).required(() => required()),
-    NewPassword: yup.string().min(8, () => min8()).required(() => required()),
+    CurrentPassword: yup
+      .string()
+      .min(8, () => min8())
+      .required(() => required()),
+    NewPassword: yup
+      .string()
+      .min(8, () => min8())
+      .required(() => required()),
   });
 };
 export const useSchemaAuth = () => {

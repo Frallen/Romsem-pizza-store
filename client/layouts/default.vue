@@ -56,7 +56,7 @@ let preloaderState=useState("preloader")
 preloaderState.value=true
 setTimeout(()=>{
   preloaderState.value=false
-},2000)
+},1500)
 
 let preloader = computed(() => {
   return catalog.isLoading || index.isLoading || userState.isLoading;

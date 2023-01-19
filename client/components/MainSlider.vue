@@ -34,7 +34,6 @@
         ><NuxtLink
           ><img
             :src="
-              config.public.strapi.url +
               item.attributes.Image.data.attributes.url
             " /></NuxtLink
       ></SwiperSlide>

@@ -1,6 +1,6 @@
 <template>
   <div class="basket">
-    <template v-if="basketItems.length">
+    <template v-if="basketItems.length>0">
       <div class="basket-wrapper">
         <div class="basket-item" v-for="item in basketItems" :key="item.id">
           <transition-group name="fade">
@@ -11,12 +11,7 @@
             >
               <div class="basket-item-info">
                 <div class="basket-item-img">
-                  <img
-                    :src="
-                      config.public.strapi.url +
-                      item.attributes.Image.data.attributes.url
-                    "
-                  />
+                  <img :src="item.attributes.Image.data.attributes.url" />
                 </div>
                 <div class="basket-item-text">
                   <h5>{{ item.attributes.Title }}</h5>
@@ -63,24 +58,17 @@
           <span>Итого</span> <span>{{ summary }} р</span>
         </div>
         <div class="basket-total-form">
-          <MazPhoneNumberInput
-            v-model="phoneNumber"
-            :error="false"
-            show-code-on-list
-            color="info"
-            :preferred-countries="['RU']"
-            @update="results = $event"
-            :success="results?.isValid"
-            fetch-country
-            :no-search="true"
-            :no-country-selector="true"
-            :translations="{
-              phoneInput: {
-                example: 'Пример:',
-              },
-            }"
-          />
-          <DefaultButton @click.stop="submit">Заказать</DefaultButton>
+          <UseForm :Schema="usePhone()" class="form" @data="onSubmit">
+            <Field
+              name="phone"
+              id="phone"
+              class="input"
+              type="text"
+              placeholder="Номер телефона"
+            ></Field>
+            <ErrorMessage name="phone" class="error" />
+            <DefaultButton>Заказать</DefaultButton></UseForm
+          >
         </div>
         <SecondButton class="basket-total-clear" @click.stop="clearBasket()"
           >Очистить корзину</SecondButton
@@ -96,13 +84,12 @@
 </template>
 
 <script setup>
-import MazPhoneNumberInput from "maz-ui/components/MazPhoneNumberInput";
+import { usePhone } from "~/composables/useSchema";
+import { Field, ErrorMessage } from "vee-validate";
 import { useCatalog } from "~/store/catalog";
 import SecondButton from "~/components/SecondButton.vue";
 const catalog = useCatalog();
 const config = useRuntimeConfig();
-const phoneNumber = useState("phoneNumber");
-const results = ref();
 let summary = useState("summary");
 
 let minus = (e) => {
@@ -145,43 +132,40 @@ onMounted(() => {
 });
 
 let Remove = async (id, type) => {
-  await catalog.removeItem(id, type).then(async ()=> {
-    basketItems.value = await fillteredItems()
+  await catalog.removeItem(id, type).then(async () => {
+    basketItems.value = await fillteredItems(false);
   });
 };
-let submit = () => {
-  if (phoneNumber.value) {
-    let arr = [];
-    document.querySelectorAll(".basket-item-type").forEach((p) => {
-      let obj = {
-        Title: p.querySelector(".basket-item-text h5").textContent,
-        Type: p.querySelector(".basket-item-text p").textContent,
-        sum: p.querySelector(".count-number-quality").dataset.sum,
-        count: p.querySelector(".count-number-quality").dataset.value,
-      };
-      arr.push(obj);
-    });
-
-    catalog.addOrder(arr, summary.value, phoneNumber.value);
-  } else {
-    useNuxtApp().$swal.fire({
-      title: "Ошибка",
-      text: "Введите номер телефона",
-      icon: "error",
-      confirmButtonText: "Хорошо",
-    });
-  }
+let onSubmit = async ({ phone }) => {
+  let arr = [];
+  document.querySelectorAll(".basket-item-type").forEach((p) => {
+    let obj = {
+      Title: p.querySelector(".basket-item-text h5").textContent,
+      Type: p.querySelector(".basket-item-text p").textContent,
+      sum: p.querySelector(".count-number-quality").dataset.sum,
+      count: p.querySelector(".count-number-quality").dataset.value,
+    };
+    arr.push(obj);
+  });
+  await catalog.addOrder(arr, summary.value, phone).then(() => clearBasket());
 };
 let basketItems = ref("items");
-let clearBasket = async () => {
-  let cookie = useCookie("order");
-  cookie.value = [];
-  basketItems.value =await fillteredItems();
+let clearBasket = () => {
+  Confirm("Очистить заказ", "Вы уверены что хотите очистить корзину?").then(
+      async  (result) => {
+      if (result.isConfirmed) {
+        basketItems.value = await fillteredItems(true);
+      }
+    }
+  );
 };
 
-
-let fillteredItems = () => {
+let fillteredItems = (val) => {
   let cookie = useCookie("order");
+
+  if(val===true){
+    cookie.value=null
+  }
   let order = [...(cookie.value ?? "")];
   if (order) {
     let arr = catalog.catalogItems.filter(
@@ -201,7 +185,7 @@ let fillteredItems = () => {
   }
 };
 
-basketItems.value = fillteredItems();
+basketItems.value = fillteredItems(false);
 </script>
 
 <style scoped lang="less">
@@ -237,7 +221,7 @@ basketItems.value = fillteredItems();
       display: flex;
       justify-content: space-between;
       .br(10px);
-      @media @lg {
+      @media @xs {
         flex-direction: column;
       }
     }
@@ -261,15 +245,24 @@ basketItems.value = fillteredItems();
 
       h5 {
         font-size: 1.4em;
+        @media @md {
+          font-size: 1.2em;
+        }
       }
       p {
         font-size: 1.1em;
+        @media @md {
+          font-size: 15px;
+        }
       }
     }
     &-count {
       display: flex;
       flex-direction: column;
       align-items: flex-end;
+      @media @xs {
+        align-items: initial;
+      }
       .button {
         padding: 2px 5px;
         margin-top: 10px;
@@ -277,11 +270,17 @@ basketItems.value = fillteredItems();
       .icon {
         margin-top: 1em;
         cursor: pointer;
+        @media @xs {
+          align-self: flex-end;
+        }
       }
     }
   }
   &-item:first-child {
     margin-top: 0;
+  }
+  &-item:last-child {
+    margin-bottom: 1em;
   }
   &-total {
     position: sticky;
@@ -298,12 +297,14 @@ basketItems.value = fillteredItems();
       left: 0;
       width: 100%;
     }
+    @media @md {
+      padding: 10px 15px;
+    }
     &-price {
       color: @black;
       font-size: 1.5em;
       font-weight: 700;
       text-align: center;
-      margin-bottom: 10px;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -326,7 +327,6 @@ basketItems.value = fillteredItems();
       }
     }
     &-clear {
-      margin-top: 1.2em;
       background: #f1f4f9;
     }
   }
@@ -359,6 +359,11 @@ basketItems.value = fillteredItems();
   display: flex;
   justify-content: flex-end;
   flex-direction: column;
+  @media @xs {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
   &-manipulate {
     display: flex;
     align-items: center;
@@ -424,6 +429,9 @@ basketItems.value = fillteredItems();
     align-items: center;
     justify-content: space-between;
     margin-bottom: 1em;
+    @media @xs {
+      margin-bottom: 0;
+    }
     input {
       border: none;
       background: transparent;
@@ -437,6 +445,11 @@ basketItems.value = fillteredItems();
       font-weight: 600;
       font-size: 24px;
     }
+  }
+}
+.form {
+  @media @xs {
+    margin: 10px 0;
   }
 }
 </style>

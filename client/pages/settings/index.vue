@@ -59,22 +59,14 @@ let onSubmit = (data) => {
 };
 let onUpdatePassword = (data) => {
   if (data) {
-    useNuxtApp()
-      .$swal.fire({
-        title: "Смена пароля",
-        text: "Вы уверенны что хотите сменить пароль? После смены пароля потребуется поторная авторизация.",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#fe5000",
-        cancelButtonColor: "#a4acad",
-        confirmButtonText: "Подтвердить",
-        cancelButtonText: "Отменить",
-      })
-      .then((result) => {
-        if (result.isConfirmed) {
-          userState.updateProfile(data);
-        }
-      });
+    Confirm(
+      "Смена пароля",
+      "Вы уверенны что хотите сменить пароль? После смены пароля потребуется поторная авторизация."
+    ).then((result) => {
+      if (result.isConfirmed) {
+        userState.updateProfile(data);
+      }
+    });
   }
 };
 definePageMeta({

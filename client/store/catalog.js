@@ -1,5 +1,5 @@
 import qs from "qs";
-import { Error, Success } from "~/composables/useAlert";
+import { Error, Success,AddedToBasket } from "~/composables/useAlert";
 import { useUser } from "~/store/user";
 export const useCatalog = defineStore("catalog", {
   state: () => ({
@@ -74,7 +74,6 @@ export const useCatalog = defineStore("catalog", {
         let obj = {
           id: data.id,
           value: [data._value],
-          //...(data._value && {value: [data._value]})}
         };
         let cookie = useCookie("order");
         let order = [...(cookie.value ?? "")];
@@ -82,7 +81,6 @@ export const useCatalog = defineStore("catalog", {
         if (order.length) {
           order.map((p) => {
             if (p.id === data.id) {
-              //console.log(p.value.find((z) => z === obj.value[0]));
               if (!p.value.find((z) => z === obj.value[0])) {
                 return (p.value = [...p.value, ...obj.value]);
               }
@@ -96,6 +94,7 @@ export const useCatalog = defineStore("catalog", {
           order.push(obj);
           cookie.value = JSON.stringify(order);
         }
+        AddedToBasket()
       } catch (e) {
         Error("Повторите попытку позже");
       } finally {
@@ -117,7 +116,7 @@ export const useCatalog = defineStore("catalog", {
               OrderItems: JSON.stringify(data),
               Sum: sum.toFixed(2),
               PhoneNumber: phone,
-              Owner: useUser().user ? useUser().user.email : phone,
+              Owner: Object.entries(useUser().user).length>0  ?  useUser().user.email : phone,
             },
           },
         }
@@ -141,11 +140,6 @@ export const useCatalog = defineStore("catalog", {
       this.isLoading = true;
       let cookie = useCookie("order");
       if (type) {
-        console.log(  cookie.value.some((p) => {
-          if (p.id === id) {
-            return  Object.entries(p.value).length < 2;
-          }
-        }));
         if (
           cookie.value.some((p) => {
             if (p.id === id) {

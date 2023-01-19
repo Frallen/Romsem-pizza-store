@@ -6,7 +6,6 @@
     <div class="catalog-item-img">
       <img
         :src="
-          config.public.strapi.url +
           exist().attributes.Image.data.attributes.url
         "
       />
