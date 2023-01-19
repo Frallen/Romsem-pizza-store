@@ -21,14 +21,12 @@
     "@nuxtjs/robots": "^3.0.0",
     "@pinia/nuxt": "^0.4.6",
     "libphonenumber-js": "^1.10.15",
-    "maz-ui": "^3.6.5",
     "modern-normalize": "^1.1.0",
     "moment": "^2.29.4",
     "nuxt-swiper": "^0.1.6",
     "qs": "^6.11.0",
     "vee-validate": "^4.7.3",
     "vue-sweetalert2": "^5.0.5",
-    "vue-tel-input": "^6.0.5",
     "yup": "^0.32.11"
   },
   "browserslist": "last 5 versions, not dead"
