@@ -171,7 +171,7 @@ export const useCatalog = defineStore("catalog", {
 
       this.isLoading = false;
     },
-    async Reviews() {
+    async getReviews() {
       this.isLoading = true;
       const query = qs.stringify(
         {
@@ -231,7 +231,7 @@ export const useCatalog = defineStore("catalog", {
       } else {
         cookie.value = JSON.stringify([]);
       }
-      await this.Reviews();
+      await this.getReviews();
       this.isLoading = false;
     },
     async userOrders() {

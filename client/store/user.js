@@ -1,5 +1,6 @@
 import { Error } from "~/composables/useAlert";
 import qs from "qs";
+import { useCatalog } from "~/store/catalog";
 
 export const useUser = defineStore("user", {
   state: () => ({
@@ -12,6 +13,11 @@ export const useUser = defineStore("user", {
     },
     isAuth: (state) => {
       return Object.keys(state.user).length > 0;
+    },
+    usersReviews: (state) => {
+      return useCatalog().reviews.filter(
+        (p) => p.attributes.Owner.data.id === state.user.id
+      );
     },
   },
   actions: {

@@ -26,13 +26,7 @@ let props = defineProps({
   @media @md {
     margin: 15px 0 25px;
   }
-  h2 {
-    font-size: 2.8em;
-    margin-bottom: 10px;
-    font-weight: 700;
-    color: #4b4242;
-    text-transform: capitalize;
-  }
+
   &-wrapper {
     display: flex;
     margin-top: -10px;

@@ -51,6 +51,7 @@ const index = useIndex();
 await catalog.getDeals();
 await index.GetPhones();
 await userState.Profile();
+await catalog.getReviews()
 //console.log(catalog.catalogItems);
 let preloaderState=useState("preloader")
 preloaderState.value=true

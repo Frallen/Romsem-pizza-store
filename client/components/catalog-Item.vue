@@ -69,7 +69,7 @@ const router = useRouter();
 const config = useRuntimeConfig();
 const catalog = useCatalog();
 const slug = useSlug(props.catalogItem.attributes.Title);
-const Status = useState(props.catalogItem.id.toString());
+//const Status = useState(props.catalogItem.id.toString());
 
 let go = () => {
   router.push(`/catalog/${slug}/${props.catalogItem.id}`);
@@ -171,8 +171,7 @@ let addToBasket = (id) => {
   }
   p {
     margin: 10px;
-    .text-eclipse();
-    -webkit-line-clamp: 1;
+    .text-eclipse(1);
     overflow: hidden;
   }
   &-btn {

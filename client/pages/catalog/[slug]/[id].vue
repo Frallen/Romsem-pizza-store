@@ -16,10 +16,10 @@
         <Icon name="mingcute:sale-line" :size="'1.8em'" />
       </div>
       <Favorite
-          class="favorite"
-          :isFavorite="userState.favorited(exist().id)"
-          :id="exist().id"
-          v-if="userState.isAuth"
+        class="favorite"
+        :isFavorite="userState.favorited(exist().id)"
+        :id="exist().id"
+        v-if="userState.isAuth"
       ></Favorite>
     </div>
     <div class="catalog-item-info">
@@ -65,7 +65,11 @@
       <h5 class="reviews-title">Отзывы</h5>
       <DefaultButton
         class="button"
-        v-if="!catalog.ReviewsByProduct(exist().id).some(p=>p.attributes.Owner.id === userState.id)"
+        v-if="
+          !catalog
+            .ReviewsByProduct(exist().id)
+            .some((p) => p.attributes.Owner.id === userState.id)
+        "
         @click="stateReview ? (stateReview = false) : (stateReview = true)"
       >
         <Icon name="ph:note-pencil-light" :size="'1.3em'" />{{
@@ -99,12 +103,18 @@
     </div>
     <div class="reviews-body" v-if="catalog.ReviewsByProduct(exist().id)">
       <div
-        class="reviews-body-item"
+        class="reviews-body-item review-shadow"
         v-for="item in catalog.ReviewsByProduct(exist().id)"
         :key="item.id"
       >
         <div class="review-head">
-          <div class="toOwner" v-if="item.attributes.Owner.id === userState.id">
+          <div
+            class="toOwner"
+            v-if="
+              userState.user &&
+              item.attributes.Owner.data.id === userState.user.id
+            "
+          >
             <Icon name="ic:baseline-star-rate" :size="'1.6em'" />
           </div>
           <div class="owner">
@@ -147,7 +157,6 @@ let exist = () => {
   else
     throw createError({ statusCode: 404, statusMessage: "Product not found" });
 };
-await catalog.Reviews();
 
 let addReview = (review) => {
   catalog.addReview(review, exist().id, userState.user.id);
@@ -312,41 +321,10 @@ let addToBasket = (id) => {
     }
   }
   &-body {
-    margin: 1.5em 0 1em;
     &-item {
-      margin-top: 1em;
-      .br(10px);
-      overflow: hidden;
-      padding: 15px;
-      background: #fff;
-      box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
-        rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
-      h6 {
-        font-size: 1.5em;
-      }
-      p {
-        font-size: 1em;
-      }
-      .review-head {
-        display: flex;
-        align-items: center;
-        margin-bottom: 10px;
-        .owner {
-          font-size: 1.1em;
-          margin-right: 15px;
-        }
-        .date {
-          font-size: 1em;
-        }
-        .toOwner{
-          margin-right: 10px;
-          color: @orange;
-        }
-      }
     }
   }
   &-item:first-child {
-    margin-top: 0;
   }
 }
 </style>

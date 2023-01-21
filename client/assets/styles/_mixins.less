@@ -14,9 +14,9 @@
 .shadow{
   filter: drop-shadow(0 6px 30px rgba(50, 52, 72, 0.1))
 }
-.text-eclipse {
+.text-eclipse(@var) {
   display: -webkit-box !important;
-  -webkit-line-clamp: 2;
+  -webkit-line-clamp: @var;
   -webkit-box-orient: vertical !important;
   text-overflow: ellipsis !important;
 }

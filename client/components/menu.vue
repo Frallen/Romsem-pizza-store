@@ -22,6 +22,13 @@
           class="icon"
         /><span>Настройки</span>
       </NuxtLink>
+      <NuxtLink class="menu-nav-item" to="/reviews/" @click="Close"
+      ><Icon
+          name="uil:comment-alt-medical"
+          :size="'1.4em'"
+          class="icon"
+      /><span>Мои отзывы</span>
+      </NuxtLink>
     </div>
     <div class="menu-wrapper">
       <h4>Меню</h4>
@@ -114,7 +121,7 @@ let Close = () => {
       background: @gray;
       .br(10px);
       padding: 10px;
-      width: 140px;
+      width: 164px;
       margin-top: 1em;
       .icon {
         margin-left: 0;

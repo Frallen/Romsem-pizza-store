@@ -1,4 +1,5 @@
 <template>
+  <h2>Настройки</h2>
   <div class="setting">
     <div class="setting-item">
       <h5>Информация</h5>
