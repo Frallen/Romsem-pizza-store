@@ -11,7 +11,7 @@
             >
               <div class="basket-item-info">
                 <div class="basket-item-img">
-                  <img :src="item.attributes.Image.data.attributes.url" />
+                  <NuxtImg provider="cloudinary" :src="item.attributes.Image.data.attributes.url" />
                 </div>
                 <div class="basket-item-text">
                   <h5>{{ item.attributes.Title }}</h5>

@@ -63,12 +63,6 @@
       "inversedBy": "users",
       "configurable": false
     },
-    "reviews": {
-      "type": "relation",
-      "relation": "oneToMany",
-      "target": "api::review.review",
-      "mappedBy": "users_permissions_user"
-    },
     "Favorites": {
       "type": "relation",
       "relation": "oneToMany",
@@ -77,6 +71,12 @@
     "FI": {
       "type": "string",
       "required": true
+    },
+    "reviews": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::review.review",
+      "mappedBy": "Owner"
     }
   }
 }

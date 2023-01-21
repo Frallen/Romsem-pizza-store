@@ -17,7 +17,7 @@
         @click="hide"
       >
         <div class="search-item-img">
-          <img
+          <NuxtImg provider="cloudinary"
             :src="
               item.attributes.Image.data.attributes.url
             "

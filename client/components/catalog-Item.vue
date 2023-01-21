@@ -9,12 +9,11 @@
     </div>
     <Favorite
       class="favorite"
-      @favoriteAction="favoriteAction"
       :isFavorite="userState.favorited(catalogItem.id)"
-      v-if="userState.isAuth"
+      v-if="userState.isAuth"  :id="catalogItem.id"
     ></Favorite>
     <div class="catalog-item-img">
-      <img
+      <NuxtImg provider="cloudinary"
         :src="
           catalogItem.attributes.Image.data.attributes.url
         "
@@ -76,11 +75,7 @@ let go = () => {
   router.push(`/catalog/${slug}/${props.catalogItem.id}`);
 };
 
-let favoriteAction = (data) => {
-  data
-    ? userState.updateFavorites(props.catalogItem.id, true)
-    : userState.updateFavorites(props.catalogItem.id, false);
-};
+
 let addToBasket = (id) => {
   let data = {
     id,

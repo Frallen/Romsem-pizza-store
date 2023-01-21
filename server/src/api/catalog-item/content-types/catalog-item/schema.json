@@ -86,6 +86,10 @@
     },
     "stock": {
       "type": "decimal"
+    },
+    "Gramm": {
+      "type": "string",
+      "required": false
     }
   }
 }

@@ -32,7 +32,8 @@
         v-for="item in IndexReducer.MainSliderData"
         :key="item.id"
         ><NuxtLink
-          ><img
+          ><NuxtImg
+          provider="cloudinary"
             :src="
               item.attributes.Image.data.attributes.url
             " /></NuxtLink

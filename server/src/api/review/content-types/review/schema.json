@@ -16,27 +16,21 @@
       "type": "string",
       "required": true
     },
-    "ReviewPhoto": {
-      "type": "media",
-      "multiple": true,
-      "required": false,
-      "allowedTypes": [
-        "images",
-        "files",
-        "videos",
-        "audios"
-      ]
-    },
     "Text": {
       "type": "text",
       "required": true,
       "minLength": 10
     },
-    "users_permissions_user": {
+    "Owner": {
       "type": "relation",
       "relation": "manyToOne",
       "target": "plugin::users-permissions.user",
       "inversedBy": "reviews"
+    },
+    "catalog_item": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::catalog-item.catalog-item"
     }
   }
 }

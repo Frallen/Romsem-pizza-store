@@ -9,18 +9,17 @@ export default defineNuxtConfig({
       ],
     },
   },
-  css: [
-    "@/assets/styles/main.less",
-    "sweetalert2/dist/sweetalert2.min.css",
-  ],
-  build: {
-  },
+  css: ["@/assets/styles/main.less", "sweetalert2/dist/sweetalert2.min.css"],
+  build: {},
   imports: {
     dirs: ["store"],
   },
   image: {
     strapi: {
       baseURL: "http://localhost:1337/uploads/",
+    },
+    cloudinary: {
+      baseURL: "https://res.cloudinary.com/devqrrkig/image/fetch/",
     },
   },
   modules: [

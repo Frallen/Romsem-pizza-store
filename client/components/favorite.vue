@@ -14,15 +14,22 @@
 </template>
 
 <script setup>
+import { useUser } from "~/store/user";
 let props = defineProps({
   isFavorite: {
     default: false,
   },
+  id:{
+    type:Number,
+    required:true
+  }
 });
+let userState = useUser();
 
-let emit = defineEmits(["favoriteAction"]);
 let favoriteAction = (data) => {
-  data ? emit("favoriteAction", true) : emit("favoriteAction", false);
+  data
+    ? userState.updateFavorites(props.id, true)
+    : userState.updateFavorites(props.id, false);
 };
 </script>
 
@@ -31,6 +38,7 @@ let favoriteAction = (data) => {
   position: absolute;
   right: 5%;
   top: 2%;
+  cursor: pointer;
   &-item {
     .check {
       color: @red;

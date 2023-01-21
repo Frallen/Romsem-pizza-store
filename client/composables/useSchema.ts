@@ -23,6 +23,12 @@ export const usePhone = () => {
       .required(() => required()),
   });
 };
+export const useReview = () => {
+  return yup.object({
+    title: yup.string().required(() => required()),
+    text: yup.string().required(() => required()),
+  });
+};
 export const useInfo = () => {
   return yup.object({
     userName: yup.string(),

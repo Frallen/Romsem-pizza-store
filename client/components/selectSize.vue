@@ -20,7 +20,7 @@ let props = defineProps({
   },
 });
 let status = ref("");
-status.value=1
+status.value = 1;
 let selectedSize = useState("Маленькая");
 selectedSize.value = "Маленькая";
 
