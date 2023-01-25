@@ -33,6 +33,7 @@
         </div>
       </div>
       <p>{{ exist().attributes.ingredients }}</p>
+      <div class="catalog-item-gram" v-if="exist().attributes.Gramm">{{ exist().attributes.Gramm }} г.</div>
       <SelectSize
         :size="exist().attributes.product_sizes"
         @selectedSize="($event) => (selectedSize = $event)"
@@ -101,7 +102,10 @@
         </UseForm></transition
       >
     </div>
-    <div class="reviews-body" v-if="catalog.ReviewsByProduct(exist().id)">
+    <div
+      class="reviews-body"
+      v-if="catalog.ReviewsByProduct(exist().id).length"
+    >
       <div
         class="reviews-body-item review-shadow"
         v-for="item in catalog.ReviewsByProduct(exist().id)"
@@ -132,7 +136,10 @@
         <p>{{ item.attributes.Text }}</p>
       </div>
     </div>
-    <div class="reviews-empty" v-else></div>
+    <div class="reviews-empty" v-else>
+      <Icon name="system-uicons:battery-empty" :size="'3em'" />
+      <h3>Отзывы отсутствуют</h3>
+    </div>
   </div>
 </template>
 
@@ -258,6 +265,16 @@ let addToBasket = (id) => {
       margin-top: 1em;
     }
   }
+  &-gram{
+    margin: 10px 0;
+    padding: 10px;
+    font-size: 1em;
+    font-weight: 700;
+    color:@gray-gram;
+    background: @gray;
+    .br(15px);
+    text-align: center;
+  }
   &-ingridient {
     display: flex;
     flex-wrap: wrap;
@@ -325,6 +342,17 @@ let addToBasket = (id) => {
     }
   }
   &-item:first-child {
+  }
+  &-empty {
+    display: flex;
+    align-items: center;
+    color: @gray-price;
+    h3 {
+      margin-left: 1em;
+      font-size: 2em;
+      color: @gray-price;
+      font-weight: 400;
+    }
   }
 }
 </style>

@@ -10,13 +10,13 @@
     <Favorite
       class="favorite"
       :isFavorite="userState.favorited(catalogItem.id)"
-      v-if="userState.isAuth"  :id="catalogItem.id"
+      v-if="userState.isAuth"
+      :id="catalogItem.id"
     ></Favorite>
     <div class="catalog-item-img">
-      <NuxtImg provider="cloudinary"
-        :src="
-          catalogItem.attributes.Image.data.attributes.url
-        "
+      <NuxtImg
+        provider="cloudinary"
+        :src="catalogItem.attributes.Image.data.attributes.url"
       />
     </div>
     <div class="catalog-item-box">
@@ -24,6 +24,9 @@
       <p v-if="catalogItem.attributes.Description">
         {{ catalogItem.attributes.Description }}
       </p>
+      <div class="catalog-item-gram" v-if="catalogItem.attributes.Gramm">
+        {{ catalogItem.attributes.Gramm }} г.
+      </div>
       <div class="size" v-if="catalogItem.attributes.product_sizes.data.length">
         <SelectSize
           :size="catalogItem.attributes.product_sizes"
@@ -74,7 +77,6 @@ const slug = useSlug(props.catalogItem.attributes.Title);
 let go = () => {
   router.push(`/catalog/${slug}/${props.catalogItem.id}`);
 };
-
 
 let addToBasket = (id) => {
   let data = {
@@ -175,6 +177,16 @@ let addToBasket = (id) => {
     overflow: hidden;
   }
   &-btn {
+  }
+  &-gram {
+    margin-top: 1em;
+    padding: 10px;
+    font-size: 1em;
+    font-weight: 700;
+    color: @gray-gram;
+    background: @gray;
+    .br(15px);
+    text-align: center;
   }
 }
 .size {

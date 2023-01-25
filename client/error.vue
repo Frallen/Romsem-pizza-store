@@ -1,6 +1,7 @@
 <template>
   <div class="empty">
     <div class="empty-box">
+      <Icon class="icon" name="material-symbols:airplanemode-inactive" :size="'9em'" />
       <h1>Упс..</h1>
       <p>Что-то пошло не так</p>
       <DefaultButton @click.stop="handleError()">На главную</DefaultButton>
@@ -22,7 +23,7 @@ const handleError = () => clearError({ redirect: "/" });
   justify-content: center;
   flex-direction: column;
   position: fixed;
-  top: 35%;
+  top: 30%;
   margin-left: auto;
   margin-right: auto;
   left: 0;
@@ -33,6 +34,10 @@ const handleError = () => clearError({ redirect: "/" });
     align-items: center;
     justify-content: center;
     flex-direction: column;
+    .icon{
+      color: @gray-gram;
+      margin-bottom: 3.5em;
+    }
   }
 }
 </style>
