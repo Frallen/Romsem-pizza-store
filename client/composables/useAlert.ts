@@ -17,8 +17,8 @@ export const Error = (text: String) => {
 
 export const Confirm = (title: String, text: String) => {
   return useNuxtApp().$swal.fire({
-    title: "Смена пароля",
-    text: "Вы уверенны что хотите сменить пароль? После смены пароля потребуется поторная авторизация.",
+    title: title,
+    text: text,
     icon: "warning",
     showCancelButton: true,
     confirmButtonColor: "#fe5000",

@@ -1,7 +1,7 @@
 <template>
   <h2>Настройки</h2>
   <div class="setting">
-    <div class="setting-item">
+    <div class="setting-item shadow">
       <h5>Информация</h5>
       <useForm :Schema="useInfo()" class="form" @data="onSubmit">
         <label for="userName" class="form-item">
@@ -84,7 +84,6 @@ definePageMeta({
   }
   &-item {
     width: 48%;
-    .shadow();
     padding: 10px 15px;
     .br(10px);
     background: #fff;

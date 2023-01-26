@@ -1,5 +1,5 @@
 <template>
-  <div class="footer">
+  <div class="footer shadow">
     <div class="footer-wrapper container">
       <div class="footer-item"><Logo class="footer-logo"></Logo></div>
       <div class="footer-item">

@@ -59,9 +59,11 @@ let changeSize = (size, id) => {
   align-items: center;
   justify-content: space-between;
   user-select: none;
+  background: #a4acad6b;
+  .br(10px);
+  overflow: hidden;
 }
 .size-item {
-  background: #a4acad6b;
   overflow: hidden;
   border: 2px solid transparent;
   padding: 5px;
@@ -69,6 +71,7 @@ let changeSize = (size, id) => {
   text-align: center;
   flex: 1 0 auto;
   .trs();
+  .br(10px);
 }
 .size-item-active {
   background: #fff;

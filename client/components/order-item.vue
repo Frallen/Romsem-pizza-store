@@ -1,6 +1,6 @@
 <template>
   <div
-    class="orders-item"
+    class="orders-item shadow"
     @click.stop="show ? (show = false) : (show = true)"
     :class="{ showHide: show }"
   >
@@ -43,7 +43,6 @@ show.value = false;
 <style scoped lang="less">
 .orders-item {
   background: #fff;
-  .shadow();
   margin-top: 1em;
   padding: 15px;
   .br(10px);

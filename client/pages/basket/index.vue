@@ -1,7 +1,7 @@
 <template>
   <div class="basket">
-    <template v-if="basketItems.length>0">
-      <div class="basket-wrapper">
+    <template v-if="basketItems.length > 0">
+      <div class="basket-wrapper shadow">
         <div class="basket-item" v-for="item in basketItems" :key="item.id">
           <transition-group name="fade">
             <div
@@ -11,7 +11,10 @@
             >
               <div class="basket-item-info">
                 <div class="basket-item-img">
-                  <NuxtImg provider="cloudinary" :src="item.attributes.Image.data.attributes.url" />
+                  <NuxtImg
+                    provider="cloudinary"
+                    :src="item.attributes.Image.data.attributes.url"
+                  />
                 </div>
                 <div class="basket-item-text">
                   <h5>{{ item.attributes.Title }}</h5>
@@ -53,7 +56,7 @@
           ></transition-group>
         </div>
       </div>
-      <div class="basket-total">
+      <div class="basket-total shadow">
         <div class="basket-total-price">
           <span>Итого</span> <span>{{ summary }} р</span>
         </div>
@@ -152,7 +155,7 @@ let onSubmit = async ({ phone }) => {
 let basketItems = ref("items");
 let clearBasket = () => {
   Confirm("Очистить заказ", "Вы уверены что хотите очистить корзину?").then(
-      async  (result) => {
+    async (result) => {
       if (result.isConfirmed) {
         basketItems.value = await fillteredItems(true);
       }
@@ -163,8 +166,8 @@ let clearBasket = () => {
 let fillteredItems = (val) => {
   let cookie = useCookie("order");
 
-  if(val===true){
-    cookie.value=null
+  if (val === true) {
+    cookie.value = null;
   }
   let order = [...(cookie.value ?? "")];
   if (order) {
@@ -209,7 +212,6 @@ basketItems.value = fillteredItems(false);
   }
   &-wrapper,
   &-total {
-    .shadow();
   }
   &-item {
     margin-top: 1em;

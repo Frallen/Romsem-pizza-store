@@ -131,7 +131,7 @@ let addToBasket = (id) => {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 10px 0;
+    padding: 15px 0 10px;
     .button {
       width: 55%;
       padding: 10px 14px;

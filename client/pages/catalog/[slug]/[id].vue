@@ -3,7 +3,7 @@
     ><Title>{{ exist().attributes.Title }}</Title></Head
   >
   <div class="catalog-item">
-    <div class="catalog-item-img">
+    <div class="catalog-item-img shadow">
       <NuxtImg
         provider="cloudinary"
         :src="exist().attributes.Image.data.attributes.url"
@@ -22,7 +22,7 @@
         v-if="userState.isAuth"
       ></Favorite>
     </div>
-    <div class="catalog-item-info">
+    <div class="catalog-item-info shadow">
       <h2>{{ exist().attributes.Title }}</h2>
       <div class="catalog-item-ingridient">
         <div
@@ -33,7 +33,9 @@
         </div>
       </div>
       <p>{{ exist().attributes.ingredients }}</p>
-      <div class="catalog-item-gram" v-if="exist().attributes.Gramm">{{ exist().attributes.Gramm }} г.</div>
+      <div class="catalog-item-gram" v-if="exist().attributes.Gramm">
+        {{ exist().attributes.Gramm }} г.
+      </div>
       <SelectSize
         :size="exist().attributes.product_sizes"
         @selectedSize="($event) => (selectedSize = $event)"
@@ -57,7 +59,7 @@
       >
     </div>
   </div>
-  <div class="catalog-item-text" v-if="exist().attributes.Text">
+  <div class="catalog-item-text shadow" v-if="exist().attributes.Text">
     <h5>Описание</h5>
     <p>{{ exist().attributes.Text }}</p>
   </div>
@@ -181,18 +183,18 @@ let addToBasket = (id) => {
 .catalog-item {
   display: flex;
   justify-content: space-between;
-  margin: 1em 0;
-  .shadow();
+  margin: 1em 0 2em;
   .br(10px);
-  overflow: hidden;
   background: #fff;
   @media @md {
     flex-direction: column;
   }
   &-img {
     width: 55%;
+    .br(10px);
     height: 350px;
     position: relative;
+    background: #fff;
     @media @md {
       width: 100%;
       height: 250px;
@@ -242,7 +244,7 @@ let addToBasket = (id) => {
   }
   &-info {
     width: 40%;
-    padding: 10px;
+    padding: 15px 10px 20px;
     background: #fff;
     height: fit-content;
     overflow: hidden;
@@ -265,12 +267,12 @@ let addToBasket = (id) => {
       margin-top: 1em;
     }
   }
-  &-gram{
+  &-gram {
     margin: 10px 0;
     padding: 10px;
     font-size: 1em;
     font-weight: 700;
-    color:@gray-gram;
+    color: @gray-gram;
     background: @gray;
     .br(15px);
     text-align: center;
@@ -296,7 +298,6 @@ let addToBasket = (id) => {
 }
 .catalog-item-text {
   background: #fff;
-  .shadow();
   .br(10px);
   padding: 15px;
   h5 {

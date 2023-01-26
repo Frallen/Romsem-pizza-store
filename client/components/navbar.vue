@@ -1,5 +1,5 @@
 <template>
-  <div class="navbar">
+  <div class="navbar shadow">
     <div class="navbar-hamburger" @click="showMenu">
       <Icon
           name="gg:menu"
@@ -65,7 +65,6 @@ let showMenu = () => {
 
 <style scoped lang="less">
 .navbar {
-  .shadow();
   display: flex;
   justify-content: space-between;
   align-items: center;
