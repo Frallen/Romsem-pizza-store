@@ -50,8 +50,6 @@
 import { Field, ErrorMessage } from "vee-validate";
 import { useInfo, usePassword } from "~/composables/useSchema";
 import { useUser } from "~/store/user";
-import { delEmptyParams } from "~/composables/objectHelper";
-import { updateInfoType } from "~/types/user.types";
 let userState = useUser();
 
 type mainType = {

@@ -1,7 +1,12 @@
 import { Error } from "~/composables/useAlert";
 import qs from "qs";
 import { useCatalog } from "~/store/catalog";
-import {AuthType, updateInfoType, UserState, UserType} from "~/types/user.types";
+import {
+  AuthType,
+  updateInfoType,
+  UserState,
+  UserType,
+} from "~/types/user.types";
 
 export const useUser: any = defineStore("user", {
   state: (): UserState => ({
@@ -23,7 +28,7 @@ export const useUser: any = defineStore("user", {
     },
   },
   actions: {
-    async createUser(obj:AuthType) {
+    async createUser(obj: AuthType) {
       this.isLoading = true;
       let cookie = useCookie("user", {
         //Secure:true,
@@ -57,11 +62,10 @@ export const useUser: any = defineStore("user", {
         }
       } else {
         cookie.value = data.value.jwt;
-        await this.Profile();
       }
       this.isLoading = false;
     },
-    async authUser(obj:AuthType) {
+    async authUser(obj: AuthType) {
       this.isLoading = true;
       let cookie = useCookie("user", {
         //Secure:true,
@@ -217,9 +221,8 @@ export const useUser: any = defineStore("user", {
               "Имя пользователя усешно изменено",
               "Можете входить в учетную запись с новыми данными"
             );
-            await this.Profile();
           }
-
+          await this.Profile();
           break;
         }
         case info.hasOwnProperty("NewPassword"): {
@@ -305,7 +308,7 @@ export const useUser: any = defineStore("user", {
           maxAge: 3600,
         });
         cookie.value = JSON.stringify("");
-        this.user = {};
+        this.user = {} as UserType;
         useRouter().push("/");
       } catch (e) {
         console.error(e);

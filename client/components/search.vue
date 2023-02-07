@@ -7,7 +7,7 @@
         class="input"
         placeholder="Название блюда"
       />
-      <Icon class="close" @click="hide" name="gg:close"  :size="'1.8em'" />
+      <Icon class="close" @click="hide" name="gg:close" :size="'1.8em'" />
     </div>
     <div class="search-wrapper">
       <NuxtLink
@@ -17,10 +17,9 @@
         @click="hide"
       >
         <div class="search-item-img">
-          <NuxtImg provider="cloudinary"
-            :src="
-              item.attributes.Image.data.attributes.url
-            "
+          <NuxtImg
+            provider="cloudinary"
+            :src="item.attributes.Image.data.attributes.url"
           />
         </div>
         <h5 class="search-item-title">{{ item.attributes.Title }}</h5>
@@ -29,17 +28,17 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { useCatalog } from "~/store/catalog";
 const config = useRuntimeConfig();
 const catalog = useCatalog();
-let emit = defineEmits(["searchStatus"]);
+let emit = defineEmits<{ (e: "searchStatus", searchStatus: boolean):void }>();
 let search = useState("search");
-let props = defineProps({
-  searchStatus: {
-    type: Boolean,
-    default: false,
-  },
+interface PropsType {
+  searchStatus: boolean;
+}
+let { searchStatus } = withDefaults(defineProps<PropsType>(), {
+  searchStatus: false,
 });
 let hide = () => {
   emit("searchStatus", false);

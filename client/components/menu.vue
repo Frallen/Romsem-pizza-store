@@ -23,11 +23,11 @@
         /><span>Настройки</span>
       </NuxtLink>
       <NuxtLink class="menu-nav-item" to="/reviews/" @click="Close"
-      ><Icon
+        ><Icon
           name="uil:comment-alt-medical"
           :size="'1.4em'"
           class="icon"
-      /><span>Мои отзывы</span>
+        /><span>Мои отзывы</span>
       </NuxtLink>
     </div>
     <div class="menu-wrapper">
@@ -72,7 +72,7 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { useIndex } from "~/store";
 import Logo from "assets/img/logo.svg";
 import Pizza from "assets/img/pizza.svg";
@@ -85,7 +85,8 @@ import Soups from "assets/img/soups.svg";
 import Corndog from "assets/img/corndog.svg";
 import Water from "assets/img/water.svg";
 import Actions from "assets/img/actions.svg";
-let emit = defineEmits(["HideMenu"]);
+
+let emit = defineEmits<{ (e: "HideMenu", close: boolean): void }>();
 const index = useIndex();
 let userState = useUser();
 

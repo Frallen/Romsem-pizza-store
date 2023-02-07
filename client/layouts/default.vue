@@ -1,14 +1,14 @@
 <template>
   <div>
     <transition name="fade">
-      <Preloader v-show="preloaderState||preloader"></Preloader
+      <Preloader v-show="preloaderState || preloader"></Preloader
     ></transition>
     <Navbar
       @showMenu="showMenu"
       @showForm="showForm"
+      @searchStatus="searchShow"
       :show="show"
       :searchStatus="search"
-      @searchStatus="searchShow"
       :user="userState.user"
     ></Navbar>
     <transition name="fade">
@@ -35,12 +35,12 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { useCatalog } from "~/store/catalog";
 import { useIndex } from "~/store";
 import { useUser } from "~/store/user";
 const route = useRoute();
-let show = useState("show");
+let show = useState<boolean>("show");
 let search = useState("searchStatus");
 let modal = useState("modal");
 let menu = useState("Menu");
@@ -51,13 +51,13 @@ const index = useIndex();
 await catalog.getDeals();
 await index.GetPhones();
 await userState.Profile();
-await catalog.getReviews()
+await catalog.getReviews();
 //console.log(catalog.catalogItems);
-let preloaderState=useState("preloader")
-preloaderState.value=true
-setTimeout(()=>{
-  preloaderState.value=false
-},1500)
+let preloaderState = useState("preloader");
+preloaderState.value = true;
+setTimeout(() => {
+  preloaderState.value = false;
+}, 1500);
 
 let preloader = computed(() => {
   return catalog.isLoading || index.isLoading || userState.isLoading;
@@ -79,9 +79,9 @@ let searchShow = (value) => {
     document.querySelector("body").style.overflow = "visible";
   }
 };
-onMounted(()=>{
+onMounted(() => {
   document.querySelector("body").style.overflow = "visible";
-})
+});
 let showMenu = () => {
   show.value = true;
   menu.value = true;

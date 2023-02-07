@@ -14,10 +14,10 @@
 </template>
 <script setup lang="ts">
 let emit = defineEmits<{ (e: "selectedSize", size: string): void }>();
-interface Props {
+interface PropsType {
   size?: object;
 }
-let props = defineProps<Props>();
+let props = defineProps<PropsType>();
 let status = ref<number>();
 status.value = 1;
 let selectedSize = useState<string>("Маленькая");

@@ -9,15 +9,13 @@
   </div>
 </template>
 
-<script setup>
-let props = defineProps({
-  type: {
-    type: String,
-  },
-  data: {
-    type: Array,
-  },
-});
+<script setup lang="ts">
+import { catalogItemType } from "~/types/catalog.types";
+interface PropsType {
+  type: string;
+  data: catalogItemType[];
+}
+let { type, data } = defineProps<PropsType>();
 </script>
 
 <style scoped lang="less">

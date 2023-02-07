@@ -10,9 +10,8 @@
   </div>
 </template>
 
-<script setup>
-let props = defineProps({});
-let emit = defineEmits(["close"]);
+<script setup lang="ts">
+let emit = defineEmits<{(e:"close",close:boolean):void}>();
 let close = () => {
   emit("close", false);
 };

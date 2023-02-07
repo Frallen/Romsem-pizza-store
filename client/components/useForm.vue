@@ -6,16 +6,14 @@
 
 <script setup lang="ts">
 import { Form } from "vee-validate";
-let emit = defineEmits(["data"]);
-let props = defineProps({
-  Schema: {
-    type: Object,
-    required: true,
-  },
-});
+let emit = defineEmits<{ (e: "data", data: Object): void }>();
+interface PropsType {
+  Schema: Object;
+}
+let { Schema } = defineProps<PropsType>();
 let onSubmit = (data: Object, { resetForm }: any): void => {
   emit("data", data);
-  resetForm()
+  resetForm();
 };
 </script>
 

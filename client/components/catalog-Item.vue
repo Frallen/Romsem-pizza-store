@@ -58,27 +58,29 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { useCatalog } from "~/store/catalog";
 import { useUser } from "~/store/user";
-let props = defineProps({
-  catalogItem: {
-    type: Object,
-  },
-});
+import { catalogItemAttributes, catalogItemType } from "~/types/catalog.types";
+
+interface PropsType {
+  catalogItem: catalogItemType;
+}
+
+let { catalogItem } = defineProps<PropsType>();
 const userState = useUser();
-let selectedSize = ref("");
+let selectedSize = ref<string>("");
 const router = useRouter();
 const config = useRuntimeConfig();
 const catalog = useCatalog();
-const slug = useSlug(props.catalogItem.attributes.Title);
+const slug = useSlug(catalogItem.attributes.Title);
 //const Status = useState(props.catalogItem.id.toString());
 
 let go = () => {
-  router.push(`/catalog/${slug}/${props.catalogItem.id}`);
+  router.push(`/catalog/${slug}/${catalogItem.id}`);
 };
 
-let addToBasket = (id) => {
+let addToBasket = (id:number) => {
   let data = {
     id,
     ...(selectedSize ?? ""),
