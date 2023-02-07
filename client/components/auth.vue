@@ -1,10 +1,10 @@
 <template>
   <Modal @close="emit('closeModal', false)">
     <useForm
-      :Schema="useSchemaReg()"
-      class="form"
-      v-if="!typeForm"
-      @data="onSubmit"
+        :Schema="useSchemaReg()"
+        class="form"
+        v-if="!typeForm"
+        @data="onSubmit"
     >
       <h3>Регистрация</h3>
       <label for="userName" class="form-item">
@@ -47,16 +47,18 @@
   </Modal>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { Field, ErrorMessage } from "vee-validate";
 import { useSchemaReg, useSchemaAuth } from "~/composables/useSchema";
 import { useUser } from "~/store/user";
+import {AuthType} from "~/types/user.types";
+
 const user = useUser();
-let emit = defineEmits(["closeModal"]);
-let typeForm = useState("typeForm");
+let emit = defineEmits<{(e:"closeModal",close:boolean):void}>();
+let typeForm = useState<boolean>();
 typeForm.value = true;
-let onSubmit = async (data) => {
-  data.userName ? await user.createUser(data) : await user.authUser(data);
+let onSubmit = async (data:AuthType) => {
+  data.userName ? await user.createUser(data) : await user.authUser(data).then(p=>user.Profile());
 };
 </script>
 

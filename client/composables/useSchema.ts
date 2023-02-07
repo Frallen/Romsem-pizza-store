@@ -31,7 +31,7 @@ export const useReview = () => {
 };
 export const useInfo = () => {
   return yup.object({
-    userName: yup.string(),
+    userName: yup.string().ensure(),
     email: yup.string().email(() => email()),
   });
 };

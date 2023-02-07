@@ -54,10 +54,6 @@
         "икра \"Масаго\""
       ],
       "required": true
-    },
-    "Active": {
-      "type": "boolean",
-      "default": true
     }
   }
 }

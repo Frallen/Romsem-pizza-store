@@ -2,10 +2,7 @@
 <input class="input">
 </template>
 
-<script>
-export default {
-  name: "DefaultInput"
-}
+<script setup>
 </script>
 
 <style scoped lang="less">

@@ -12,16 +12,15 @@
     </div>
   </div>
 </template>
-<script setup>
-let emit = defineEmits(["selectedSize"]);
-let props = defineProps({
-  size: {
-    type: Object,
-  },
-});
-let status = ref("");
+<script setup lang="ts">
+let emit = defineEmits<{ (e: "selectedSize", size: string): void }>();
+interface Props {
+  size?: object;
+}
+let props = defineProps<Props>();
+let status = ref<number>();
 status.value = 1;
-let selectedSize = useState("Маленькая");
+let selectedSize = useState<string>("Маленькая");
 selectedSize.value = "Маленькая";
 
 watch(
@@ -34,7 +33,7 @@ onMounted(() => {
   emit("selectedSize", selectedSize.value);
 });
 
-let modifiedSize = (val) => {
+let modifiedSize = (val: string) => {
   switch (val) {
     case "Маленькая": {
       return "26 СМ";
@@ -47,7 +46,7 @@ let modifiedSize = (val) => {
     }
   }
 };
-let changeSize = (size, id) => {
+let changeSize = (size: string, id: number) => {
   selectedSize.value = size;
   status.value = id;
 };
@@ -60,7 +59,7 @@ let changeSize = (size, id) => {
   justify-content: space-between;
   user-select: none;
   background: #a4acad6b;
-  .br(10px);
+  .br(15px);
   overflow: hidden;
 }
 .size-item {
@@ -71,7 +70,7 @@ let changeSize = (size, id) => {
   text-align: center;
   flex: 1 0 auto;
   .trs();
-  .br(10px);
+  .br(15px);
 }
 .size-item-active {
   background: #fff;

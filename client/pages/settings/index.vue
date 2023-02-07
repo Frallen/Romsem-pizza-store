@@ -17,7 +17,7 @@
         <DefaultButton>Обновить</DefaultButton>
       </useForm>
     </div>
-    <div class="setting-item">
+    <div class="setting-item shadow">
       <h5>Смена пароля</h5>
       <useForm :Schema="usePassword()" class="form" @data="onUpdatePassword">
         <label for="CurrentPassword" class="form-item">
@@ -46,24 +46,45 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { Field, ErrorMessage } from "vee-validate";
 import { useInfo, usePassword } from "~/composables/useSchema";
 import { useUser } from "~/store/user";
-
+import { delEmptyParams } from "~/composables/objectHelper";
+import { updateInfoType } from "~/types/user.types";
 let userState = useUser();
 
-let onSubmit = (data) => {
-  if (data) {
-    userState.updateProfile(data);
-  }
+type mainType = {
+  userName?: string | undefined;
+  email?: string | undefined;
 };
-let onUpdatePassword = (data) => {
+type passwordType = {
+  CurrentPassword: string;
+  NewPassword: string;
+};
+let onSubmit = (data: mainType): void => {
+  Object.keys(data).forEach((key) => {
+    if (keyIsInObject(key, data)) {
+      if (data[key] === undefined) {
+        delete data[key];
+      }
+    }
+  });
+  userState.updateProfile(data);
+};
+/// ДЛЯ РАБОТЫ TYPESCRIPT c object
+function keyIsInObject<T extends object>(
+  key: string | number | symbol,
+  obj: T
+): key is keyof T {
+  return key in obj;
+}
+let onUpdatePassword = (data: passwordType): void => {
   if (data) {
     Confirm(
       "Смена пароля",
       "Вы уверенны что хотите сменить пароль? После смены пароля потребуется поторная авторизация."
-    ).then((result) => {
+    ).then((result: any) => {
       if (result.isConfirmed) {
         userState.updateProfile(data);
       }

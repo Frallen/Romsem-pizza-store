@@ -43,7 +43,7 @@
 </template>
 
 <script setup>
-import { useIndex } from "~/store/index";
+import { useIndex } from "~/store";
 const config = useRuntimeConfig();
 let IndexReducer = useIndex();
 const onSwiper = (swiper) => {

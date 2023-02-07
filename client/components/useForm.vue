@@ -4,7 +4,7 @@
   ></Form>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { Form } from "vee-validate";
 let emit = defineEmits(["data"]);
 let props = defineProps({
@@ -13,8 +13,9 @@ let props = defineProps({
     required: true,
   },
 });
-let onSubmit = async (data, { resetForm }) => {
+let onSubmit = (data: Object, { resetForm }: any): void => {
   emit("data", data);
+  resetForm()
 };
 </script>
 

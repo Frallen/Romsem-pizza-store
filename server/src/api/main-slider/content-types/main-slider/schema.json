@@ -27,12 +27,6 @@
         "audios"
       ]
     },
-    "catalog_item": {
-      "type": "relation",
-      "relation": "oneToOne",
-      "target": "api::catalog-item.catalog-item",
-      "inversedBy": "main_slider"
-    },
     "Mobileimage": {
       "allowedTypes": [
         "images",
