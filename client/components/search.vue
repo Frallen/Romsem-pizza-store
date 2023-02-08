@@ -1,5 +1,5 @@
 <template>
-  <div class="search" :class="{ show: searchStatus }">
+  <div class="search">
     <div class="search-head">
       <input
         v-model.trim="search"
@@ -34,12 +34,7 @@ const config = useRuntimeConfig();
 const catalog = useCatalog();
 let emit = defineEmits<{ (e: "searchStatus", searchStatus: boolean):void }>();
 let search = useState("search");
-interface PropsType {
-  searchStatus: boolean;
-}
-let { searchStatus } = withDefaults(defineProps<PropsType>(), {
-  searchStatus: false,
-});
+
 let hide = () => {
   emit("searchStatus", false);
 };

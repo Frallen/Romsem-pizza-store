@@ -50,8 +50,8 @@ definePageMeta({
   &-body {
     display: flex;
     flex-wrap: wrap;
-    margin-left: -10px;
-    margin-top: -10px;
+    margin-left: -15px;
+    margin-top: -15px;
     flex-direction: row;
     &-item {
       margin-left: 10px;
@@ -59,7 +59,18 @@ definePageMeta({
       text-decoration: none;
       display: block;
       color: @black;
-      width: calc(100% / 4);
+      width: calc(100% / 4 - 15px);
+      @media @lg {
+        width: calc(100% / 3 - 15px);
+      }
+      @media @md {
+        width: calc(100% / 2 - 15px);
+      }
+      @media @xs {
+        width: calc(100%);
+        margin-left: 0;
+        margin-top: 1em;
+      }
       p {
         .text-eclipse(3);
         overflow: hidden;

@@ -41,9 +41,10 @@ import { useIndex } from "~/store";
 import { useUser } from "~/store/user";
 const route = useRoute();
 let show = useState<boolean>("show");
-let search = useState("searchStatus");
-let modal = useState("modal");
-let menu = useState("Menu");
+let search = useState<boolean>("searchStatus");
+search.value=false
+let modal = useState<boolean>("modal");
+let menu = useState<boolean>("Menu");
 
 let userState = useUser();
 const catalog = useCatalog();
@@ -59,7 +60,7 @@ setTimeout(() => {
   preloaderState.value = false;
 }, 1500);
 
-let preloader = computed(() => {
+let preloader = computed<boolean>(() => {
   return catalog.isLoading || index.isLoading || userState.isLoading;
 });
 watch(
@@ -68,7 +69,7 @@ watch(
     HideMenu();
   }
 );
-let searchShow = (value) => {
+let searchShow = (value:boolean) => {
   if (value) {
     search.value = true;
     if (window.matchMedia("(max-width: 575.98px)").matches) {

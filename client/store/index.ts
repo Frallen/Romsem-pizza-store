@@ -2,7 +2,6 @@ import qs from "qs";
 export const useIndex = defineStore("index", {
 
   state: () => ({
-    baseURL : useRuntimeConfig().public.strapi.url,
     isLoading: false,
     Phones:[],
     MainSliderData: [],
@@ -21,7 +20,7 @@ export const useIndex = defineStore("index", {
         );
         this.isLoading = true;
         let { data } = await useFetch(
-            `${this.baseURL}/api/numbers/?${query}`
+            `${useRuntimeConfig().public.strapi.url}/api/numbers/?${query}`
         );
         // @ts-ignore
         this.Phones = data.value.data;
@@ -43,7 +42,7 @@ export const useIndex = defineStore("index", {
         );
         this.isLoading = true;
         let { data } = await useFetch(
-          `${this.baseURL}/api/main-sliders/?${query}`
+          `${useRuntimeConfig().public.strapi.url}/api/main-sliders/?${query}`
         );
         // @ts-ignore
         this.MainSliderData = data.value.data;

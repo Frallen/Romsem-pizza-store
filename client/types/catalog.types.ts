@@ -70,3 +70,11 @@ export interface CatalogState {
   reviews: reviewsTypeByItem[];
 }
 
+export interface addToBasketType {
+  id: number;
+  value:string[]
+}
+export interface newReview{
+  title: string;
+  text: string;
+}

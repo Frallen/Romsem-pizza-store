@@ -2,15 +2,20 @@ import qs from "qs";
 import { Error, Success, AddedToBasket } from "~/composables/useAlert";
 import { useUser } from "~/store/user";
 import {
-  CatalogState
+  addToBasketType,
+  catalogItemType,
+  CatalogState,
+  newReview,
+  ordersType,
+  reviewsTypeByItem
 } from "~/types/catalog.types";
 
 export type isLoading = boolean;
-export const useCatalog:any = defineStore("catalog", {
-  state: ():CatalogState => ({
-    catalogItems: [] ,
-    isLoading: false ,
-    orders: [] ,
+export const useCatalog: any = defineStore("catalog", {
+  state: (): CatalogState => ({
+    catalogItems: [],
+    isLoading: false,
+    orders: [],
     reviews: [],
   }),
   getters: {
@@ -34,7 +39,7 @@ export const useCatalog:any = defineStore("catalog", {
     favoriteItems: (state) => {
       if (useUser().isAuth) {
         return state.catalogItems.filter(
-          (p) => useUser().user.Favorites.some((z) => z.id === p.id) && p
+          (p) => useUser().user.Favorites.some((z:any) => z.id === p.id) && p
         );
       } else return false;
     },
@@ -58,12 +63,20 @@ export const useCatalog:any = defineStore("catalog", {
           encodeValuesOnly: true, // prettify URL
         }
       );
-
-      let { data, error } = await useFetch(
+      interface ResponseType {
+        data: {
+          value: {
+            data?: catalogItemType[],
+            meta?:object
+          };
+        };
+        error: {
+          value?: object;
+        };
+      }
+      let { data, error } = await useFetch<ResponseType>(
         `${useRuntimeConfig().public.strapi.url}/api/catalog-items/?${query}`
       );
-
-      //console.log(this.catalogItems);
 
       if (error.value) {
         switch (error.value.data.error.message) {
@@ -71,23 +84,20 @@ export const useCatalog:any = defineStore("catalog", {
             Error("Повторите попытку позже");
         }
       } else {
-        this.catalogItems = data._value.data;
+        this.catalogItems = data.value.data as catalogItemType[];
       }
       this.isLoading = false;
     },
-    addToBasket(data: object) {
+    addToBasket(data: addToBasketType) {
       try {
         this.isLoading = false;
-        type ObjectSend = {
-          id: number;
-          value: object[];
-        };
-        let obj: ObjectSend = {
+
+        let obj :addToBasketType= {
           id: data.id,
-          value: [data._value],
+          value: [...data.value],
         };
         let cookie = useCookie("order");
-        let order = [...(cookie.value ?? "")];
+        let order = [...(cookie.value ?? "")] as addToBasketType[];
 
         if (order.length) {
           order.map((p) => {
@@ -188,12 +198,21 @@ export const useCatalog:any = defineStore("catalog", {
           encodeValuesOnly: true, // prettify URL
         }
       );
-
-      let { data, error } = await useFetch(
+      interface ResponseType {
+        data: {
+          value: {
+            data?: reviewsTypeByItem[],
+            meta?:object
+          };
+        };
+        error: {
+          value?: object;
+        };
+      }
+      let { data, error } = await useFetch<ResponseType>(
         `${useRuntimeConfig().public.strapi.url}/api/reviews/?${query}`
       );
 
-      //console.log(this.catalogItems);
 
       if (error.value) {
         switch (error.value.data.error.message) {
@@ -201,11 +220,11 @@ export const useCatalog:any = defineStore("catalog", {
             Error("Повторите попытку позже");
         }
       } else {
-        this.reviews = data._value.data;
+        this.reviews = data.value.data as reviewsTypeByItem[];
       }
       this.isLoading = false;
     },
-    async addReview(review: object, itemId: number, ownerId: number) {
+    async addReview(review: newReview, itemId: number, ownerId: number) {
       this.isLoading = true;
       let cookie = useCookie("user", {
         httpOnly: true,
@@ -262,8 +281,18 @@ export const useCatalog:any = defineStore("catalog", {
           encodeValuesOnly: true, // prettify URL
         }
       );
-
-      let { data, error } = await useFetch(
+      interface ResponseType {
+        data: {
+          value: {
+            data?: ordersType[],
+            meta?:object
+          };
+        };
+        error: {
+          value?: object;
+        };
+      }
+      let { data, error } = await useFetch<ResponseType>(
         `${useRuntimeConfig().public.strapi.url}/api/orders/?${query}`,
         {
           method: "GET",
@@ -279,7 +308,7 @@ export const useCatalog:any = defineStore("catalog", {
             Error("Повторите попытку позже");
         }
       } else {
-        this.orders = data._value.data;
+        this.orders = data.value.data as ordersType[];
       }
       this.isLoading = false;
     },

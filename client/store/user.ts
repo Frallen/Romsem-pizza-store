@@ -23,19 +23,29 @@ export const useUser: any = defineStore("user", {
     },
     usersReviews: (state) => {
       return useCatalog().reviews.filter(
-        (p) => p.attributes.Owner.data.id === state.user.id
+        (p: any) => p.attributes.Owner.data.id === state.user.id
       );
     },
   },
   actions: {
     async createUser(obj: AuthType) {
+      interface ResponseType {
+        data: {
+          value?: {
+            jwt: string;
+          };
+        };
+        error: {
+          value?: object;
+        };
+      }
       this.isLoading = true;
       let cookie = useCookie("user", {
         //Secure:true,
         sameSite: "strict",
         maxAge: 3600,
       });
-      let { data, error } = await useFetch(
+      let { data, error } = await useFetch<ResponseType>(
         `${useRuntimeConfig().public.strapi.url}/api/auth/local/register`,
         {
           method: "POST",
@@ -66,13 +76,24 @@ export const useUser: any = defineStore("user", {
       this.isLoading = false;
     },
     async authUser(obj: AuthType) {
+      interface ResponseType {
+        data: {
+          value?: {
+            jwt: string;
+          };
+        };
+        error: {
+          value?: object;
+        };
+      }
+
       this.isLoading = true;
       let cookie = useCookie("user", {
         //Secure:true,
         sameSite: "strict",
         maxAge: 3600,
       });
-      let { data, error } = await useFetch(
+      let { data, error } = await useFetch<ResponseType>(
         `${useRuntimeConfig().public.strapi.url}/api/auth/local`,
         {
           method: "POST",
@@ -109,7 +130,9 @@ export const useUser: any = defineStore("user", {
         maxAge: 3600,
       });
       if (status) {
-        let arr: number[] = this.user.Favorites.map((p) => p.id);
+        let arr: (number | undefined)[] = [
+          ...this.user.Favorites.map((p) => p.id),
+        ];
         arr.push(id);
         let { data, error } = await useFetch(
           `${useRuntimeConfig().public.strapi.url}/api/users/${this.user.id}`,
@@ -262,6 +285,15 @@ export const useUser: any = defineStore("user", {
       this.isLoading = false;
     },
     async Profile() {
+      interface ResponseType {
+        data: {
+          value?: UserType;
+        };
+        error: {
+          value?: object;
+        };
+      }
+
       this.isLoading = true;
       let cookie = useCookie("user", {
         //secure:true,
@@ -277,7 +309,7 @@ export const useUser: any = defineStore("user", {
             encodeValuesOnly: true, // prettify URL
           }
         );
-        let { data, error } = await useFetch(
+        let { data, error } = await useFetch<ResponseType>(
           `${useRuntimeConfig().public.strapi.url}/api/users/me/?${query}`,
           {
             method: "GET",
@@ -294,7 +326,7 @@ export const useUser: any = defineStore("user", {
               Error("Повторите попытку позже");
           }
         } else {
-          this.user = { ...data.value };
+          this.user = { ...data.value } as UserType;
         }
       }
       this.isLoading = false;

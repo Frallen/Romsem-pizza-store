@@ -61,7 +61,11 @@
 <script setup lang="ts">
 import { useCatalog } from "~/store/catalog";
 import { useUser } from "~/store/user";
-import { catalogItemAttributes, catalogItemType } from "~/types/catalog.types";
+import {
+  addToBasketType,
+  catalogItemAttributes,
+  catalogItemType,
+} from "~/types/catalog.types";
 
 interface PropsType {
   catalogItem: catalogItemType;
@@ -80,11 +84,12 @@ let go = () => {
   router.push(`/catalog/${slug}/${catalogItem.id}`);
 };
 
-let addToBasket = (id:number) => {
-  let data = {
+let addToBasket = (id: number) => {
+  let data: addToBasketType = {
     id,
-    ...(selectedSize ?? ""),
+    value: [selectedSize.value],
   };
+
   catalog.addToBasket(data);
 };
 </script>
