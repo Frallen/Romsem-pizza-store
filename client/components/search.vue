@@ -32,7 +32,7 @@
 import { useCatalog } from "~/store/catalog";
 const config = useRuntimeConfig();
 const catalog = useCatalog();
-let emit = defineEmits<{ (e: "searchStatus", searchStatus: boolean):void }>();
+let emit = defineEmits<{ (e: "searchStatus", searchStatus: boolean): void }>();
 let search = useState("search");
 
 let hide = () => {
@@ -43,18 +43,15 @@ let hide = () => {
 <style scoped lang="less">
 .search {
   position: fixed;
-  right: 3%;
-  top: 10%;
-  .br(10px);
+  right: 0;
+  top: 0;
+  height: 100%;
   width: 300px;
   background: #fff;
   box-shadow: 0 0 5px 0 #000;
-  z-index: 5;
-  padding: 10px;
+  z-index: 6;
+  padding: 15px 10px;
   @media @sm {
-    .br(0);
-    right: 0;
-    top: 0;
     width: 100%;
     height: 100%;
   }
@@ -73,13 +70,21 @@ let hide = () => {
 
   &-wrapper {
     overflow: auto;
-
-    max-height: 350px;
+    max-height: 90%;
     @media @sm {
-      max-height: 500px;
     }
   }
-
+  &-wrapper::-webkit-scrollbar-thumb {
+    background: @orange;
+    .br(10px);
+  }
+  &-wrapper::-webkit-scrollbar-track {
+    background-color: @gray-price;
+    .br(10px);
+  }
+  &-wrapper::-webkit-scrollbar {
+    width: 10px;
+  }
   &-item {
     display: flex;
     text-decoration: none;
@@ -105,6 +110,7 @@ let hide = () => {
     margin-top: 0;
   }
 }
+
 .show {
   visibility: visible;
 }

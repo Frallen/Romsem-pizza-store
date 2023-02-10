@@ -31,7 +31,7 @@ export const useUser: any = defineStore("user", {
     async createUser(obj: AuthType) {
       interface ResponseType {
         data: {
-          value?: {
+          value: {
             jwt: string;
           };
         };

@@ -27,22 +27,22 @@ let { type, data } = defineProps<PropsType>();
 
   &-wrapper {
     display: flex;
-    margin-top: -10px;
-    margin-left: -10px;
+    margin-top: -15px;
+    margin-left: -15px;
     flex-wrap: wrap;
     @media @sm {
       margin-left: 0;
     }
   }
   &-item {
-    margin-top: 10px;
-    margin-left: 10px;
-    width: calc(100% / 4 - 10px);
+    margin-top: 15px;
+    margin-left: 15px;
+    width: calc(100% / 4 - 15px);
     @media @lg {
-      width: calc(100% / 3 - 10px);
+      width: calc(100% / 3 - 15px);
     }
     @media @md {
-      width: calc(100% / 2 - 10px);
+      width: calc(100% / 2 - 15px);
     }
     @media @sm {
       width: calc(100%);

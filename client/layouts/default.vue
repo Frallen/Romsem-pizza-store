@@ -11,7 +11,7 @@
       :searchStatus="search"
       :user="userState.user"
     ></Navbar>
-    <transition name="fade">
+    <transition name="rightToLeft">
       <Search v-show="search" @searchStatus="searchShow"></Search>
     </transition>
     <transition name="fade">
@@ -42,7 +42,7 @@ import { useUser } from "~/store/user";
 const route = useRoute();
 let show = useState<boolean>("show");
 let search = useState<boolean>("searchStatus");
-search.value=false
+search.value = false;
 let modal = useState<boolean>("modal");
 let menu = useState<boolean>("Menu");
 
@@ -69,14 +69,14 @@ watch(
     HideMenu();
   }
 );
-let searchShow = (value:boolean) => {
+let searchShow = (value: boolean) => {
   if (value) {
     search.value = true;
-    if (window.matchMedia("(max-width: 575.98px)").matches) {
-      document.querySelector("body").style.overflow = "hidden";
-    }
+    show.value = true;
+    document.querySelector("body").style.overflow = "hidden";
   } else {
     search.value = false;
+    show.value = false;
     document.querySelector("body").style.overflow = "visible";
   }
 };
@@ -95,11 +95,13 @@ let HideMenu = () => {
   show.value = false;
   modal.value = false;
   menu.value = false;
+  search.value = false;
 };
 </script>
 <style lang="less">
 .leftToRight-enter-active,
-.leftToRight-leave-active {
+.leftToRight-leave-active, .rightToLeft-enter-active,
+.rightToLeft-leave-active  {
   .trs();
 }
 .leftToRight-enter-from {
@@ -108,14 +110,27 @@ let HideMenu = () => {
 .leftToRight-leave-to {
   transform: translateX(0);
 }
+.rightToLeft-enter-from {
+  transform: translateX(100%);
+}
+.rightToLeft-leave-to {
+  transform: translateX(0);
+}
 .leftToRight-leave-from {
   transform: translateX(0);
 }
 .leftToRight-leave-to {
   transform: translateX(-100%);
 }
+.rightToLeft-leave-from {
+  transform: translateX(0);
+}
+.rightToLeft-leave-to {
+  transform: translateX(100%);
+}
 .leftToRight-enter-from,
-.leftToRight-leave-to {
+.leftToRight-leave-to,.rightToLeft-enter-from,
+.rightToLeft-leave-to  {
   opacity: 0;
 }
 </style>

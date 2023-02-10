@@ -1,56 +1,61 @@
 import qs from "qs";
+import { IndexState } from "~/types/index.types";
+import { Error } from "~/composables/useAlert";
 export const useIndex = defineStore("index", {
-
-  state: () => ({
+  state: (): IndexState => ({
     isLoading: false,
-    Phones:[],
+    Phones: [],
     MainSliderData: [],
   }),
   getters: {},
   actions: {
-    async GetPhones(){
-      try {
-        const query = qs.stringify(
-            {
-              populate: "*",
-            },
-            {
-              encodeValuesOnly: true, // prettify URL
-            }
-        );
-        this.isLoading = true;
-        let { data } = await useFetch(
-            `${useRuntimeConfig().public.strapi.url}/api/numbers/?${query}`
-        );
-        // @ts-ignore
+    async GetPhones() {
+      const query = qs.stringify(
+        {
+          populate: "*",
+        },
+        {
+          encodeValuesOnly: true, // prettify URL
+        }
+      );
+      this.isLoading = true;
+      let { data, error } = await useFetch(
+        `${useRuntimeConfig().public.strapi.url}/api/numbers/?${query}`
+      );
+
+      if (error.value) {
+        switch (error.value.data.error.message) {
+          default:
+            Error("Повторите попытку позже");
+        }
+      } else {
         this.Phones = data.value.data;
-      } catch (e) {
-        console.error(e);
-      } finally {
-        this.isLoading = false;
       }
+      this.isLoading = false;
     },
     async getSlides() {
-      try {
-        const query = qs.stringify(
-          {
-            populate: "*",
-          },
-          {
-            encodeValuesOnly: true, // prettify URL
-          }
-        );
-        this.isLoading = true;
-        let { data } = await useFetch(
-          `${useRuntimeConfig().public.strapi.url}/api/main-sliders/?${query}`
-        );
-        // @ts-ignore
+      const query = qs.stringify(
+        {
+          populate: "*",
+        },
+        {
+          encodeValuesOnly: true, // prettify URL
+        }
+      );
+      this.isLoading = true;
+      let { data, error } = await useFetch(
+        `${useRuntimeConfig().public.strapi.url}/api/main-sliders/?${query}`
+      );
+
+      if (error.value) {
+        switch (error.value.data.error.message) {
+          default:
+            Error("Повторите попытку позже");
+        }
+      } else {
         this.MainSliderData = data.value.data;
-      } catch (e) {
-        console.error(e);
-      } finally {
-        this.isLoading = false;
       }
+      this.isLoading = false;
     },
   },
 });

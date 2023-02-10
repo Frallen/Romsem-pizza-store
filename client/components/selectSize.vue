@@ -17,7 +17,7 @@ let emit = defineEmits<{ (e: "selectedSize", size: string): void }>();
 interface PropsType {
   size?: object;
 }
-let props = defineProps<PropsType>();
+let { size } = defineProps<PropsType>();
 let status = ref<number>();
 status.value = 1;
 let selectedSize = useState<string>("Маленькая");
