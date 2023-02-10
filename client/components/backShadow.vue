@@ -2,10 +2,7 @@
   <div class="shadow"></div>
 </template>
 
-<script>
-export default {
-  name: "backShadow",
-};
+<script lang="ts">
 </script>
 
 <style scoped lang="less">

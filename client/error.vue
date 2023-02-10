@@ -1,7 +1,11 @@
 <template>
   <div class="empty">
     <div class="empty-box">
-      <Icon class="icon" name="material-symbols:airplanemode-inactive" :size="'9em'" />
+      <Icon
+        class="icon"
+        name="material-symbols:airplanemode-inactive"
+        :size="'9em'"
+      />
       <h1>Упс..</h1>
       <p>Что-то пошло не так</p>
       <DefaultButton @click.stop="handleError()">На главную</DefaultButton>
@@ -9,10 +13,17 @@
   </div>
 </template>
 
-<script setup>
-const props = defineProps({
-  error: Object,
-});
+<script setup lang="ts">
+interface PropsType {
+  message?: string;
+  stack?: string;
+  statusCode?: string;
+  statusMessage?: string;
+  url?: string;
+}
+const { message, stack, statusCode, statusMessage, url } =
+  defineProps<PropsType>();
+
 const handleError = () => clearError({ redirect: "/" });
 </script>
 
@@ -34,7 +45,7 @@ const handleError = () => clearError({ redirect: "/" });
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    .icon{
+    .icon {
       color: @gray-gram;
       margin-bottom: 3.5em;
     }

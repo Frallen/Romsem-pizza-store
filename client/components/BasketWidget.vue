@@ -1,15 +1,15 @@
 <template>
   <NuxtLink to="/basket" class="widget"
-    ><Icon name="iconoir:shopping-bag" :size="'1.6em'" />
+  ><Icon name="iconoir:shopping-bag" :size="'1.6em'" />
     <div class="widget-count" v-show="count">+</div></NuxtLink
   >
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { useCatalog } from "~/store/catalog";
 const catalog = useCatalog();
 
-let count = useState("count");
+let count = useState<boolean>("count");
 
 setInterval(() => {
   calc();

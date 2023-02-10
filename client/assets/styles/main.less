@@ -6,7 +6,6 @@ html {
 body {
   font-family: "DIN Pro", serif;
   // background: #f2f2f2;
-  overflow: hidden;
 }
 .container {
   padding: 10px 7.813em;
@@ -128,10 +127,11 @@ h2 {
 
 .input {
   outline: none;
-  border: 1px solid #2226;
+  background: #f1f4f9;
+  border: 1px solid transparent;
   .br(10px);
-  padding: 5px 10px;
-  font-size: 1.2em;
+  padding: 10px 15px;
+  font-size: 1em;
 }
 .textarea {
   resize: none;
@@ -188,4 +188,7 @@ h2 {
   &-item:first-child {
     margin-top: 0;
   }
+}
+.shadow {
+  filter: drop-shadow(0 6px 30px rgba(50, 52, 72, 0.1));
 }

@@ -9,15 +9,13 @@
   </div>
 </template>
 
-<script setup>
-let props = defineProps({
-  type: {
-    type: String,
-  },
-  data: {
-    type: Array,
-  },
-});
+<script setup lang="ts">
+import { catalogItemType } from "~/types/catalog.types";
+interface PropsType {
+  type: string;
+  data: catalogItemType[];
+}
+let { type, data } = defineProps<PropsType>();
 </script>
 
 <style scoped lang="less">
@@ -29,22 +27,22 @@ let props = defineProps({
 
   &-wrapper {
     display: flex;
-    margin-top: -10px;
-    margin-left: -10px;
+    margin-top: -15px;
+    margin-left: -15px;
     flex-wrap: wrap;
     @media @sm {
       margin-left: 0;
     }
   }
   &-item {
-    margin-top: 10px;
-    margin-left: 10px;
-    width: calc(100% / 4 - 10px);
+    margin-top: 15px;
+    margin-left: 15px;
+    width: calc(100% / 4 - 15px);
     @media @lg {
-      width: calc(100% / 3 - 10px);
+      width: calc(100% / 3 - 15px);
     }
     @media @md {
-      width: calc(100% / 2 - 10px);
+      width: calc(100% / 2 - 15px);
     }
     @media @sm {
       width: calc(100%);

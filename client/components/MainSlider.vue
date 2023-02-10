@@ -27,33 +27,28 @@
       @slideChange="onSlideChange"
       class="slider-wrapper"
     >
-      <SwiperSlide
-        class="slider-item"
-        v-for="item in IndexReducer.MainSliderData"
-        :key="item.id"
+      <SwiperSlide class="slider-item" v-for="item in slides" :key="item.id"
         ><NuxtLink
           ><NuxtImg
-          provider="cloudinary"
-            :src="
-              item.attributes.Image.data.attributes.url
-            " /></NuxtLink
+            provider="cloudinary"
+            :src="item.attributes.Image.data.attributes.url" /></NuxtLink
       ></SwiperSlide>
     </Swiper>
   </div>
 </template>
 
-<script setup>
-import { useIndex } from "~/store/index";
-const config = useRuntimeConfig();
-let IndexReducer = useIndex();
-const onSwiper = (swiper) => {
+<script setup lang="ts">
+import { MainSliderType } from "~/types/index.types";
+interface PropsType {
+  slides: MainSliderType[];
+}
+let { slides } = defineProps<PropsType>();
+const onSwiper = (swiper: any) => {
   //console.log(swiper);
 };
 const onSlideChange = () => {
   //console.log("slide change");
 };
-IndexReducer.getSlides();
-//console.log(IndexReducer.MainSliderData)
 </script>
 
 <style scoped lang="less">

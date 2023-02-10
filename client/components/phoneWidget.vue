@@ -1,15 +1,14 @@
 <template>
   <NuxtLink :to="`tel:${PhoneNumber}`" class="widget">
-    <Icon name="lucide:smartphone" :size="'1.6em'"/>
+    <Icon name="lucide:smartphone" :size="'1.6em'" />
   </NuxtLink>
 </template>
 
-<script setup>
-let props = defineProps({
-  PhoneNumber: {
-    type: String,
-  },
-});
+<script setup lang="ts">
+interface PropsType {
+  PhoneNumber: string;
+}
+let { PhoneNumber } = defineProps<PropsType>();
 </script>
 
 <style scoped lang="less">
@@ -20,6 +19,5 @@ let props = defineProps({
   @media @md {
     bottom: 35%;
   }
-
 }
 </style>

@@ -1,5 +1,7 @@
 <template>
-  <MainSlider></MainSlider>
+  <ClientOnly>
+    <MainSlider :slides="IndexReducer.MainSliderData"></MainSlider>
+  </ClientOnly>
   <div class="catalog-categories">
     <!--Картинки грузятся из директории public из-за расширения-->
     <NuxtLink class="catalog-categories-item" to="/category/Роллы"
@@ -76,7 +78,10 @@
 
 <script setup>
 import { useCatalog } from "~/store/catalog";
+import {useIndex} from "~/store";
 const catalog = useCatalog();
+let IndexReducer = useIndex();
+await IndexReducer.getSlides();
 </script>
 
 <style lang="less">

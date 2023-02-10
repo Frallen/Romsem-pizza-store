@@ -25,6 +25,7 @@ export default defineNuxtConfig({
   modules: [
     ["@nuxtjs/robots"],
     ["nuxt-icon"],
+    ["@vueuse/nuxt"],
     [
       "@nuxtjs/web-vitals",
       {

@@ -13,23 +13,19 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { useUser } from "~/store/user";
-let props = defineProps({
-  isFavorite: {
-    default: false,
-  },
-  id:{
-    type:Number,
-    required:true
-  }
-});
+interface PropsType {
+  isFavorite: boolean;
+  id: number;
+}
+let { id, isFavorite } = defineProps<PropsType>();
 let userState = useUser();
 
-let favoriteAction = (data) => {
+let favoriteAction = (data: boolean) => {
   data
-    ? userState.updateFavorites(props.id, true)
-    : userState.updateFavorites(props.id, false);
+    ? userState.updateFavorites(id, true)
+    : userState.updateFavorites(id, false);
 };
 </script>
 

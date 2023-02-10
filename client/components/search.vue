@@ -1,5 +1,5 @@
 <template>
-  <div class="search" :class="{ show: searchStatus }">
+  <div class="search">
     <div class="search-head">
       <input
         v-model.trim="search"
@@ -7,7 +7,7 @@
         class="input"
         placeholder="Название блюда"
       />
-      <Icon class="close" @click="hide" name="gg:close"  :size="'1.8em'" />
+      <Icon class="close" @click="hide" name="gg:close" :size="'1.8em'" />
     </div>
     <div class="search-wrapper">
       <NuxtLink
@@ -17,10 +17,9 @@
         @click="hide"
       >
         <div class="search-item-img">
-          <NuxtImg provider="cloudinary"
-            :src="
-              item.attributes.Image.data.attributes.url
-            "
+          <NuxtImg
+            provider="cloudinary"
+            :src="item.attributes.Image.data.attributes.url"
           />
         </div>
         <h5 class="search-item-title">{{ item.attributes.Title }}</h5>
@@ -29,18 +28,13 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { useCatalog } from "~/store/catalog";
 const config = useRuntimeConfig();
 const catalog = useCatalog();
-let emit = defineEmits(["searchStatus"]);
+let emit = defineEmits<{ (e: "searchStatus", searchStatus: boolean): void }>();
 let search = useState("search");
-let props = defineProps({
-  searchStatus: {
-    type: Boolean,
-    default: false,
-  },
-});
+
 let hide = () => {
   emit("searchStatus", false);
 };
@@ -49,18 +43,15 @@ let hide = () => {
 <style scoped lang="less">
 .search {
   position: fixed;
-  right: 3%;
-  top: 10%;
-  .br(10px);
+  right: 0;
+  top: 0;
+  height: 100%;
   width: 300px;
   background: #fff;
   box-shadow: 0 0 5px 0 #000;
-  z-index: 5;
-  padding: 10px;
+  z-index: 6;
+  padding: 15px 10px;
   @media @sm {
-    .br(0);
-    right: 0;
-    top: 0;
     width: 100%;
     height: 100%;
   }
@@ -79,13 +70,21 @@ let hide = () => {
 
   &-wrapper {
     overflow: auto;
-
-    max-height: 350px;
+    max-height: 90%;
     @media @sm {
-      max-height: 500px;
     }
   }
-
+  &-wrapper::-webkit-scrollbar-thumb {
+    background: @orange;
+    .br(10px);
+  }
+  &-wrapper::-webkit-scrollbar-track {
+    background-color: @gray-price;
+    .br(10px);
+  }
+  &-wrapper::-webkit-scrollbar {
+    width: 10px;
+  }
   &-item {
     display: flex;
     text-decoration: none;
@@ -111,6 +110,7 @@ let hide = () => {
     margin-top: 0;
   }
 }
+
 .show {
   visibility: visible;
 }

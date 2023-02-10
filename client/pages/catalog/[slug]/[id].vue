@@ -161,8 +161,8 @@ stateReview.value = false;
 let item = catalog.filteredItem(route.params.id);
 //console.log(catalog.filteredItem(route.params.id));
 let exist = () => {
-  if (catalog.filteredItem(route.params.id))
-    return catalog.filteredItem(route.params.id);
+  if (catalog.filteredItem(parseInt(route.params.id)))
+    return catalog.filteredItem(parseInt(route.params.id));
   else
     throw createError({ statusCode: 404, statusMessage: "Product not found" });
 };
