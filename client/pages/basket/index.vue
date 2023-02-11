@@ -36,7 +36,9 @@
             <DefaultButton>Заказать</DefaultButton></UseForm
           >
         </div>
-        <SecondButton class="basket-total-clear" @click.stop="clearBasket()"
+        <SecondButton
+          class="basket-total-clear"
+          @click.stop="clearBasketQuestion()"
           >Очистить корзину</SecondButton
         >
       </div>
@@ -49,88 +51,50 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { usePhone } from "~/composables/useSchema";
 import { Field, ErrorMessage } from "vee-validate";
 import { useCatalog } from "~/store/catalog";
-import SecondButton from "~/components/SecondButton.vue";
+import { useSessionStorage } from "@vueuse/core";
+import {addToBasketType, catalogItemType, SessionOrderType} from "~/types/catalog.types";
 const catalog = useCatalog();
 const config = useRuntimeConfig();
-let summary = useState("summary");
+let summary = useState<number>("summary");
+let sessionOrder = useSessionStorage("basket", [] as SessionOrderType[]);
 
-let minus = (e) => {
-  let quality = e.currentTarget.parentNode.parentNode.parentNode.querySelector(
-    ".count-number-quality"
-  );
-
-  if (quality.dataset.value <= 1) {
-    quality.dataset.value = 1;
-  } else if (parseInt(quality.dataset.value) !== 1) {
-    quality.dataset.value = parseInt(quality.dataset.value) - 1;
-  }
-  if (quality.dataset.sum !== quality.dataset.price) {
-    quality.dataset.sum = parseInt(quality.dataset.sum - quality.dataset.price);
-  }
-
-  quality.textContent = quality.dataset.value + " X";
-  calc(e);
-};
-let plus = (e) => {
-  let quality = e.currentTarget.parentNode.parentNode.parentNode.querySelector(
-    ".count-number-quality"
-  );
-
-  quality.dataset.value = parseInt(quality.dataset.value) + 1;
-  quality.dataset.sum = parseInt(quality.dataset.value * quality.dataset.price);
-  quality.textContent = quality.dataset.value + " X";
-  calc(e);
-};
-
-let calc = () => {
-  let arr = [];
-  document.querySelectorAll(".basket-item").forEach((p) => {
-    arr.push(parseInt(p.dataset.value));
-  });
-  summary.value = arr.reduce((acc, number) => acc + number, 0);
-};
-onMounted(() => {});
-
-let Remove = async (id, type) => {
+let Remove = async (id: number, type: string) => {
   await catalog.removeItem(id, type).then(async () => {
     basketItems.value = await fillteredItems(false);
   });
 };
-let onSubmit = async ({ phone }) => {
-  let arr = [];
-  document.querySelectorAll(".basket-item-type").forEach((p) => {
-    let obj = {
-      Title: p.querySelector(".basket-item-text h5").textContent,
-      Type: p.querySelector(".basket-item-text p").textContent,
-      sum: p.querySelector(".count-number-quality").dataset.sum,
-      count: p.querySelector(".count-number-quality").dataset.value,
-    };
-    arr.push(obj);
-  });
-  await catalog.addOrder(arr, summary.value, phone).then(() => clearBasket());
+interface FormValueType {
+  phone: string;
+}
+let onSubmit = async (data: FormValueType) => {
+  await catalog
+    .addOrder(sessionOrder.value, summary.value, data.phone)
+    .then(() => (basketItems.value = fillteredItems(true)));
 };
-let basketItems = ref("items");
-let clearBasket = () => {
+
+let basketItems = ref<catalogItemType[]>();
+let clearBasketQuestion = () => {
   Confirm("Очистить заказ", "Вы уверены что хотите очистить корзину?").then(
-    async (result) => {
+    async (result: any) => {
       if (result.isConfirmed) {
         basketItems.value = await fillteredItems(true);
       }
     }
   );
 };
-
-let fillteredItems = (val) => {
+// Извлечение заказов для корзины из cookies
+let fillteredItems = (val: boolean) => {
   let cookie = useCookie("order");
 
-  if (val === true) {
+  if (val) {
     cookie.value = null;
+    sessionOrder.value = [];
   }
-  let order = [...(cookie.value ?? "")];
+  let order = [...(cookie.value ?? "")]as addToBasketType[];
   if (order) {
     let arr = catalog.catalogItems.filter(
       (p) => order.find((z) => z.id === p.id) && p
@@ -150,21 +114,27 @@ let fillteredItems = (val) => {
 };
 
 basketItems.value = fillteredItems(false);
-const items = ref(basketItems.value);
-const calculateOverallTotalSum = ({ id, type, sum }) => {
-  items.value = items.value.map((item) => {
-    if (item.id === id) {
-      if (item.value.includes(type)) {
-        item.sum = sum;
-      } else {
-        item.sum = sum;
+
+const calculateOverallTotalSum = (id: number, type: string, sum: number) => {
+  if (sessionOrder.value.some((p) => p.id === id && p.type.includes(type))) {
+    sessionOrder.value.map((p) => {
+      if (p.id === id && p.type === type) {
+        return (p.sum = sum);
       }
-    }
+    });
+  } else {
+    let obj = {
+      id: id,
+      type: type,
+      sum: sum,
+    };
+    sessionOrder.value.push(obj);
+  }
 
-    return item;
-  });
-
-  summary.value = items.value.reduce((total, item) => item.sum + total, 0);
+  summary.value = sessionOrder.value.reduce(
+    (total, item) => item.sum + total,
+    0
+  );
 };
 </script>
 

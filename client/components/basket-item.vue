@@ -1,5 +1,5 @@
 <template>
-  <div class="basket-item" :data-value="sum.value">
+  <div class="basket-item">
     <div class="basket-item-info">
       <div class="basket-item-img">
         <NuxtImg
@@ -15,17 +15,13 @@
     <div class="basket-item-count">
       <div class="count">
         <div class="count-number">
-          <div
-            class="count-number-quality"
-          >
-            {{ count }} X
-          </div>
+          <div class="count-number-quality">{{ count }} X</div>
           <div class="count-number-price">{{ item.attributes.Price }}р</div>
         </div>
         <div class="count-manipulate">
           <div
             class="count-manipulate-item minus"
-            @click.prevent="parseInt(count) <= 1 ? count : count--"
+            @click.prevent="count <= 1 ? count : count--"
           ></div>
           <div
             class="count-manipulate-item plus"
@@ -42,24 +38,25 @@
   </div>
 </template>
 
-<script setup>
-let props = defineProps({
-  item: {
-    type: Object,
-    required: true,
-  },
-  type: {
-    type: String,
-  },
-});
+<script setup lang="ts">
+import { catalogItemType } from "~/types/catalog.types";
 
-let emit = defineEmits(["remove", "sum"]);
-let sum = ref(props.item.id);
-let calc = () => {
-  sum.value = parseInt(count.value) * parseInt(props.item.attributes.Price);
-  emit("sum", { id: props.item.id,type:props.type, sum: sum.value });
+interface PropsType {
+  item: catalogItemType;
+  type: string;
+}
+let { type, item } = defineProps<PropsType>();
+
+let emit = defineEmits<{
+  (e: "remove", id: number, type: string): void;
+  (e: "sum", id: number, type: string, sum: number): void;
+}>();
+let sum = ref<number>(item.id);
+let calc = ():void => {
+  sum.value = count.value * item.attributes.Price;
+  emit("sum",  item.id, type, sum.value );
 };
-let count = ref(1);
+let count = ref<number>(1);
 calc();
 
 watch(
@@ -68,7 +65,7 @@ watch(
     calc();
   }
 );
-let Remove = (id, type) => {
+let Remove = (id: number, type: string):void => {
   emit("remove", id, type);
 };
 </script>

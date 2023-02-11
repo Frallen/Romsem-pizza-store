@@ -73,15 +73,15 @@ let searchShow = (value: boolean) => {
   if (value) {
     search.value = true;
     show.value = true;
-    document.querySelector("body").style.overflow = "hidden";
+    document.body.style.overflow = "hidden";
   } else {
     search.value = false;
     show.value = false;
-    document.querySelector("body").style.overflow = "visible";
+    document.body.style.overflow = "visible";
   }
 };
 onMounted(() => {
-  document.querySelector("body").style.overflow = "visible";
+  document.body.style.overflow = "visible";
 });
 let showMenu = () => {
   show.value = true;

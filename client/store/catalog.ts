@@ -7,7 +7,7 @@ import {
   CatalogState,
   newReview,
   ordersType,
-  reviewsTypeByItem
+  reviewsTypeByItem, SessionOrderType
 } from "~/types/catalog.types";
 
 export type isLoading = boolean;
@@ -122,9 +122,8 @@ export const useCatalog: any = defineStore("catalog", {
         this.isLoading = false;
       }
     },
-    async addOrder(data: object, sum: number, phone: string) {
+    async addOrder(data: SessionOrderType[], sum: number, phone: string) {
       this.isLoading = true;
-      let cookie = useCookie("order");
       let { error } = await useFetch(
         `${useRuntimeConfig().public.strapi.url}/api/orders`,
         {
@@ -151,7 +150,6 @@ export const useCatalog: any = defineStore("catalog", {
             Error("Повторите попытку позже");
         }
       } else {
-        cookie.value = JSON.stringify([]);
         Success(
           "Заказ успешно создан!",
           "Ожидайте звонка нашего специалиста или позвоните по номеру"

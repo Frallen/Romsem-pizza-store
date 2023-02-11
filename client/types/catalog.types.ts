@@ -72,9 +72,14 @@ export interface CatalogState {
 
 export interface addToBasketType {
   id: number;
-  value:string[]
+  value: string[];
 }
-export interface newReview{
+export interface newReview {
   title: string;
   text: string;
+}
+export interface SessionOrderType {
+  id: number;
+  type: string;
+  sum: number;
 }

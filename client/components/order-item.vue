@@ -28,15 +28,15 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import moment from "moment";
-let props = defineProps({
-  item: {
-    type: Object,
-  },
-});
+import { reviewsTypeByItem } from "~/types/catalog.types";
+interface PropsType {
+  item: reviewsTypeByItem;
+}
+let { item } = defineProps<PropsType>();
 
-let show = useState(props.item.id.toString());
+let show = useState<boolean>(item.id.toString());
 show.value = false;
 </script>
 
