@@ -20,7 +20,7 @@
       ><nuxt-img src="pizza.png" alt="" />
       <h4>Пицца</h4></NuxtLink
     >
-    <NuxtLink class="catalog-categories-item" to="/category/Вода"
+    <NuxtLink class="catalog-categories-item" to="/category/Напитки"
       ><nuxt-img src="water.png" alt="" />
       <h4>Напитки</h4></NuxtLink
     >

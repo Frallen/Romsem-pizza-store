@@ -96,12 +96,14 @@ let HideMenu = () => {
   modal.value = false;
   menu.value = false;
   search.value = false;
+  document.body.style.overflow = "visible";
 };
 </script>
 <style lang="less">
 .leftToRight-enter-active,
-.leftToRight-leave-active, .rightToLeft-enter-active,
-.rightToLeft-leave-active  {
+.leftToRight-leave-active,
+.rightToLeft-enter-active,
+.rightToLeft-leave-active {
   .trs();
 }
 .leftToRight-enter-from {
@@ -129,8 +131,9 @@ let HideMenu = () => {
   transform: translateX(100%);
 }
 .leftToRight-enter-from,
-.leftToRight-leave-to,.rightToLeft-enter-from,
-.rightToLeft-leave-to  {
+.leftToRight-leave-to,
+.rightToLeft-enter-from,
+.rightToLeft-leave-to {
   opacity: 0;
 }
 </style>
