@@ -6,8 +6,13 @@ export const useIndex = defineStore("index", {
     isLoading: false,
     Phones: [],
     MainSliderData: [],
+    Articles: [],
   }),
-  getters: {},
+  getters: {
+    getArticle: (state) => {
+      return (id: number) => state.Articles.find((p) => p.id === id);
+    },
+  },
   actions: {
     async GetPhones() {
       const query = qs.stringify(
@@ -54,6 +59,30 @@ export const useIndex = defineStore("index", {
         }
       } else {
         this.MainSliderData = data.value.data;
+      }
+      this.isLoading = false;
+    },
+    async getArticles() {
+      const query = qs.stringify(
+        {
+          populate: "*",
+        },
+        {
+          encodeValuesOnly: true, // prettify URL
+        }
+      );
+      this.isLoading = true;
+      let { data, error } = await useFetch(
+        `${useRuntimeConfig().public.strapi.url}/api/articles/?${query}`
+      );
+
+      if (error.value) {
+        switch (error.value.data.error.message) {
+          default:
+            Error("Повторите попытку позже");
+        }
+      } else {
+        this.Articles = data.value.data;
       }
       this.isLoading = false;
     },

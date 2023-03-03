@@ -122,7 +122,7 @@ export const useUser: any = defineStore("user", {
       this.isLoading = false;
     },
 
-    async updateFavorites(id: number, status: string) {
+    async updateFavorites(id: number, status: boolean) {
       this.isLoading = true;
       let cookie = useCookie("user", {
         //secure:true,

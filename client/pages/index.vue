@@ -29,6 +29,9 @@
       <h4>Акции</h4></NuxtLink
     >
   </div>
+  <ClientOnly>
+    <ArticleSlider :slides="IndexReducer.Articles" v-if="IndexReducer.Articles"></ArticleSlider>
+  </ClientOnly>
   <Offers
     :type="'Пицца'"
     :data="catalog.sortedCategories('Пицца')"
@@ -78,7 +81,7 @@
 
 <script setup>
 import { useCatalog } from "~/store/catalog";
-import {useIndex} from "~/store";
+import { useIndex } from "~/store";
 const catalog = useCatalog();
 let IndexReducer = useIndex();
 await IndexReducer.getSlides();

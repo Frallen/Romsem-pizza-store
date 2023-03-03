@@ -53,6 +53,7 @@ await catalog.getDeals();
 await index.GetPhones();
 await userState.Profile();
 await catalog.getReviews();
+await index.getArticles()
 //console.log(catalog.catalogItems);
 let preloaderState = useState("preloader");
 preloaderState.value = true;
