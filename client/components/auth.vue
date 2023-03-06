@@ -9,17 +9,50 @@
       <h3>Регистрация</h3>
       <label for="userName" class="form-item">
         <span>Имя пользователя</span>
-        <Field name="userName" id="userName" class="input" type="text" />
+        <Field
+          name="userName"
+          id="userName"
+          class="input"
+          type="text"
+          v-slot="{ valid, meta, field }"
+        >
+          <input
+            v-bind="field"
+            class="input"
+            :class="{ 'input-error': meta.touched && !meta.valid }"
+        /></Field>
         <ErrorMessage name="userName" class="error" />
       </label>
       <label for="email" class="form-item">
         <span>Почта</span>
-        <Field name="email" id="email" class="input" type="email" />
+        <Field
+          name="email"
+          id="email"
+          class="input"
+          type="email"
+          v-slot="{ valid, meta, field }"
+        >
+          <input
+            v-bind="field"
+            class="input"
+            :class="{ 'input-error': meta.touched && !meta.valid }"
+        /></Field>
         <ErrorMessage name="email" class="error" />
       </label>
       <label for="password" class="form-item">
         <span>Пароль</span>
-        <Field name="password" id="password" class="input" type="password" />
+        <Field
+          name="password"
+          id="password"
+          class="input"
+          type="password"
+          v-slot="{ valid, meta, field }"
+        >
+          <input
+            v-bind="field"
+            class="input"
+            :class="{ 'input-error': meta.touched && !meta.valid }"
+        /></Field>
         <ErrorMessage name="password" class="error" />
       </label>
       <DefaultButton>Зарегистрироваться</DefaultButton>
@@ -31,12 +64,32 @@
       <h3>Авторизация</h3>
       <label for="email" class="form-item">
         <span>Почта</span>
-        <Field name="email" id="genre" class="input" type="email" />
+        <Field
+          name="email"
+          id="email"
+          type="email"
+          v-slot="{ valid, meta, field }"
+          ><input
+            v-bind="field"
+            class="input"
+            :class="{ 'input-error': meta.touched && !meta.valid }"
+        /></Field>
         <ErrorMessage name="email" class="error" />
       </label>
       <label for="password" class="form-item">
         <span>Пароль</span>
-        <Field name="password" id="password" class="input" type="password" />
+        <Field
+          name="password"
+          id="password"
+          type="password"
+          v-slot="{ valid, meta, field }"
+        >
+          <input
+            v-bind="field"
+            class="input"
+            :class="{ 'input-error': meta.touched && !meta.valid }"
+          />
+        </Field>
         <ErrorMessage name="password" class="error" />
       </label>
       <DefaultButton>Войти</DefaultButton>
